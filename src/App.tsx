@@ -4,6 +4,7 @@ import type { CanvasCommand } from './canvas/commands'
 import { executeCanvasCommand } from './canvas/executeCanvasCommand'
 import { SemanticStore } from './canvas/semanticStore'
 import { rebuildSemanticStore } from './canvas/syncSemanticStore'
+import { validateCommand } from './canvas/validateCommand'
 
 // The canvas is saved to the browser (IndexedDB) under this key, so drawings
 // survive page reloads. Changing the key starts a fresh, empty board.
@@ -24,8 +25,17 @@ const HELLO_COMMAND: CanvasCommand = {
 function handleMount(editor: Editor) {
   rebuildSemanticStore(editor, semanticStore)
   if (editor.getCurrentPageShapeIds().size === 0) {
-    executeCanvasCommand(editor, semanticStore, HELLO_COMMAND)
+    runCommand(editor, HELLO_COMMAND)
   }
+}
+
+function runCommand(editor: Editor, command: CanvasCommand) {
+  const result = validateCommand(command, semanticStore)
+  if (!result.ok) {
+    console.warn(`Rejected ${command.type}: ${result.reason}`)
+    return
+  }
+  executeCanvasCommand(editor, semanticStore, command)
 }
 
 export default function App() {
