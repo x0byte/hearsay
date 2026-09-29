@@ -14,16 +14,25 @@ export function nextFreePosition(occupied: Rect[]): Point {
   return { x: MARGIN, y: bottom + GAP }
 }
 
+// Cells are ARRAY_CELL_SIZE tall and at least that wide.
 export const ARRAY_CELL_SIZE = 60
+// Estimated width of one character of a cell label (a digit in tldraw's draw
+// font at the default size is ~16) and the padding either side (tldraw pads
+// geo labels by ~16). A generous estimate, so layout stays pure and labels
+// don't wrap.
+export const CELL_CHAR_WIDTH = 16
+export const CELL_PADDING = 20
 
-// One square cell per value, side by side from the origin.
-export function arrayCellRects(origin: Point, count: number): Rect[] {
-  return Array.from({ length: count }, (_, i) => ({
-    x: origin.x + i * ARRAY_CELL_SIZE,
-    y: origin.y,
-    w: ARRAY_CELL_SIZE,
-    h: ARRAY_CELL_SIZE,
-  }))
+// Every cell of an array has the same width: enough for its widest value.
+export function arrayCellWidth(values: (number | string)[]): number {
+  const longest = Math.max(0, ...values.map((value) => String(value).length))
+  return Math.max(ARRAY_CELL_SIZE, longest * CELL_CHAR_WIDTH + 2 * CELL_PADDING)
+}
+
+// One cell per value, side by side from the origin.
+export function arrayCellRects(origin: Point, values: (number | string)[]): Rect[] {
+  const w = arrayCellWidth(values)
+  return values.map((_, i) => ({ x: origin.x + i * w, y: origin.y, w, h: ARRAY_CELL_SIZE }))
 }
 
 // Space under a cell for its index label, then the pointer arrow and its label.

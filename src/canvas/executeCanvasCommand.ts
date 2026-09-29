@@ -137,7 +137,7 @@ function createText(editor: Editor, store: SemanticStore, command: CreateTextCom
 function createArray(editor: Editor, store: SemanticStore, command: CreateArrayCommand): void {
   const props = { values: command.values }
   const base = { semanticId: command.id, kind: 'array' as const, props }
-  const cells = arrayCellRects(positionFor(editor, command), command.values.length)
+  const cells = arrayCellRects(positionFor(editor, command), command.values)
   const shapes: TLShapePartial[] = []
   cells.forEach((cell, index) => {
     shapes.push({
