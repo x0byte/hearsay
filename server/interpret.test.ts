@@ -1,13 +1,17 @@
 import { describe, expect, it, vi } from 'vitest'
 import { commandTools, draftFromToolCall } from './commandTools.ts'
+import type { SemanticObject } from '../src/canvas/semanticStore.ts'
+import type { InterpretRequest } from '../src/interpret/protocol.ts'
 import {
   DEFAULT_MODEL,
   interpret,
+  interpretWithJev,
   MAX_SEGMENTS,
   parseInterpretRequest,
   resolveModelConfig,
   WINDOW_MS,
 } from './interpret.ts'
+import type { ChoiceAnswer, JevAnswers } from './jev.ts'
 import type { ChatRequest, ToolCall } from './openrouter.ts'
 
 const call = (name: string, args: unknown): ToolCall => ({
@@ -213,5 +217,60 @@ describe('parseInterpretRequest', () => {
     expect(
       parseInterpretRequest({ segments: [{ text: 'hi', at: 0 }, { text: ' ', at: 1 }], objects: [] }),
     ).toBeUndefined()
+  })
+})
+
+describe('interpretWithJev', () => {
+  const arrayA: SemanticObject = { id: 'array-a', kind: 'array', shapeIds: [], props: { values: [5, 2, 8, 1] } }
+  const pointerI: SemanticObject = {
+    id: 'pointer-i',
+    kind: 'pointer',
+    shapeIds: [],
+    props: { label: 'i', array: 'array-a', index: 0 },
+  }
+  const request = (newest: string): InterpretRequest => ({ segments: [{ text: newest, at: 0 }], objects: [arrayA, pointerI] })
+  const choice = (value: string, confidence = 0.95): ChoiceAnswer => ({ type: 'choice', choice: value, confidence })
+  const sure = (answers: Omit<JevAnswers, 'change'>): JevAnswers => ({ change: { type: 'noul', noul: 0.95 }, ...answers })
+  const config = resolveModelConfig({})
+  const gemma = () =>
+    vi.fn(async (_request: ChatRequest, _signal?: AbortSignal) => ({
+      choices: [{ finish_reason: 'stop', message: { content: null } }],
+    }))
+
+  it('returns Jev commands without calling Gemma when Jev settles the request', async () => {
+    const chat = gemma()
+    const jev = async () => ({
+      answers: sure({ command: choice('move_pointer'), target: choice('pointer-i'), index: choice('1') }),
+      usage: { cost: 0.00003 },
+    })
+    const result = await interpretWithJev(chat, jev, request('move it over one'), config)
+    expect(result).toMatchObject({ path: 'jev', commands: [{ type: 'move_pointer', target: 'pointer-i', index: 1 }] })
+    expect(result.jev.costUsd).toBe(0.00003)
+    expect(chat).not.toHaveBeenCalled()
+  })
+
+  it('returns nothing below the gate without calling Gemma', async () => {
+    const chat = gemma()
+    const jev = async () => ({ answers: { change: { type: 'noul' as const, noul: 0.1 } } })
+    expect(await interpretWithJev(chat, jev, request('it is simple'), config)).toMatchObject({ path: 'jev-none', commands: [] })
+    expect(chat).not.toHaveBeenCalled()
+  })
+
+  it('falls back to Gemma when Jev is unsure or fails', async () => {
+    const unsure = gemma()
+    const low = async () => ({ answers: sure({ command: choice('swap', 0.4) }) })
+    expect(await interpretWithJev(unsure, low, request('they trade places'), config)).toMatchObject({
+      path: 'fallback',
+      reason: 'command not confident',
+    })
+    expect(unsure).toHaveBeenCalledTimes(1)
+
+    const failing = gemma()
+    const broken = async () => {
+      throw new Error('Jev 502')
+    }
+    const result = await interpretWithJev(failing, broken, request('move it over one'), config)
+    expect(result).toMatchObject({ path: 'fallback', reason: 'jev error' })
+    expect(result.jev.error).toContain('Jev 502')
   })
 })

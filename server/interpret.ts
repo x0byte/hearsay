@@ -3,6 +3,15 @@ import type { InterpretRequest, TranscriptSegment } from '../src/interpret/proto
 import { assignIds, type DraftCommand } from '../src/canvas/assignIds.ts'
 import { dropNoOps, type NoOpResult } from '../src/canvas/dropNoOps.ts'
 import { commandTools, draftFromToolCall } from './commandTools.ts'
+import {
+  buildJevBody,
+  DEFAULT_THRESHOLDS,
+  routeJev,
+  type JevAnswers,
+  type JevDecide,
+  type JevThresholds,
+  type Route,
+} from './jev.ts'
 import type { ChatCompletion, ChatResponse } from './openrouter.ts'
 
 export const DEFAULT_MODEL = 'google/gemma-4-26b-a4b-it'
@@ -130,4 +139,49 @@ function commandsFrom(response: ChatResponse, existingIds: string[]): CanvasComm
     return []
   }
   return commands
+}
+
+export type InterpretPath = 'gemma' | 'jev-none' | 'jev' | 'fallback'
+
+export type JevTrace = {
+  answers?: JevAnswers
+  latencyMs: number
+  costUsd: number
+  error?: string
+}
+
+export type JevInterpretResult = NoOpResult & {
+  path: Exclude<InterpretPath, 'gemma'>
+  reason?: string // why it fell back
+  jev: JevTrace
+  gemmaLatencyMs?: number // only when Gemma was called
+}
+
+// Jev first, Gemma only when Jev can't settle the request (sequential).
+export async function interpretWithJev(
+  chat: ChatCompletion,
+  jev: JevDecide,
+  request: InterpretRequest,
+  config: ModelConfig,
+  thresholds: JevThresholds = DEFAULT_THRESHOLDS,
+  signal?: AbortSignal,
+): Promise<JevInterpretResult> {
+  const started = performance.now()
+  let trace: JevTrace
+  let route: Route
+  try {
+    const response = await jev(buildJevBody(request), signal)
+    trace = { answers: response.answers, latencyMs: performance.now() - started, costUsd: response.usage?.cost ?? 0 }
+    route = routeJev(response.answers, request, thresholds)
+  } catch (error) {
+    if (signal?.aborted) throw error
+    trace = { latencyMs: performance.now() - started, costUsd: 0, error: String(error) }
+    route = { kind: 'fallback', reason: 'jev error' }
+  }
+  if (route.kind === 'none') return { commands: [], dropped: [], path: 'jev-none', jev: trace }
+  if (route.kind === 'command') return { ...dropNoOps([route.command], request.objects), path: 'jev', jev: trace }
+
+  const gemmaStarted = performance.now()
+  const result = await interpret(chat, request, config, signal)
+  return { ...result, path: 'fallback', reason: route.reason, jev: trace, gemmaLatencyMs: performance.now() - gemmaStarted }
 }

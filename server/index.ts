@@ -1,5 +1,6 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
-import { interpret, parseInterpretRequest, resolveModelConfig } from './interpret.ts'
+import { interpret, interpretWithJev, parseInterpretRequest, resolveModelConfig } from './interpret.ts'
+import { DEFAULT_THRESHOLDS, openRouterJev } from './jev.ts'
 import { OpenRouterError, openRouterChat } from './openrouter.ts'
 
 // Minimal backend that keeps the API key off the browser. The client posts an
@@ -15,6 +16,12 @@ if (!apiKey) {
   process.exit(1)
 }
 const chat = openRouterChat(apiKey)
+// Jev in front of Gemma: off unless HEARSAY_JEV=1 (pending the eval decision).
+const jev = process.env.HEARSAY_JEV === '1' ? openRouterJev(apiKey) : undefined
+const thresholds = {
+  gate: Number(process.env.JEV_GATE ?? DEFAULT_THRESHOLDS.gate),
+  confidence: Number(process.env.JEV_CONFIDENCE ?? DEFAULT_THRESHOLDS.confidence),
+}
 
 const server = createServer(async (req, res) => {
   if (req.method !== 'POST' || req.url !== '/api/interpret') {
@@ -39,7 +46,9 @@ const server = createServer(async (req, res) => {
     if (!res.writableEnded) clientGone.abort()
   })
   try {
-    const { commands } = await interpret(chat, request, config, clientGone.signal)
+    const { commands } = jev
+      ? await interpretWithJev(chat, jev, request, config, thresholds, clientGone.signal)
+      : await interpret(chat, request, config, clientGone.signal)
     sendJson(res, 200, { commands })
   } catch (error) {
     if (clientGone.signal.aborted) return
@@ -74,5 +83,6 @@ function sendJson(res: ServerResponse, status: number, data: unknown): void {
 }
 
 server.listen(PORT, () => {
-  console.log(`Hearsay server on http://localhost:${PORT} (${config.model} via ${config.provider})`)
+  const mode = jev ? `Jev (gate ${thresholds.gate}, confidence ${thresholds.confidence}) + ` : ''
+  console.log(`Hearsay server on http://localhost:${PORT} (${mode}${config.model} via ${config.provider})`)
 })
