@@ -130,7 +130,7 @@ export function routeJev(answers: JevAnswers, request: InterpretRequest, t: JevT
 
   switch (command) {
     case 'create_array': {
-      const values = numberList(newest)
+      const values = arrayValues(newest)
       if (values) draft = { type: 'create_array', values }
       break
     }
@@ -201,13 +201,39 @@ function arrayOf(id: string, objects: SemanticObject[]): string {
 const NUMBER = String.raw`-?\d+(?:\.\d+)?`
 const NUMBER_WORDS: Record<string, number> = {
   zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+  eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17,
+  eighteen: 18, nineteen: 19, twenty: 20,
 }
+export const MAX_RANGE_VALUES = 20
 
-// The first run of numbers separated only by commas, spaces or "and":
-// "an array with 3, 1, 4 and 5 then ..." -> [3, 1, 4, 5].
-export function numberList(text: string): number[] | undefined {
-  const run = new RegExp(`${NUMBER}(?:(?:\\s*,\\s*|\\s+and\\s+|\\s+)${NUMBER})*`).exec(text)
-  return run ? run[0].match(new RegExp(NUMBER, 'g'))!.map(Number) : undefined
+// Array values in the NEWEST line: a range ("from 1 to 5", "1 through 8",
+// "5 to 1"), or a run of numbers separated by commas, spaces or "and"
+// ("3, 1, 4 and 5"). Number words count ("one to five"). Returns undefined,
+// leaving the request to Gemma, unless every number in the line is used: a
+// partial array is worse than asking Gemma.
+export function arrayValues(text: string): number[] | undefined {
+  const normalized = text
+    .toLowerCase()
+    .replace(/\b[a-z]+\b/g, (word) => (word in NUMBER_WORDS ? String(NUMBER_WORDS[word]) : word))
+  const mentioned = normalized.match(new RegExp(NUMBER, 'g'))?.length ?? 0
+  if (mentioned === 0) return undefined
+  // "five random numbers": a count of values, not a value.
+  if (new RegExp(`${NUMBER}\\s+(?:[a-z]+\\s+)?(?:numbers|values|elements|items|cells|integers)\\b`).test(normalized)) {
+    return undefined
+  }
+
+  const range = new RegExp(`(?:from\\s+)?(${NUMBER})\\s+(?:to|through|thru)\\s+(${NUMBER})`).exec(normalized)
+  if (range) {
+    const [from, to] = [Number(range[1]), Number(range[2])]
+    const size = Math.abs(to - from) + 1
+    if (mentioned !== 2 || !Number.isInteger(from) || !Number.isInteger(to) || size > MAX_RANGE_VALUES) return undefined
+    const step = from <= to ? 1 : -1
+    return Array.from({ length: size }, (_, i) => from + i * step)
+  }
+
+  const run = new RegExp(`${NUMBER}(?:(?:\\s*,\\s*|\\s+and\\s+|\\s+)${NUMBER})*`).exec(normalized)
+  const values = run?.[0].match(new RegExp(NUMBER, 'g'))?.map(Number)
+  return values && values.length === mentioned ? values : undefined
 }
 
 // The value after the last "to" / "with" / "into", or a sentence ending in a

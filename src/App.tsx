@@ -5,7 +5,7 @@ import type { CanvasCommand } from './canvas/commands'
 import { runCommands } from './canvas/executeCanvasCommand'
 import { SemanticStore } from './canvas/semanticStore'
 import { rebuildSemanticStore, syncSemanticStore } from './canvas/syncSemanticStore'
-import { DevCommandBox } from './DevCommandBox'
+import { TranscriptPanel } from './TranscriptPanel'
 
 // The canvas is saved to the browser (IndexedDB) under this key, so drawings
 // survive page reloads. Changing the key starts a fresh, empty board.
@@ -57,7 +57,7 @@ export default function App() {
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
       <Tldraw persistenceKey={PERSISTENCE_KEY} onMount={onMount} />
-      {import.meta.env.DEV && editor && <DevCommandBox editor={editor} store={semanticStore} />}
+      {editor && <TranscriptPanel editor={editor} store={semanticStore} />}
     </div>
   )
 }

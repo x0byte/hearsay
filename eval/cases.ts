@@ -209,6 +209,31 @@ export const cases: EvalCase[] = [
   },
   explain('explain-swapping', 'swapping is how bubble sort makes progress', ARR),
 
+  // Ranges: the values are spelled as a range, not listed.
+  {
+    name: 'create-array-range',
+    tag: 'command',
+    segments: ['create an array with numbers from 1 to 5'],
+    board: EMPTY,
+    expected: [{ type: 'create_array', id: 'array-a', values: [1, 2, 3, 4, 5] }],
+  },
+  {
+    name: 'create-array-range-through',
+    tag: 'command',
+    segments: ['draw an array of 1 through 8'],
+    board: ARR,
+    expected: [{ type: 'create_array', id: 'array-b', values: [1, 2, 3, 4, 5, 6, 7, 8] }],
+  },
+  {
+    name: 'create-array-range-down',
+    tag: 'command',
+    segments: ['make an array counting down from 5 to 1'],
+    board: EMPTY,
+    expected: [{ type: 'create_array', id: 'array-a', values: [5, 4, 3, 2, 1] }],
+  },
+  explain('explain-range-indices', 'the indices go from 0 to 3 here', ARR),
+  explain('explain-range-values', 'an array like this could hold anything from 1 to 100', ARR),
+
   // Several commands in one sentence, referring to what was just created.
   {
     name: 'multi-array-and-pointer',

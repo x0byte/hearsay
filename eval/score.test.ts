@@ -92,10 +92,10 @@ describe('cases', () => {
   const tuned = cases.filter((c) => c.tag !== 'holdout')
   const holdout = cases.filter((c) => c.tag === 'holdout')
 
-  it('has 45 tuned and 25 held-out cases, all with unique names', () => {
-    expect(tuned).toHaveLength(45)
+  it('has 50 tuned and 25 held-out cases, all with unique names', () => {
+    expect(tuned).toHaveLength(50)
     expect(holdout).toHaveLength(25)
-    expect(new Set(cases.map((c) => c.name)).size).toBe(70)
+    expect(new Set(cases.map((c) => c.name)).size).toBe(75)
   })
 
   it('keeps about 40% of the tuned set expecting no commands', () => {

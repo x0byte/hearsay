@@ -4,8 +4,9 @@ import type { InterpretRequest } from '../src/interpret/protocol.ts'
 import {
   buildJevBody,
   MAX_INDEX_OPTIONS,
+  arrayValues,
+  MAX_RANGE_VALUES,
   newValue,
-  numberList,
   pointerLabel,
   routeJev,
   type ChoiceAnswer,
@@ -44,11 +45,26 @@ describe('value extraction', () => {
   it.each([
     ["let's make an array with 3, 1, 4, 1, 5", [3, 1, 4, 1, 5]],
     ['draw the array 9 7 2', [9, 7, 2]],
-    ['make an array 6, 3, 9, 1 and point i at the 9', [6, 3, 9, 1]],
     ['values -1200 and 5', [-1200, 5]],
+    ['create an array with numbers from 1 to 5', [1, 2, 3, 4, 5]],
+    ['an array of 1 through 8', [1, 2, 3, 4, 5, 6, 7, 8]],
+    ['count down from 5 to 1', [5, 4, 3, 2, 1]],
+    ['an array from one to five', [1, 2, 3, 4, 5]],
+    ['an array of three, one and four', [3, 1, 4]],
+    // Left to Gemma: nothing to extract, or numbers the array wouldn't use.
     ['draw an array of words', undefined],
-  ])('numberList(%j)', (text, expected) => {
-    expect(numberList(text)).toEqual(expected)
+    ['an array with five random numbers', undefined],
+    ['an array of 4 values', undefined],
+    ['make an array 6, 3, 9, 1 and point i at the 9', undefined],
+    ['an array from 1 to 5 with i on 2', undefined],
+    ['an array from 1 to 1000', undefined],
+  ])('arrayValues(%j)', (text, expected) => {
+    expect(arrayValues(text)).toEqual(expected)
+  })
+
+  it('caps ranges at MAX_RANGE_VALUES', () => {
+    expect(arrayValues(`from 1 to ${MAX_RANGE_VALUES}`)).toHaveLength(MAX_RANGE_VALUES)
+    expect(arrayValues(`from 1 to ${MAX_RANGE_VALUES + 1}`)).toBeUndefined()
   })
 
   it.each([
