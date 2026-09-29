@@ -1,4 +1,4 @@
-# Visual Scribe
+# Hearsay
 
 Prototype of a voice-controlled visual whiteboard. For now it is just a
 full-window [tldraw](https://tldraw.dev) canvas that saves to the browser.
