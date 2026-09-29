@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { commandFromToolCall, commandTools } from './commandTools.ts'
+import { commandTools, draftFromToolCall } from './commandTools.ts'
 import {
   DEFAULT_MODEL,
   interpret,
@@ -27,10 +27,10 @@ const request = {
 }
 
 describe('interpret', () => {
-  it('turns valid tool calls into commands, in order', async () => {
+  it('turns valid tool calls into commands, in order, with IDs assigned in code', async () => {
     const chat = fakeChat([
-      call('create_array', { id: 'array-a', values: [3, 1, 4] }),
-      call('create_pointer', { id: 'pointer-i', label: 'i', array: 'array-a', index: 0 }),
+      call('create_array', { values: [3, 1, 4] }),
+      call('create_pointer', { label: 'i', array: 'new', index: 0 }),
     ])
 
     expect(await interpret(chat, request)).toEqual([
@@ -39,14 +39,19 @@ describe('interpret', () => {
     ])
   })
 
+  it('returns no commands when "new" has nothing to refer to', async () => {
+    const chat = fakeChat([call('highlight', { target: 'new' })])
+    expect(await interpret(chat, request)).toEqual([])
+  })
+
   it('returns no commands when the model calls no tools', async () => {
     expect(await interpret(fakeChat(undefined, 'stop'), request)).toEqual([])
   })
 
   it('returns no commands at all if any one call is malformed', async () => {
     const chat = fakeChat([
-      call('create_array', { id: 'array-a', values: [3, 1, 4] }),
-      call('create_pointer', { id: 'pointer-i', label: 'i', array: 'array-a', index: '0' }),
+      call('create_array', { values: [3, 1, 4] }),
+      call('create_pointer', { label: 'i', array: 'new', index: '0' }),
     ])
     expect(await interpret(chat, request)).toEqual([])
   })
@@ -68,40 +73,40 @@ describe('interpret', () => {
   })
 })
 
-describe('commandFromToolCall', () => {
+describe('draftFromToolCall', () => {
   it('accepts a call that matches its schema, including optional fields', () => {
-    expect(commandFromToolCall(call('highlight', { target: 'array-a' }))).toEqual({
+    expect(draftFromToolCall(call('highlight', { target: 'array-a' }))).toEqual({
       type: 'highlight',
       target: 'array-a',
     })
-    expect(commandFromToolCall(call('highlight', { target: 'array-a', index: 2 }))).toEqual({
+    expect(draftFromToolCall(call('highlight', { target: 'array-a', index: 2 }))).toEqual({
       type: 'highlight',
       target: 'array-a',
       index: 2,
     })
-    expect(commandFromToolCall(call('create_array', { id: 'a', values: [1, 'x'] }))).toEqual({
+    expect(draftFromToolCall(call('create_array', { values: [1, 'x'] }))).toEqual({
       type: 'create_array',
-      id: 'a',
       values: [1, 'x'],
     })
   })
 
   it.each([
-    ['unknown tool', call('draw_tree', { id: 'a' })],
+    ['unknown tool', call('draw_tree', { values: [1] })],
+    ['model-supplied id', call('create_array', { id: 'array-z', values: [1] })],
     ['invalid JSON', call('delete', '{target:')],
     ['missing field', call('move_pointer', { target: 'pointer-i' })],
     ['extra field', call('delete', { target: 'a', x: 10 })],
     ['wrong type', call('move_pointer', { target: 'pointer-i', index: 1.5 })],
     ['empty string', call('delete', { target: '' })],
-    ['bad array item', call('create_array', { id: 'a', values: [1, null] })],
+    ['bad array item', call('create_array', { values: [1, null] })],
     ['not an object', call('delete', '["a"]')],
   ])('rejects %s', (_label, toolCall) => {
-    expect(commandFromToolCall(toolCall)).toBeUndefined()
+    expect(draftFromToolCall(toolCall)).toBeUndefined()
   })
 })
 
 describe('commandTools', () => {
-  it('has one tool per command type and never asks for coordinates', () => {
+  it('has one tool per command type and never asks for coordinates or new IDs', () => {
     expect(commandTools.map((t) => t.function.name)).toEqual([
       'create_text',
       'create_array',
@@ -114,6 +119,7 @@ describe('commandTools', () => {
       const properties = Object.keys(t.function.parameters.properties ?? {})
       expect(properties).not.toContain('x')
       expect(properties).not.toContain('y')
+      expect(properties).not.toContain('id')
     }
   })
 })

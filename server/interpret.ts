@@ -1,6 +1,7 @@
 import type { CanvasCommand } from '../src/canvas/commands.ts'
 import type { SemanticObject } from '../src/canvas/semanticStore.ts'
-import { commandFromToolCall, commandTools } from './commandTools.ts'
+import { assignIds, type DraftCommand } from '../src/canvas/assignIds.ts'
+import { commandTools, draftFromToolCall } from './commandTools.ts'
 import type { ChatCompletion, ChatResponse } from './openrouter.ts'
 
 export const DEFAULT_MODEL = 'google/gemma-4-26b-a4b-it'
@@ -42,8 +43,13 @@ const SYSTEM_PROMPT = `You drive a whiteboard for someone explaining ideas out l
 You receive the latest transcript and the objects currently on the board.
 Call tools only when the speaker asks for, or clearly implies, a change to the board.
 Most speech is explanation: in that case call no tools and reply with nothing.
-Refer to existing objects only by the IDs listed on the board. Call tools in the
-order the changes should happen.`
+Refer to existing objects only by the IDs listed on the board. New objects get
+their IDs automatically; to refer to an object created earlier in the same
+reply, use "new".
+Make every call the request needs in this one reply, in the order the changes
+should happen. You will not see tool results. For example, "draw 4, 2, 7 with
+i on the first one" is create_array(values: [4, 2, 7]) followed by
+create_pointer(label: "i", array: "new", index: 0).`
 
 // Asks the model which commands (if any) the transcript calls for.
 export async function interpret(
@@ -63,7 +69,7 @@ export async function interpret(
     provider: { order: [config.provider], allow_fallbacks: false },
     max_tokens: 1024,
   })
-  return commandsFrom(response)
+  return commandsFrom(response, request.objects.map((object) => object.id))
 }
 
 function userMessage({ transcript, objects }: InterpretRequest): string {
@@ -74,16 +80,20 @@ function userMessage({ transcript, objects }: InterpretRequest): string {
 }
 
 // All or nothing: the calls in one reply often depend on each other (create an
-// array, then a pointer on it), so if any call is malformed none are used.
-function commandsFrom(response: ChatResponse): CanvasCommand[] {
+// array, then a pointer on it), so if any call is malformed, or a "new"
+// reference has nothing to refer to, none are used.
+function commandsFrom(response: ChatResponse, existingIds: string[]): CanvasCommand[] {
   const choice = response.choices[0]
   if (!choice) throw new Error('Model returned no choices')
   if (choice.finish_reason === 'length') throw new Error('Model reply was cut off')
   const calls = choice.message.tool_calls ?? []
-  const commands = calls.map(commandFromToolCall)
-  if (commands.some((command) => command === undefined)) {
+  const drafts = calls.map(draftFromToolCall)
+  const commands = drafts.every((draft) => draft !== undefined)
+    ? assignIds(drafts as DraftCommand[], existingIds)
+    : undefined
+  if (!commands) {
     console.warn('Dropping reply with malformed tool calls:', JSON.stringify(calls))
     return []
   }
-  return commands as CanvasCommand[]
+  return commands
 }

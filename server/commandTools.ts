@@ -1,10 +1,11 @@
+import type { DraftCommand } from '../src/canvas/assignIds.ts'
 import type { CanvasCommand } from '../src/canvas/commands.ts'
 import type { FunctionTool, ToolCall } from './openrouter.ts'
 
 // One tool per canvas command. The tool name is the command's `type` and its
 // arguments are the rest of the command, so a tool call maps straight onto a
-// CanvasCommand (see src/canvas/commands.ts). Coordinates are left out on
-// purpose: the layout module places new objects.
+// DraftCommand (see src/canvas/assignIds.ts). Left out on purpose: coordinates
+// (the layout module places objects) and new IDs (assigned in code).
 
 type Schema = {
   type: 'object' | 'array' | 'string' | 'integer' | 'number'
@@ -15,11 +16,8 @@ type Schema = {
   items?: { anyOf: Schema[] }
 }
 
-const newId: Schema = {
-  type: 'string',
-  description: 'New unique semantic ID, kebab-case, e.g. "array-a", "pointer-i".',
-}
-const target: Schema = { type: 'string', description: 'Semantic ID of an existing object.' }
+const REF_HELP = 'An ID listed on the board, or "new" for the object created most recently in this reply.'
+const target: Schema = { type: 'string', description: REF_HELP }
 const cellIndex: Schema = { type: 'integer', description: 'Zero-based array cell index.' }
 
 function tool(
@@ -39,18 +37,12 @@ function tool(
 }
 
 export const commandTools = [
-  tool('create_text', 'Write a short piece of text on the board.', { id: newId, text: { type: 'string' } }, [
-    'id',
-    'text',
-  ]),
+  tool('create_text', 'Write a short piece of text on the board.', { text: { type: 'string' } }, ['text']),
   tool(
     'create_array',
     'Draw an array as a row of cells with their indices.',
-    {
-      id: newId,
-      values: { type: 'array', items: { anyOf: [{ type: 'number' }, { type: 'string' }] } },
-    },
-    ['id', 'values'],
+    { values: { type: 'array', items: { anyOf: [{ type: 'number' }, { type: 'string' }] } } },
+    ['values'],
   ),
   tool(
     'highlight',
@@ -62,12 +54,11 @@ export const commandTools = [
     'create_pointer',
     'Draw a labelled pointer (e.g. loop variable "i") under a cell of an existing array.',
     {
-      id: newId,
       label: { type: 'string', description: 'Short label, usually the variable name.' },
-      array: { type: 'string', description: 'Semantic ID of the array to point into.' },
+      array: { type: 'string', description: `The array to point into. ${REF_HELP}` },
       index: cellIndex,
     },
-    ['id', 'label', 'array', 'index'],
+    ['label', 'array', 'index'],
   ),
   tool('move_pointer', 'Move an existing pointer to another cell of its array.', { target, index: cellIndex }, [
     'target',
@@ -78,10 +69,10 @@ export const commandTools = [
   ]),
 ]
 
-// Turns a model tool call into a command, or undefined if the call doesn't
+// Turns a model tool call into a draft command, or undefined if the call doesn't
 // match a command tool's schema exactly (unknown name, bad JSON, missing or
 // extra fields, wrong types).
-export function commandFromToolCall(call: ToolCall): CanvasCommand | undefined {
+export function draftFromToolCall(call: ToolCall): DraftCommand | undefined {
   const tool = commandTools.find((t) => t.function.name === call.function.name)
   if (!tool) return undefined
   let args: unknown
@@ -91,7 +82,7 @@ export function commandFromToolCall(call: ToolCall): CanvasCommand | undefined {
     return undefined
   }
   if (!matches(tool.function.parameters, args)) return undefined
-  return { type: tool.function.name, ...(args as object) } as CanvasCommand
+  return { type: tool.function.name, ...(args as object) } as DraftCommand
 }
 
 // Checks a value against the small JSON Schema subset used above.
