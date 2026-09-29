@@ -42,8 +42,23 @@ export const commandTools = [
   tool('create_text', 'Write a short piece of text on the board.', { text: { type: 'string' } }, ['text']),
   tool(
     'create_array',
-    'Draw an array as a row of cells with their indices.',
-    { values: { type: 'array', items: cellValue } },
+    'Draw an array as a row of cells with their indices, optionally with pointers on it (e.g. i on the first cell).',
+    {
+      values: { type: 'array', items: cellValue },
+      pointers: {
+        type: 'array',
+        description: 'Pointers to put on the new array straight away.',
+        items: {
+          type: 'object',
+          properties: {
+            label: { type: 'string', description: 'Short label, usually the variable name.' },
+            index: cellIndex,
+          },
+          required: ['label', 'index'],
+          additionalProperties: false,
+        },
+      },
+    },
     ['values'],
   ),
   tool(

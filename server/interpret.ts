@@ -76,9 +76,9 @@ Refer to existing objects only by the IDs listed on the board. New objects get
 their IDs automatically; to refer to an object created earlier in the same
 reply, use "new".
 Make every call the request needs in this one reply, in the order the changes
-should happen. You will not see tool results. For example, "draw 4, 2, 7 with
-i on the first one" is create_array(values: [4, 2, 7]) followed by
-create_pointer(label: "i", array: "new", index: 0).`
+should happen. You will not see tool results. Pointers on a new array go in
+the same create_array call: "draw 4, 2, 7 with i on the first one" is
+create_array(values: [4, 2, 7], pointers: [{ label: "i", index: 0 }]).`
 
 // Asks the model which commands (if any) the transcript calls for. Commands
 // that wouldn't change the board are returned separately in `dropped`.
