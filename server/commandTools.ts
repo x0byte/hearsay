@@ -1,0 +1,120 @@
+import type { CanvasCommand } from '../src/canvas/commands.ts'
+import type { FunctionTool, ToolCall } from './openrouter.ts'
+
+// One tool per canvas command. The tool name is the command's `type` and its
+// arguments are the rest of the command, so a tool call maps straight onto a
+// CanvasCommand (see src/canvas/commands.ts). Coordinates are left out on
+// purpose: the layout module places new objects.
+
+type Schema = {
+  type: 'object' | 'array' | 'string' | 'integer' | 'number'
+  description?: string
+  properties?: Record<string, Schema>
+  required?: string[]
+  additionalProperties?: false
+  items?: { anyOf: Schema[] }
+}
+
+const newId: Schema = {
+  type: 'string',
+  description: 'New unique semantic ID, kebab-case, e.g. "array-a", "pointer-i".',
+}
+const target: Schema = { type: 'string', description: 'Semantic ID of an existing object.' }
+const cellIndex: Schema = { type: 'integer', description: 'Zero-based array cell index.' }
+
+function tool(
+  name: CanvasCommand['type'],
+  description: string,
+  properties: Record<string, Schema>,
+  required: string[],
+): FunctionTool & { function: { parameters: Schema } } {
+  return {
+    type: 'function',
+    function: {
+      name,
+      description,
+      parameters: { type: 'object', properties, required, additionalProperties: false },
+    },
+  }
+}
+
+export const commandTools = [
+  tool('create_text', 'Write a short piece of text on the board.', { id: newId, text: { type: 'string' } }, [
+    'id',
+    'text',
+  ]),
+  tool(
+    'create_array',
+    'Draw an array as a row of cells with their indices.',
+    {
+      id: newId,
+      values: { type: 'array', items: { anyOf: [{ type: 'number' }, { type: 'string' }] } },
+    },
+    ['id', 'values'],
+  ),
+  tool(
+    'highlight',
+    'Highlight an existing object, or one cell of an array when index is given.',
+    { target, index: cellIndex },
+    ['target'],
+  ),
+  tool(
+    'create_pointer',
+    'Draw a labelled pointer (e.g. loop variable "i") under a cell of an existing array.',
+    {
+      id: newId,
+      label: { type: 'string', description: 'Short label, usually the variable name.' },
+      array: { type: 'string', description: 'Semantic ID of the array to point into.' },
+      index: cellIndex,
+    },
+    ['id', 'label', 'array', 'index'],
+  ),
+  tool('move_pointer', 'Move an existing pointer to another cell of its array.', { target, index: cellIndex }, [
+    'target',
+    'index',
+  ]),
+  tool('delete', 'Remove an existing object. Removing an array also removes its pointers.', { target }, [
+    'target',
+  ]),
+]
+
+// Turns a model tool call into a command, or undefined if the call doesn't
+// match a command tool's schema exactly (unknown name, bad JSON, missing or
+// extra fields, wrong types).
+export function commandFromToolCall(call: ToolCall): CanvasCommand | undefined {
+  const tool = commandTools.find((t) => t.function.name === call.function.name)
+  if (!tool) return undefined
+  let args: unknown
+  try {
+    args = JSON.parse(call.function.arguments)
+  } catch {
+    return undefined
+  }
+  if (!matches(tool.function.parameters, args)) return undefined
+  return { type: tool.function.name, ...(args as object) } as CanvasCommand
+}
+
+// Checks a value against the small JSON Schema subset used above.
+function matches(schema: Schema, value: unknown): boolean {
+  switch (schema.type) {
+    case 'string':
+      return typeof value === 'string' && value.trim() !== ''
+    case 'number':
+      return typeof value === 'number' && Number.isFinite(value)
+    case 'integer':
+      return Number.isInteger(value)
+    case 'array':
+      return (
+        Array.isArray(value) &&
+        value.every((item) => schema.items?.anyOf.some((option) => matches(option, item)) ?? true)
+      )
+    case 'object': {
+      if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
+      const properties = schema.properties ?? {}
+      const record = value as Record<string, unknown>
+      if (!Object.keys(record).every((key) => key in properties)) return false
+      if (!(schema.required ?? []).every((key) => key in record)) return false
+      return Object.entries(record).every(([key, v]) => matches(properties[key], v))
+    }
+  }
+}
