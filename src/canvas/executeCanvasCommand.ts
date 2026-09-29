@@ -3,10 +3,17 @@ import {
   toRichText,
   type Editor,
   type TLGeoShape,
+  type TLShape,
+  type TLShapeId,
   type TLShapePartial,
   type TLTextShape,
 } from 'tldraw'
-import type { CanvasCommand, CreateArrayCommand, CreateTextCommand } from './commands'
+import type {
+  CanvasCommand,
+  CreateArrayCommand,
+  CreateTextCommand,
+  HighlightCommand,
+} from './commands'
 import { arrayCellRects, nextFreePosition, type Point, type Rect } from './layout'
 import type { SemanticStore } from './semanticStore'
 import { toShapeMeta } from './syncSemanticStore'
@@ -25,6 +32,9 @@ export function executeCanvasCommand(
       return
     case 'create_array':
       createArray(editor, store, command)
+      return
+    case 'highlight':
+      highlight(editor, store, command)
       return
     default: {
       // Fails to compile if a new command type is added without a case above.
@@ -52,10 +62,11 @@ function createText(editor: Editor, store: SemanticStore, command: CreateTextCom
 }
 
 // Each value becomes a square cell with its index labelled underneath. Every
-// shape carries the same semantic meta, so they rebuild as one object.
+// shape carries the array's semantic meta (so they rebuild as one object) plus
+// which cell or label it draws.
 function createArray(editor: Editor, store: SemanticStore, command: CreateArrayCommand): void {
   const props = { values: command.values }
-  const meta = toShapeMeta({ semanticId: command.id, kind: 'array', props })
+  const base = { semanticId: command.id, kind: 'array' as const, props }
   const cells = arrayCellRects(positionFor(editor, command), command.values.length)
   const shapes: TLShapePartial[] = []
   cells.forEach((cell, index) => {
@@ -70,7 +81,7 @@ function createArray(editor: Editor, store: SemanticStore, command: CreateArrayC
         h: cell.h,
         richText: toRichText(String(command.values[index])),
       },
-      meta,
+      meta: toShapeMeta({ ...base, part: 'cell', index }),
     } satisfies TLShapePartial<TLGeoShape>)
     shapes.push({
       id: createShapeId(),
@@ -85,11 +96,35 @@ function createArray(editor: Editor, store: SemanticStore, command: CreateArrayC
         autoSize: false,
         w: cell.w,
       },
-      meta,
+      meta: toShapeMeta({ ...base, part: 'index-label', index }),
     } satisfies TLShapePartial<TLTextShape>)
   })
   editor.createShapes(shapes)
   store.add({ id: command.id, kind: 'array', shapeIds: shapes.map((s) => s.id), props })
+}
+
+const HIGHLIGHT_COLOR = 'orange'
+
+// Fills array cells (all, or just `index`) and recolours text objects.
+function highlight(editor: Editor, store: SemanticStore, command: HighlightCommand): void {
+  const target = store.get(command.target)
+  if (!target) throw new Error(`No such object: ${command.target}`)
+  const shapes = target.shapeIds
+    .map((id) => editor.getShape(id as TLShapeId))
+    .filter((shape) => shape !== undefined)
+  const updates: TLShapePartial[] = []
+  for (const shape of shapes) {
+    if (shape.type === 'text' && target.kind === 'text') {
+      updates.push({ id: shape.id, type: 'text', props: { color: HIGHLIGHT_COLOR } })
+    } else if (shape.meta.part === 'cell' && isSelectedCell(shape, command.index)) {
+      updates.push({ id: shape.id, type: 'geo', props: { fill: 'solid', color: HIGHLIGHT_COLOR } })
+    }
+  }
+  editor.updateShapes(updates)
+}
+
+function isSelectedCell(shape: TLShape, index: number | undefined): boolean {
+  return index === undefined || shape.meta.index === index
 }
 
 function positionFor(editor: Editor, command: { x?: number; y?: number }): Point {

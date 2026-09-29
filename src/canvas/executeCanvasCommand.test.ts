@@ -81,6 +81,30 @@ describe('executeCanvasCommand', () => {
     })
   })
 
+  it('highlights only the requested array cell', () => {
+    const shapes = [
+      { id: 'shape:c0', type: 'geo', meta: { part: 'cell', index: 0 } },
+      { id: 'shape:l0', type: 'text', meta: { part: 'index-label', index: 0 } },
+      { id: 'shape:c1', type: 'geo', meta: { part: 'cell', index: 1 } },
+    ]
+    const editor = {
+      getShape: (id: string) => shapes.find((s) => s.id === id),
+      updateShapes: vi.fn(),
+    }
+    const store = new SemanticStore()
+    store.add({ id: 'array-a', kind: 'array', shapeIds: shapes.map((s) => s.id), props: {} })
+
+    executeCanvasCommand(editor as unknown as Editor, store, {
+      type: 'highlight',
+      target: 'array-a',
+      index: 1,
+    })
+
+    expect(editor.updateShapes).toHaveBeenCalledWith([
+      { id: 'shape:c1', type: 'geo', props: { fill: 'solid', color: 'orange' } },
+    ])
+  })
+
   it('throws on an unknown command type', () => {
     const unknown = { type: 'not_a_command' } as unknown as CanvasCommand
     expect(() => executeCanvasCommand({} as Editor, new SemanticStore(), unknown)).toThrow(

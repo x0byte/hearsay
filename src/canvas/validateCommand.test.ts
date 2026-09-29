@@ -37,6 +37,40 @@ describe('validateCommand', () => {
     })
   })
 
+  describe('highlight', () => {
+    const store = new SemanticStore()
+    store.add({ id: 'array-a', kind: 'array', shapeIds: [], props: { values: [3, 1, 4] } })
+    store.add({ id: 'hello', kind: 'text', shapeIds: [], props: { text: 'Hi' } })
+
+    it('accepts a whole object or an in-range array cell', () => {
+      expect(validateCommand({ type: 'highlight', target: 'hello' }, store)).toEqual({ ok: true })
+      expect(validateCommand({ type: 'highlight', target: 'array-a', index: 2 }, store)).toEqual({
+        ok: true,
+      })
+    })
+
+    it('rejects a missing target', () => {
+      expect(validateCommand({ type: 'highlight', target: 'nope' }, store)).toEqual({
+        ok: false,
+        reason: 'No such object: nope',
+      })
+    })
+
+    it('rejects an index on a non-array', () => {
+      expect(validateCommand({ type: 'highlight', target: 'hello', index: 0 }, store)).toEqual({
+        ok: false,
+        reason: 'Only arrays have cells: hello',
+      })
+    })
+
+    it('rejects an out-of-range index', () => {
+      expect(validateCommand({ type: 'highlight', target: 'array-a', index: 3 }, store)).toEqual({
+        ok: false,
+        reason: 'Index 3 out of range for array-a',
+      })
+    })
+  })
+
   it('rejects an unknown command type', () => {
     const unknown = { type: 'not_a_command' } as unknown as CanvasCommand
     expect(validateCommand(unknown, new SemanticStore())).toEqual({

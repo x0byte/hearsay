@@ -20,4 +20,12 @@ export type CreateArrayCommand = {
   y?: number
 }
 
-export type CanvasCommand = CreateTextCommand | CreateArrayCommand
+// Highlights an existing object, or a single cell when `index` is given
+// (arrays only).
+export type HighlightCommand = {
+  type: 'highlight'
+  target: string
+  index?: number
+}
+
+export type CanvasCommand = CreateTextCommand | CreateArrayCommand | HighlightCommand

@@ -7,6 +7,9 @@ export type SemanticShapeMeta = {
   semanticId: string
   kind: SemanticKind
   props: Record<string, unknown>
+  // Which part of the object this shape draws, e.g. array cell 2.
+  part?: 'cell' | 'index-label'
+  index?: number
 }
 
 export function toShapeMeta(object: SemanticShapeMeta): JsonObject {
