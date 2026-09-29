@@ -1,4 +1,4 @@
-import type { Editor, JsonObject, TLShape } from 'tldraw'
+import type { Editor, HistoryEntry, JsonObject, TLRecord, TLShape } from 'tldraw'
 import type { SemanticKind, SemanticObject, SemanticStore } from './semanticStore'
 
 // Each tldraw shape drawn for a semantic object carries this in its `meta`,
@@ -44,4 +44,29 @@ export function rebuildSemanticStore(editor: Editor, store: SemanticStore): void
   }
   store.clear()
   for (const object of objects.values()) store.add(object)
+}
+
+// Keeps the store in step with the canvas when shapes change outside the
+// executor: manual deletes, undo and redo. Rebuilding from shape meta gives the
+// same result a reload would. Returns a function that stops listening.
+export function syncSemanticStore(editor: Editor, store: SemanticStore): () => void {
+  return editor.store.listen(
+    (entry) => {
+      if (touchesSemanticShapes(entry)) rebuildSemanticStore(editor, store)
+    },
+    { scope: 'document' },
+  )
+}
+
+function touchesSemanticShapes({ changes }: HistoryEntry<TLRecord>): boolean {
+  const addedOrRemoved = [...Object.values(changes.added), ...Object.values(changes.removed)]
+  if (addedOrRemoved.some(isSemanticShape)) return true
+  // e.g. undoing move_pointer restores the old meta.
+  return Object.values(changes.updated).some(
+    ([from, to]) => isSemanticShape(to) && from.meta !== to.meta,
+  )
+}
+
+function isSemanticShape(record: TLRecord): boolean {
+  return record.typeName === 'shape' && typeof record.meta.semanticId === 'string'
 }

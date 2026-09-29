@@ -3,7 +3,7 @@ import 'tldraw/tldraw.css'
 import type { CanvasCommand } from './canvas/commands'
 import { executeCanvasCommand } from './canvas/executeCanvasCommand'
 import { SemanticStore } from './canvas/semanticStore'
-import { rebuildSemanticStore } from './canvas/syncSemanticStore'
+import { rebuildSemanticStore, syncSemanticStore } from './canvas/syncSemanticStore'
 import { validateCommand } from './canvas/validateCommand'
 
 // The canvas is saved to the browser (IndexedDB) under this key, so drawings
@@ -18,13 +18,16 @@ const HELLO_COMMAND: CanvasCommand = {
   text: 'Hello from Hearsay',
 }
 
-// Restore the semantic store from the persisted canvas, then seed an empty
-// page only, so reloading a persisted board doesn't add a copy.
+// Restore the semantic store from the persisted canvas, keep it in sync with
+// later canvas changes, then seed an empty page only, so reloading a persisted
+// board doesn't add a copy.
 function handleMount(editor: Editor) {
   rebuildSemanticStore(editor, semanticStore)
+  const stopSync = syncSemanticStore(editor, semanticStore)
   if (editor.getCurrentPageShapeIds().size === 0) {
     runCommand(editor, HELLO_COMMAND)
   }
+  return stopSync
 }
 
 function runCommand(editor: Editor, command: CanvasCommand) {
