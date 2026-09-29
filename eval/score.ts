@@ -1,0 +1,147 @@
+import type { CanvasCommand } from '../src/canvas/commands.ts'
+import type { InterpretPath, JevTrace } from '../server/interpret.ts'
+import { ANY, type EvalTag } from './cases.ts'
+
+// correct:    got exactly the expected commands (including [] when [] expected)
+// false_draw: expected [] but got commands
+// miss:       expected commands but got []
+// wrong:      expected commands, got different ones
+// error:      the request failed
+export type Outcome = 'correct' | 'false_draw' | 'miss' | 'wrong' | 'error'
+
+export type Attempt = {
+  case: string
+  tag: EvalTag
+  expectsChange: boolean
+  outcome: Outcome
+  latencyMs: number
+  costUsd: number
+  // From the model response; absent if the request failed before one arrived.
+  finishReason?: string | null
+  tokens?: { prompt: number; completion: number; reasoning: number }
+  got: CanvasCommand[] | { error: string }
+  // No-op commands removed before scoring (they would not change the board).
+  dropped: CanvasCommand[]
+  // Which route produced the answer; Jev runs also record every Jev answer.
+  path: InterpretPath
+  reason?: string // why a Jev run fell back to Gemma
+  jev?: JevTrace
+  gemma?: GemmaTrace
+}
+
+// Gemma's answer for this attempt. In Jev runs where Jev settled the request,
+// Gemma is still called afterwards as a "shadow" (untimed, not in the path or
+// cost) so saved runs can be re-scored at other thresholds.
+export type GemmaTrace = {
+  latencyMs: number
+  costUsd: number
+  shadow: boolean
+  commands?: CanvasCommand[]
+  dropped?: CanvasCommand[]
+  error?: string
+}
+
+// Latency if Jev and Gemma were started together and Gemma cancelled whenever
+// Jev settles the request.
+export function parallelLatencyMs(a: Attempt): number {
+  if (a.path === 'gemma' || !a.jev) return a.latencyMs
+  if (a.path === 'fallback') return Math.max(a.jev.latencyMs, a.gemma?.latencyMs ?? 0)
+  return a.jev.latencyMs
+}
+
+export function classify(expected: CanvasCommand[], got: CanvasCommand[] | undefined): Outcome {
+  if (!got) return 'error'
+  if (expected.length === 0) return got.length === 0 ? 'correct' : 'false_draw'
+  if (got.length === 0) return 'miss'
+  return matches(expected.map(canonical), got.map(canonical)) ? 'correct' : 'wrong'
+}
+
+// swap(i, j) and swap(j, i) are the same change.
+function canonical(command: CanvasCommand): CanvasCommand {
+  return command.type === 'swap' && command.i > command.j ? { ...command, i: command.j, j: command.i } : command
+}
+
+// Deep equality, ignoring key order, where an expected ANY matches any string.
+export function matches(expected: unknown, got: unknown): boolean {
+  if (expected === ANY) return typeof got === 'string'
+  if (Array.isArray(expected)) {
+    return (
+      Array.isArray(got) &&
+      got.length === expected.length &&
+      expected.every((item, i) => matches(item, got[i]))
+    )
+  }
+  if (typeof expected === 'object' && expected !== null) {
+    if (typeof got !== 'object' || got === null || Array.isArray(got)) return false
+    const e = expected as Record<string, unknown>
+    const g = got as Record<string, unknown>
+    const keys = new Set([...Object.keys(e), ...Object.keys(g)])
+    return [...keys].every((key) => matches(e[key], g[key]))
+  }
+  return expected === got
+}
+
+export function percentile(values: number[], p: number): number {
+  if (values.length === 0) return 0
+  const sorted = [...values].sort((a, b) => a - b)
+  const rank = Math.ceil((p / 100) * sorted.length) - 1
+  return sorted[Math.min(Math.max(rank, 0), sorted.length - 1)]
+}
+
+export type Summary = {
+  attempts: number
+  accuracy: number
+  counts: Record<Outcome, number>
+  falseDrawRate: number // of attempts where [] was expected
+  missRate: number // of attempts where commands were expected
+  accuracyByTag: Partial<Record<EvalTag, number>>
+  latencyMs: { p50: number; p95: number }
+  parallelLatencyMs: { p50: number; p95: number } // simulated; see parallelLatencyMs()
+  paths: Partial<Record<InterpretPath, number>>
+  totalCostUsd: number
+  // Reported separately so no-op drops can't hide false draws.
+  noOps: {
+    commands: number // no-op commands dropped in total
+    attempts: number // attempts with at least one dropped command
+    rescued: number // no-change attempts scored correct only because of a drop
+  }
+}
+
+export function summarize(attempts: Attempt[]): Summary {
+  const counts: Record<Outcome, number> = { correct: 0, false_draw: 0, miss: 0, wrong: 0, error: 0 }
+  for (const attempt of attempts) counts[attempt.outcome]++
+  const expectingNothing = attempts.filter((a) => !a.expectsChange).length
+  const expectingCommands = attempts.length - expectingNothing
+  const accuracyByTag: Partial<Record<EvalTag, number>> = {}
+  for (const tag of new Set(attempts.map((a) => a.tag))) {
+    const ofTag = attempts.filter((a) => a.tag === tag)
+    accuracyByTag[tag] = ratio(ofTag.filter((a) => a.outcome === 'correct').length, ofTag.length)
+  }
+  const timed = attempts.filter((a) => a.outcome !== 'error')
+  const latencies = timed.map((a) => a.latencyMs)
+  const parallel = timed.map(parallelLatencyMs)
+  const paths: Partial<Record<InterpretPath, number>> = {}
+  for (const a of attempts) paths[a.path] = (paths[a.path] ?? 0) + 1
+  return {
+    attempts: attempts.length,
+    accuracy: ratio(counts.correct, attempts.length),
+    counts,
+    falseDrawRate: ratio(counts.false_draw, expectingNothing),
+    missRate: ratio(counts.miss, expectingCommands),
+    accuracyByTag,
+    latencyMs: { p50: percentile(latencies, 50), p95: percentile(latencies, 95) },
+    parallelLatencyMs: { p50: percentile(parallel, 50), p95: percentile(parallel, 95) },
+    paths,
+    totalCostUsd: attempts.reduce((sum, a) => sum + a.costUsd, 0),
+    noOps: {
+      commands: attempts.reduce((sum, a) => sum + a.dropped.length, 0),
+      attempts: attempts.filter((a) => a.dropped.length > 0).length,
+      rescued: attempts.filter((a) => !a.expectsChange && a.outcome === 'correct' && a.dropped.length > 0)
+        .length,
+    },
+  }
+}
+
+function ratio(part: number, whole: number): number {
+  return whole === 0 ? 0 : part / whole
+}

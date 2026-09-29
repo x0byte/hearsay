@@ -15,8 +15,10 @@ import type {
   CreatePointerCommand,
   CreateTextCommand,
   DeleteCommand,
-  HighlightCommand,
+  Highlight,
   MovePointerCommand,
+  SetValueCommand,
+  SwapCommand,
 } from './commands'
 import {
   arrayCellRects,
@@ -32,6 +34,7 @@ import {
   whileApplyingCommands,
   type SemanticShapeMeta,
 } from './syncSemanticStore'
+import { dropNoOps } from './dropNoOps'
 import { validateCommand } from './validateCommand'
 
 export type RunResult = { ok: true } | { ok: false; index: number; reason: string }
@@ -45,11 +48,14 @@ export function runCommands(
   store: SemanticStore,
   commands: CanvasCommand[],
 ): RunResult {
+  // Safety net: the server already drops no-ops, but the board may have
+  // changed since. `index` in a failure refers to the remaining commands.
+  const { commands: effective } = dropNoOps(commands, store.list())
   return whileApplyingCommands(() => {
     const mark = editor.markHistoryStoppingPoint('hearsay-commands')
     let result: RunResult = { ok: true }
     editor.run(() => {
-      for (const [index, command] of commands.entries()) {
+      for (const [index, command] of effective.entries()) {
         const validation = validateCommand(command, store)
         if (!validation.ok) {
           result = { ok: false, index, reason: validation.reason }
@@ -88,13 +94,22 @@ export function executeCanvasCommand(
       createArray(editor, store, command)
       return
     case 'highlight':
-      highlight(editor, store, command)
+      setHighlight(editor, store, command.target, command.index ?? 'all')
+      return
+    case 'clear_highlight':
+      setHighlight(editor, store, command.target, undefined)
       return
     case 'create_pointer':
       createPointer(editor, store, command)
       return
     case 'move_pointer':
       movePointer(editor, store, command)
+      return
+    case 'swap':
+      swap(editor, store, command)
+      return
+    case 'set_value':
+      setValue(editor, store, command)
       return
     case 'delete':
       deleteObject(editor, store, command)
@@ -129,25 +144,34 @@ function createText(editor: Editor, store: SemanticStore, command: CreateTextCom
 // which cell or label it draws.
 function createArray(editor: Editor, store: SemanticStore, command: CreateArrayCommand): void {
   const props = { values: command.values }
-  const base = { semanticId: command.id, kind: 'array' as const, props }
-  const cells = arrayCellRects(positionFor(editor, command), command.values.length)
-  const shapes: TLShapePartial[] = []
-  cells.forEach((cell, index) => {
-    shapes.push({
-      id: createShapeId(),
+  const ids = command.values.map(() => ({ cell: createShapeId(), label: createShapeId() }))
+  const cells = arrayCellRects(positionFor(editor, command), command.values)
+  const shapes = arrayShapes(ids, cells, command.values, { semanticId: command.id, kind: 'array', props })
+  editor.createShapes(shapes)
+  store.add({ id: command.id, kind: 'array', shapeIds: shapes.map((s) => s.id), props })
+}
+
+// Each value is a cell with its index labelled underneath. Every shape carries
+// the array's semantic meta (so they rebuild as one object) plus which cell or
+// label it draws. Cell fill and colour are left alone, so highlights survive a
+// redraw.
+function arrayShapes(
+  ids: { cell: TLShapeId; label: TLShapeId }[],
+  cells: Rect[],
+  values: (number | string)[],
+  base: SemanticShapeMeta,
+): TLShapePartial[] {
+  return cells.flatMap((cell, index) => [
+    {
+      id: ids[index].cell,
       type: 'geo',
       x: cell.x,
       y: cell.y,
-      props: {
-        geo: 'rectangle',
-        w: cell.w,
-        h: cell.h,
-        richText: toRichText(String(command.values[index])),
-      },
+      props: { geo: 'rectangle', w: cell.w, h: cell.h, richText: toRichText(String(values[index])) },
       meta: toShapeMeta({ ...base, part: 'cell', index }),
-    } satisfies TLShapePartial<TLGeoShape>)
-    shapes.push({
-      id: createShapeId(),
+    } satisfies TLShapePartial<TLGeoShape>,
+    {
+      id: ids[index].label,
       type: 'text',
       x: cell.x,
       y: cell.y + cell.h + 4,
@@ -160,34 +184,96 @@ function createArray(editor: Editor, store: SemanticStore, command: CreateArrayC
         w: cell.w,
       },
       meta: toShapeMeta({ ...base, part: 'index-label', index }),
-    } satisfies TLShapePartial<TLTextShape>)
-  })
-  editor.createShapes(shapes)
-  store.add({ id: command.id, kind: 'array', shapeIds: shapes.map((s) => s.id), props })
+    } satisfies TLShapePartial<TLTextShape>,
+  ])
+}
+
+function swap(editor: Editor, store: SemanticStore, command: SwapCommand): void {
+  const array = getObject(store, command.target)
+  const values = [...(array.props.values as (number | string)[])]
+  const held = values[command.i]
+  values[command.i] = values[command.j]
+  values[command.j] = held
+  redrawArray(editor, store, array, values)
+}
+
+function setValue(editor: Editor, store: SemanticStore, command: SetValueCommand): void {
+  const array = getObject(store, command.target)
+  const values = [...(array.props.values as (number | string)[])]
+  values[command.index] = command.value
+  redrawArray(editor, store, array, values)
+}
+
+// Redraws an array with new values from where it currently sits (it may have
+// been dragged): cell widths are recomputed, and index labels and every pointer
+// on the array follow the cells.
+function redrawArray(
+  editor: Editor,
+  store: SemanticStore,
+  array: SemanticObject,
+  values: (number | string)[],
+): void {
+  // Deliberately position-based: highlights and pointers stay on their cell
+  // index when values move, like a finger on a slot, not on a value.
+  const props = { ...array.props, values }
+  const first = findPart(editor, array, 'cell', 0)
+  const cells = arrayCellRects({ x: first.x, y: first.y }, values)
+  const ids = values.map((_, index) => ({
+    cell: findPart(editor, array, 'cell', index).id,
+    label: findPart(editor, array, 'index-label', index).id,
+  }))
+  const updates = arrayShapes(ids, cells, values, { semanticId: array.id, kind: 'array', props })
+  for (const pointer of store.list()) {
+    if (pointer.kind !== 'pointer' || pointer.props.array !== array.id) continue
+    const pointerIds = {
+      arrow: findPart(editor, pointer, 'pointer-arrow').id,
+      label: findPart(editor, pointer, 'pointer-label').id,
+    }
+    const cell = cells[Number(pointer.props.index)]
+    updates.push(...pointerShapes(pointerIds, cell, { semanticId: pointer.id, kind: 'pointer', props: pointer.props }))
+  }
+  editor.updateShapes(updates)
+  store.updateProps(array.id, props)
 }
 
 const HIGHLIGHT_COLOR = 'orange'
 
-// Fills array cells (all, or just `index`) and recolours text objects.
-function highlight(editor: Editor, store: SemanticStore, command: HighlightCommand): void {
-  const target = store.get(command.target)
-  if (!target) throw new Error(`No such object: ${command.target}`)
-  const shapes = target.shapeIds
-    .map((id) => editor.getShape(id as TLShapeId))
-    .filter((shape) => shape !== undefined)
-  const updates: TLShapePartial[] = []
-  for (const shape of shapes) {
-    if (shape.type === 'text' && target.kind === 'text') {
-      updates.push({ id: shape.id, type: 'text', props: { color: HIGHLIGHT_COLOR } })
-    } else if (shape.meta.part === 'cell' && isSelectedCell(shape, command.index)) {
-      updates.push({ id: shape.id, type: 'geo', props: { fill: 'solid', color: HIGHLIGHT_COLOR } })
+// Highlights are exclusive per object: every shape of the object is redrawn
+// from its single current highlight, which is stored in the object's props
+// (and each shape's meta, so it survives a reload). `undefined` clears it.
+function setHighlight(
+  editor: Editor,
+  store: SemanticStore,
+  target: string,
+  highlight: Highlight | undefined,
+): void {
+  const object = getObject(store, target)
+  const props = { ...object.props }
+  delete props.highlight
+  if (highlight !== undefined) props.highlight = highlight
+  const updates: TLShapePartial[] = shapesOf(editor, object).map((shape) => {
+    const meta = toShapeMeta({ ...(shape.meta as unknown as SemanticShapeMeta), props })
+    if (shape.type === 'text' && object.kind === 'text') {
+      const color = highlight === undefined ? 'black' : HIGHLIGHT_COLOR
+      return { id: shape.id, type: 'text', meta, props: { color } }
     }
-  }
+    if (shape.meta.part === 'cell') {
+      const on = highlight === 'all' || shape.meta.index === highlight
+      const style = on
+        ? ({ fill: 'solid', color: HIGHLIGHT_COLOR } as const)
+        : ({ fill: 'none', color: 'black' } as const)
+      return { id: shape.id, type: 'geo', meta, props: style }
+    }
+    return { id: shape.id, type: shape.type, meta }
+  })
   editor.updateShapes(updates)
+  store.updateProps(object.id, props)
 }
 
-function isSelectedCell(shape: TLShape, index: number | undefined): boolean {
-  return index === undefined || shape.meta.index === index
+function shapesOf(editor: Editor, object: SemanticObject): TLShape[] {
+  return object.shapeIds
+    .map((id) => editor.getShape(id as TLShapeId))
+    .filter((shape) => shape !== undefined)
 }
 
 function createPointer(editor: Editor, store: SemanticStore, command: CreatePointerCommand): void {
@@ -266,10 +352,7 @@ function findPart(
   part: SemanticShapeMeta['part'],
   index?: number,
 ): TLShape {
-  const shape = object.shapeIds
-    .map((id) => editor.getShape(id as TLShapeId))
-    .filter((s) => s !== undefined)
-    .find((s) => s.meta.part === part && (index === undefined || s.meta.index === index))
+  const shape = shapesOf(editor, object).find((s) => s.meta.part === part && (index === undefined || s.meta.index === index))
   if (!shape) throw new Error(`${object.id} has no ${part}${index === undefined ? '' : ` ${index}`}`)
   return shape
 }

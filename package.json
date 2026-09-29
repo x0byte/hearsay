@@ -8,7 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "server": "node --env-file-if-exists=.env server/index.ts",
+    "eval": "node --env-file-if-exists=.env eval/run.ts",
+    "rescore": "node eval/rescore.ts"
   },
   "dependencies": {
     "react": "^19.2.8",

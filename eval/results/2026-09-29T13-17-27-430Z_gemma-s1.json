@@ -1,0 +1,7623 @@
+{
+  "runAt": "2026-09-29T13:17:27.432Z",
+  "label": "gemma-s1",
+  "model": "google/gemma-4-26b-a4b-it",
+  "provider": "deepinfra/fp8",
+  "promptHash": "cbbf0b111ead",
+  "repeats": 5,
+  "summary": {
+    "attempts": 225,
+    "accuracy": 0.9422222222222222,
+    "counts": {
+      "correct": 212,
+      "false_draw": 7,
+      "miss": 0,
+      "wrong": 5,
+      "error": 1
+    },
+    "falseDrawRate": 0.07777777777777778,
+    "missRate": 0,
+    "accuracyByTag": {
+      "explanation": 0.9111111111111111,
+      "command": 1,
+      "multi": 0.5,
+      "context": 1
+    },
+    "latencyMs": {
+      "p50": 920,
+      "p95": 2027
+    },
+    "parallelLatencyMs": {
+      "p50": 920,
+      "p95": 2027
+    },
+    "paths": {
+      "gemma": 225
+    },
+    "totalCostUsd": 0.02031023000000001,
+    "noOps": {
+      "commands": 0,
+      "attempts": 0,
+      "rescued": 0
+    }
+  },
+  "holdoutSummary": {
+    "attempts": 125,
+    "accuracy": 0.848,
+    "counts": {
+      "correct": 106,
+      "false_draw": 6,
+      "miss": 0,
+      "wrong": 9,
+      "error": 4
+    },
+    "falseDrawRate": 0.12,
+    "missRate": 0,
+    "accuracyByTag": {
+      "holdout": 0.848
+    },
+    "latencyMs": {
+      "p50": 908,
+      "p95": 2517
+    },
+    "parallelLatencyMs": {
+      "p50": 908,
+      "p95": 2517
+    },
+    "paths": {
+      "gemma": 125
+    },
+    "totalCostUsd": 0.011406259999999984,
+    "noOps": {
+      "commands": 0,
+      "attempts": 0,
+      "rescued": 0
+    }
+  },
+  "attempts": [
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 586,
+      "costUsd": 0.00008534,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1006,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 560,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1098,
+      "costUsd": 0.00008534,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 631,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1345,
+      "costUsd": 0.00009363,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 31,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 408,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2027,
+      "costUsd": 0.00008853,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 430,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 461,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 701,
+      "costUsd": 0.00008661,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2762,
+      "costUsd": 0.00009885,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 470,
+      "costUsd": 0.00008661,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1206,
+      "costUsd": 0.00008967,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 14,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 534,
+      "costUsd": 0.00008661,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 442,
+      "costUsd": 0.00008525,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 1,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 447,
+      "costUsd": 0.00008559,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 612,
+      "costUsd": 0.00008661,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 967,
+      "costUsd": 0.00008661,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 556,
+      "costUsd": 0.00008559,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 502,
+      "costUsd": 0.00008415,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 703,
+      "costUsd": 0.00008415,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 939,
+      "costUsd": 0.00008415,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 891,
+      "costUsd": 0.00009095,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 821,
+      "costUsd": 0.00009027,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 24,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 480,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 506,
+      "costUsd": 0.00008513,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1655,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1119,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 473,
+      "costUsd": 0.00008479,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 670,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 679,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 914,
+      "costUsd": 0.00009217,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 557,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 467,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 510,
+      "costUsd": 0.00008486,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 736,
+      "costUsd": 0.0000886,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 504,
+      "costUsd": 0.00008486,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 458,
+      "costUsd": 0.0000852,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 487,
+      "costUsd": 0.00008486,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 447,
+      "costUsd": 0.00008525,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 1,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1604,
+      "costUsd": 0.00008763,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 8,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 422,
+      "costUsd": 0.00008559,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 754,
+      "costUsd": 0.00008695,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 519,
+      "costUsd": 0.00008559,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1213,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2177,
+      "costUsd": 0.00009531,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 31,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 819,
+      "costUsd": 0.00008647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1675,
+      "costUsd": 0.00008647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 487,
+      "costUsd": 0.00008647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1769,
+      "costUsd": 0.00009973,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 44,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1124,
+      "costUsd": 0.00009171,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "an array is just a row of values stored next to each other",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1191,
+      "costUsd": 0.00009171,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "an array is just a row of values stored next to each other",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 841,
+      "costUsd": 0.00009171,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "an array is just a row of values stored next to each other",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 979,
+      "costUsd": 0.00009171,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "an array is just a row of values stored next to each other",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1150,
+      "costUsd": 0.00009171,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "an array is just a row of values stored next to each other",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 443,
+      "costUsd": 0.00008682,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1216,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 512,
+      "costUsd": 0.00008682,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1216,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 415,
+      "costUsd": 0.0000858,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1216,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 506,
+      "costUsd": 0.00008682,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1216,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 508,
+      "costUsd": 0.00008682,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1216,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 402,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1184,
+      "costUsd": 0.0000969,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 40,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "error",
+      "path": "gemma",
+      "latencyMs": 9238,
+      "costUsd": 0.00017034,
+      "finishReason": "length",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 256,
+        "reasoning": 111
+      },
+      "got": {
+        "error": "Model reply was cut off"
+      },
+      "dropped": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 435,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 639,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 836,
+      "costUsd": 0.00008493,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 839,
+      "costUsd": 0.00008493,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1096,
+      "costUsd": 0.00008527,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 493,
+      "costUsd": 0.00008527,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 497,
+      "costUsd": 0.00008493,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1002,
+      "costUsd": 0.00009612,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 2604,
+      "costUsd": 0.00009612,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1129,
+      "costUsd": 0.00009578,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 977,
+      "costUsd": 0.00009612,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1087,
+      "costUsd": 0.0000968,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 29,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 435,
+      "costUsd": 0.00008423,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 791,
+      "costUsd": 0.00008423,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1065,
+      "costUsd": 0.00008423,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 478,
+      "costUsd": 0.00008423,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 542,
+      "costUsd": 0.00008457,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 679,
+      "costUsd": 0.00009023,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1069,
+      "costUsd": 0.00009023,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 918,
+      "costUsd": 0.00009023,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1126,
+      "costUsd": 0.00009023,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 824,
+      "costUsd": 0.00009023,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 679,
+      "costUsd": 0.00008908,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 954,
+      "costUsd": 0.00008908,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 752,
+      "costUsd": 0.00008908,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1398,
+      "costUsd": 0.00008908,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1127,
+      "costUsd": 0.00008908,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 921,
+      "costUsd": 0.00009241,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1042,
+      "costUsd": 0.00009241,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 903,
+      "costUsd": 0.00009241,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 973,
+      "costUsd": 0.00009241,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 906,
+      "costUsd": 0.00009241,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1113,
+      "costUsd": 0.00009381,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1209,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1087,
+      "costUsd": 0.00009381,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1209,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1283,
+      "costUsd": 0.00009381,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1209,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1293,
+      "costUsd": 0.00009381,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1209,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1477,
+      "costUsd": 0.00009381,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1209,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1390,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1178,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 870,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1640,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 919,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1127,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 606,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 827,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 923,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 920,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 709,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 827,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 819,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 820,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 818,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 708,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1547,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 818,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 787,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1261,
+      "costUsd": 0.00009184,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1230,
+      "costUsd": 0.00008934,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1184,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1060,
+      "costUsd": 0.00008934,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1184,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 934,
+      "costUsd": 0.00008934,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1184,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 973,
+      "costUsd": 0.00008934,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1184,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 665,
+      "costUsd": 0.00008934,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1184,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1794,
+      "costUsd": 0.00008805,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1065,
+      "costUsd": 0.00008805,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 880,
+      "costUsd": 0.00008805,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1389,
+      "costUsd": 0.00008805,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 984,
+      "costUsd": 0.00008805,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 733,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 715,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 823,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1207,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 984,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 8831,
+      "costUsd": 0.00009081,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1205,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 921,
+      "costUsd": 0.00009081,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1205,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 721,
+      "costUsd": 0.00009081,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1205,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 815,
+      "costUsd": 0.00009081,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1205,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 770,
+      "costUsd": 0.00009081,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1205,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1445,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 854,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 615,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 824,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 712,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 646,
+      "costUsd": 0.00008959,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1207,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 732,
+      "costUsd": 0.00008959,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1207,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 777,
+      "costUsd": 0.00008959,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1207,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 676,
+      "costUsd": 0.00008959,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1207,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 816,
+      "costUsd": 0.00008959,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1207,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 862,
+      "costUsd": 0.00008938,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1204,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 855,
+      "costUsd": 0.00008938,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1204,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1461,
+      "costUsd": 0.00008938,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1204,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1017,
+      "costUsd": 0.00008938,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1204,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 762,
+      "costUsd": 0.00008938,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1204,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1332,
+      "costUsd": 0.00008762,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1174,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1640,
+      "costUsd": 0.00008762,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1174,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1127,
+      "costUsd": 0.00008762,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1174,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1024,
+      "costUsd": 0.00008762,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1174,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 714,
+      "costUsd": 0.00008762,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1174,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-explicit",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2253,
+      "costUsd": 0.00009084,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-explicit",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2477,
+      "costUsd": 0.00009084,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-explicit",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1425,
+      "costUsd": 0.00009084,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-explicit",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1217,
+      "costUsd": 0.00009084,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-explicit",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1128,
+      "costUsd": 0.00009084,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-implied",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1591,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-implied",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 908,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-implied",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 767,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-implied",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 931,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-implied",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1024,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 1,
+          "j": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-at-pointers",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 818,
+      "costUsd": 0.0000942,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1234,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-at-pointers",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1743,
+      "costUsd": 0.0000942,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1234,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-at-pointers",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1023,
+      "costUsd": 0.0000942,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1234,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-at-pointers",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1024,
+      "costUsd": 0.0000942,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1234,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "swap-at-pointers",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1025,
+      "costUsd": 0.0000942,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1234,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "set-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1637,
+      "costUsd": 0.00009207,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 2,
+          "target": "array-a",
+          "value": 10
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "set-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1557,
+      "costUsd": 0.00009207,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 2,
+          "target": "array-a",
+          "value": 10
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "set-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 924,
+      "costUsd": 0.00009207,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 2,
+          "target": "array-a",
+          "value": 10
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "set-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1105,
+      "costUsd": 0.00009207,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 2,
+          "target": "array-a",
+          "value": 10
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "set-value",
+      "tag": "command",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 921,
+      "costUsd": 0.00009207,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 2,
+          "target": "array-a",
+          "value": 10
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "explain-swapping",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2353,
+      "costUsd": 0.00009642,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 39,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-swapping",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 604,
+      "costUsd": 0.00008486,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-swapping",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 558,
+      "costUsd": 0.00008486,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-swapping",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 787,
+      "costUsd": 0.0000852,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "explain-swapping",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 473,
+      "costUsd": 0.00008486,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1188,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1674,
+      "costUsd": 0.00009771,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 43,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 2,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 1027,
+      "costUsd": 0.00008955,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1740,
+      "costUsd": 0.00009771,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 43,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 2,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 881,
+      "costUsd": 0.00008955,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 1128,
+      "costUsd": 0.00008955,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 909,
+      "costUsd": 0.0000916,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1226,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1380,
+      "costUsd": 0.00009976,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1226,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-b",
+          "index": 2,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 921,
+      "costUsd": 0.0000916,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1226,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 3788,
+      "costUsd": 0.00009976,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1226,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-b",
+          "index": 2,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 4506,
+      "costUsd": 0.00009976,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1226,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-b",
+          "index": 2,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1638,
+      "costUsd": 0.00009388,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1434,
+      "costUsd": 0.00009388,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1435,
+      "costUsd": 0.00009388,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1522,
+      "costUsd": 0.00009388,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1053,
+      "costUsd": 0.00009388,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1210,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2849,
+      "costUsd": 0.00009415,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1243,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1436,
+      "costUsd": 0.00009415,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1243,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1021,
+      "costUsd": 0.00009415,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1243,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 925,
+      "costUsd": 0.00009415,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1243,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1024,
+      "costUsd": 0.00009415,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1243,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 716,
+      "costUsd": 0.00009123,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 865,
+      "costUsd": 0.00009123,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 846,
+      "costUsd": 0.00009123,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1179,
+      "costUsd": 0.00009123,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 801,
+      "costUsd": 0.00009123,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1138,
+      "costUsd": 0.00009204,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 906,
+      "costUsd": 0.00009204,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1224,
+      "costUsd": 0.00009204,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 927,
+      "costUsd": 0.00009204,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1639,
+      "costUsd": 0.00009204,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1242,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1401,
+      "costUsd": 0.00009018,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1196,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1567,
+      "costUsd": 0.00009018,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1196,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 926,
+      "costUsd": 0.00009018,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1196,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1113,
+      "costUsd": 0.00009018,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1196,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1341,
+      "costUsd": 0.00009018,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1196,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 546,
+      "costUsd": 0.00008584,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1202,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 840,
+      "costUsd": 0.00008584,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1202,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 504,
+      "costUsd": 0.00008584,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1202,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 488,
+      "costUsd": 0.00008584,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1202,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 3750,
+      "costUsd": 0.00008584,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1202,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-two-pointers",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 607,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-two-pointers",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 673,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-two-pointers",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 621,
+      "costUsd": 0.00008843,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-two-pointers",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 458,
+      "costUsd": 0.00008707,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1239,
+        "completion": 1,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-two-pointers",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "error",
+      "path": "gemma",
+      "latencyMs": 30008,
+      "costUsd": 0,
+      "got": {
+        "error": "OpenRouter returned no completion (body missing or malformed)"
+      },
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-bubbles",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "error",
+      "path": "gemma",
+      "latencyMs": 7390,
+      "costUsd": 0.00017055,
+      "finishReason": "length",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 256,
+        "reasoning": 111
+      },
+      "got": {
+        "error": "Model reply was cut off"
+      },
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-bubbles",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "error",
+      "path": "gemma",
+      "latencyMs": 9902,
+      "costUsd": 0.00017055,
+      "finishReason": "length",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 256,
+        "reasoning": 111
+      },
+      "got": {
+        "error": "Model reply was cut off"
+      },
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-bubbles",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1989,
+      "costUsd": 0.00008521,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-bubbles",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 799,
+      "costUsd": 0.00009031,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 20,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-bubbles",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1631,
+      "costUsd": 0.00009575,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 36,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-what-is-index",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 499,
+      "costUsd": 0.00008555,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-what-is-index",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 593,
+      "costUsd": 0.00008521,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-what-is-index",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "error",
+      "path": "gemma",
+      "latencyMs": 8079,
+      "costUsd": 0.00017055,
+      "finishReason": "length",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 256,
+        "reasoning": 111
+      },
+      "got": {
+        "error": "Model reply was cut off"
+      },
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-what-is-index",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 432,
+      "costUsd": 0.00008521,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-what-is-index",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 567,
+      "costUsd": 0.00008521,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-edge-cases",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 539,
+      "costUsd": 0.00008668,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1214,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-edge-cases",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 333,
+      "costUsd": 0.00008532,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1214,
+        "completion": 1,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-edge-cases",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 465,
+      "costUsd": 0.00008702,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1214,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-edge-cases",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 435,
+      "costUsd": 0.00008668,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1214,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-edge-cases",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 591,
+      "costUsd": 0.00008668,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1214,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-sorted-faster",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1096,
+      "costUsd": 0.00008925,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "a sorted array makes searching much faster",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-sorted-faster",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 900,
+      "costUsd": 0.00008925,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "a sorted array makes searching much faster",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-sorted-faster",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1282,
+      "costUsd": 0.00008925,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "a sorted array makes searching much faster",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-sorted-faster",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1598,
+      "costUsd": 0.00008925,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "a sorted array makes searching much faster",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-sorted-faster",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1241,
+      "costUsd": 0.00008925,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1173,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "A sorted array makes searching much faster",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-i-starts-at-zero",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1076,
+      "costUsd": 0.00009429,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 28,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-i-starts-at-zero",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 525,
+      "costUsd": 0.00008647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-i-starts-at-zero",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 824,
+      "costUsd": 0.00009089,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 18,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-i-starts-at-zero",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 863,
+      "costUsd": 0.00008647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-i-starts-at-zero",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 805,
+      "costUsd": 0.00008647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1211,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-merge-sort",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 465,
+      "costUsd": 0.00008507,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1191,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-merge-sort",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 796,
+      "costUsd": 0.00008507,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1191,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-merge-sort",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 949,
+      "costUsd": 0.00008507,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1191,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-merge-sort",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 749,
+      "costUsd": 0.00008507,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1191,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-merge-sort",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2306,
+      "costUsd": 0.00008507,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1191,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-cost",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1487,
+      "costUsd": 0.00009636,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1192,
+        "completion": 38,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-cost",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 772,
+      "costUsd": 0.0000899,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1192,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-cost",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "false_draw",
+      "path": "gemma",
+      "latencyMs": 1507,
+      "costUsd": 0.0000933,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1192,
+        "completion": 29,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "a swap costs three assignments if you use a temporary variable",
+          "id": "text-1"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-cost",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1337,
+      "costUsd": 0.00009228,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1192,
+        "completion": 26,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-cost",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1202,
+      "costUsd": 0.0000916,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1192,
+        "completion": 24,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-condition",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 430,
+      "costUsd": 0.00008856,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1236,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-condition",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 753,
+      "costUsd": 0.00008822,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1236,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-condition",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 529,
+      "costUsd": 0.00008822,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1236,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-condition",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 620,
+      "costUsd": 0.00008822,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1236,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-swap-condition",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 737,
+      "costUsd": 0.00008822,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1236,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-fewer-swaps",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 902,
+      "costUsd": 0.00008976,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-fewer-swaps",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 569,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-fewer-swaps",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2517,
+      "costUsd": 0.00009826,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 44,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-fewer-swaps",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2560,
+      "costUsd": 0.000085,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-explain-fewer-swaps",
+      "tag": "holdout",
+      "expectsChange": false,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 406,
+      "costUsd": 0.00008364,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 1190,
+        "completion": 1,
+        "reasoning": 0
+      },
+      "got": [],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-lo-hi",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 2666,
+      "costUsd": 0.00008997,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-lo-hi",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 1499,
+      "costUsd": 0.00008997,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-lo-hi",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 891,
+      "costUsd": 0.00008997,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-lo-hi",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 908,
+      "costUsd": 0.00008997,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-lo-hi",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 1617,
+      "costUsd": 0.00008997,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-highlight-middle",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 2560,
+      "costUsd": 0.00008852,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1182,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            7,
+            3,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-highlight-middle",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1024,
+      "costUsd": 0.00009396,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1182,
+        "completion": 33,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            7,
+            3,
+            5
+          ],
+          "id": "array-a"
+        },
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-highlight-middle",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 707,
+      "costUsd": 0.00008852,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1182,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            7,
+            3,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-highlight-middle",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 933,
+      "costUsd": 0.00008852,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1182,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            7,
+            3,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-multi-highlight-middle",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "wrong",
+      "path": "gemma",
+      "latencyMs": 664,
+      "costUsd": 0.00008852,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1182,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            7,
+            3,
+            5
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-shift-j-to-start",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 872,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 0,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-shift-j-to-start",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 943,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 0,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-shift-j-to-start",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 796,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 0,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-shift-j-to-start",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 821,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 0,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-shift-j-to-start",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 661,
+      "costUsd": 0.00009345,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1233,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 0,
+          "target": "pointer-j"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-ends",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 692,
+      "costUsd": 0.00009091,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-ends",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1307,
+      "costUsd": 0.00009091,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-ends",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 819,
+      "costUsd": 0.00009091,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-ends",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1557,
+      "costUsd": 0.00009091,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-ends",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1210,
+      "costUsd": 0.00009091,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1187,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-implied-switch",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 939,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-implied-switch",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 670,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-implied-switch",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 947,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-implied-switch",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1198,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-implied-switch",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1264,
+      "costUsd": 0.00009133,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1193,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-i-with-next",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1459,
+      "costUsd": 0.00009266,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1212,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-i-with-next",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 3099,
+      "costUsd": 0.00009266,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1212,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-i-with-next",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1020,
+      "costUsd": 0.00009266,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1212,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-i-with-next",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 765,
+      "costUsd": 0.00009266,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1212,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-swap-i-with-next",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1845,
+      "costUsd": 0.00009266,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1212,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 0,
+          "j": 1,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-context-those-two-swap",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 921,
+      "costUsd": 0.00009189,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1201,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 2,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-context-those-two-swap",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 28263,
+      "costUsd": 0.00009189,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1201,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 2,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-context-those-two-swap",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 3273,
+      "costUsd": 0.00009189,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1201,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 2,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-context-those-two-swap",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1331,
+      "costUsd": 0.00009189,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1201,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 2,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-context-those-two-swap",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1185,
+      "costUsd": 0.00009189,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1201,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "swap",
+          "i": 2,
+          "j": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-replace",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1712,
+      "costUsd": 0.00009173,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": 7
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-replace",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1200,
+      "costUsd": 0.00009173,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": 7
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-replace",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1841,
+      "costUsd": 0.00009173,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": 7
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-replace",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1742,
+      "costUsd": 0.00009173,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": 7
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-replace",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1537,
+      "costUsd": 0.00009173,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": 7
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-last-zero",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1842,
+      "costUsd": 0.00009152,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 3,
+          "target": "array-a",
+          "value": 0
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-last-zero",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1127,
+      "costUsd": 0.00009152,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 3,
+          "target": "array-a",
+          "value": 0
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-last-zero",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1300,
+      "costUsd": 0.00009152,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 3,
+          "target": "array-a",
+          "value": 0
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-last-zero",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1825,
+      "costUsd": 0.00009152,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 3,
+          "target": "array-a",
+          "value": 0
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-last-zero",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1482,
+      "costUsd": 0.00009152,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1186,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 3,
+          "target": "array-a",
+          "value": 0
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-letter",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 784,
+      "costUsd": 0.00009213,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": "z"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-letter",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1471,
+      "costUsd": 0.00009213,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": "z"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-letter",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 945,
+      "costUsd": 0.00009213,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": "z"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-letter",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 2230,
+      "costUsd": 0.00009213,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": "z"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-set-value-letter",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 818,
+      "costUsd": 0.00009213,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "set_value",
+          "index": 1,
+          "target": "array-a",
+          "value": "z"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-advance-i-by-two",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 821,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-advance-i-by-two",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 828,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-advance-i-by-two",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1025,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-advance-i-by-two",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1043,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-advance-i-by-two",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1710,
+      "costUsd": 0.0000917,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1208,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-highlight-smallest",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 707,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-highlight-smallest",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 652,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-highlight-smallest",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 893,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-highlight-smallest",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 761,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-highlight-smallest",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1082,
+      "costUsd": 0.00008941,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1185,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 3,
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-unhighlight",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1024,
+      "costUsd": 0.00008901,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "clear_highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-unhighlight",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 834,
+      "costUsd": 0.00008901,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "clear_highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-unhighlight",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 698,
+      "costUsd": 0.00008901,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "clear_highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-unhighlight",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 851,
+      "costUsd": 0.00008901,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "clear_highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-unhighlight",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 644,
+      "costUsd": 0.00008901,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1189,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "clear_highlight",
+          "target": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-word-array",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 969,
+      "costUsd": 0.00009035,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            "cat",
+            "dog",
+            "emu"
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-word-array",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 782,
+      "costUsd": 0.00009035,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            "cat",
+            "dog",
+            "emu"
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-word-array",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1470,
+      "costUsd": 0.00009035,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            "cat",
+            "dog",
+            "emu"
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-word-array",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1025,
+      "costUsd": 0.00009035,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            "cat",
+            "dog",
+            "emu"
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-word-array",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 722,
+      "costUsd": 0.00009035,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1179,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            "cat",
+            "dog",
+            "emu"
+          ],
+          "id": "array-a"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-remove-i-pointer",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 842,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-remove-i-pointer",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 865,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-remove-i-pointer",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 648,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-remove-i-pointer",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 815,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    },
+    {
+      "case": "holdout-remove-i-pointer",
+      "tag": "holdout",
+      "expectsChange": true,
+      "outcome": "correct",
+      "path": "gemma",
+      "latencyMs": 1023,
+      "costUsd": 0.00009127,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 1231,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-i"
+        }
+      ],
+      "dropped": []
+    }
+  ]
+}

@@ -21,11 +21,38 @@ export type CreateArrayCommand = {
 }
 
 // Highlights an existing object, or a single cell when `index` is given
-// (arrays only).
+// (arrays only). Highlights are exclusive per object: a new one replaces the
+// object's previous highlight.
 export type HighlightCommand = {
   type: 'highlight'
   target: string
   index?: number
+}
+
+// Removes an object's highlight.
+export type ClearHighlightCommand = {
+  type: 'clear_highlight'
+  target: string
+}
+
+// An object's current highlight, stored in its props as `highlight`: the whole
+// object, or one array cell. Absent means not highlighted.
+export type Highlight = 'all' | number
+
+// Swaps the values in two cells of an array.
+export type SwapCommand = {
+  type: 'swap'
+  target: string
+  i: number
+  j: number
+}
+
+// Replaces the value in one cell of an array.
+export type SetValueCommand = {
+  type: 'set_value'
+  target: string
+  index: number
+  value: number | string
 }
 
 // A labelled arrow under one cell of an array, e.g. loop index `i`.
@@ -54,6 +81,9 @@ export type CanvasCommand =
   | CreateTextCommand
   | CreateArrayCommand
   | HighlightCommand
+  | ClearHighlightCommand
   | CreatePointerCommand
   | MovePointerCommand
+  | SwapCommand
+  | SetValueCommand
   | DeleteCommand

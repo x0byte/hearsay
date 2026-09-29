@@ -2,11 +2,15 @@ import { describe, expect, it } from 'vitest'
 import {
   ARRAY_CELL_SIZE,
   arrayCellRects,
+  arrayCellWidth,
+  CELL_CHAR_WIDTH,
+  CELL_PADDING,
   GAP,
   INDEX_LABEL_SPACE,
   MARGIN,
   nextFreePosition,
   POINTER_ARROW_LENGTH,
+  POINTER_LABEL_HEIGHT,
   pointerGeometry,
 } from './layout'
 
@@ -24,12 +28,46 @@ describe('nextFreePosition', () => {
   })
 })
 
+describe('stacking gap', () => {
+  it('leaves room for a pointer row added later under the array above', () => {
+    const cell = { x: MARGIN, y: MARGIN, w: 60, h: 60 }
+    const below = nextFreePosition([cell])
+    const { label } = pointerGeometry(cell)
+    expect(label.y + POINTER_LABEL_HEIGHT).toBeLessThan(below.y)
+  })
+})
+
+describe('arrayCellWidth', () => {
+  const widthFor = (chars: number) => chars * CELL_CHAR_WIDTH + 2 * CELL_PADDING
+
+  it('uses the minimum for single digits', () => {
+    expect(arrayCellWidth([3, 1, 4, 1, 5])).toBe(ARRAY_CELL_SIZE)
+  })
+
+  it('fits the widest multi-digit value', () => {
+    expect(arrayCellWidth([7, 100, 25000])).toBe(widthFor(5))
+  })
+
+  it('counts the minus sign of negative numbers', () => {
+    expect(arrayCellWidth([-12, 3])).toBeGreaterThan(arrayCellWidth([12, 3]))
+    expect(arrayCellWidth([-1200, 3])).toBe(widthFor(5))
+  })
+
+  it('fits a long string value', () => {
+    expect(arrayCellWidth(['a', 'banana split'])).toBe(widthFor(12))
+  })
+
+  it('uses the minimum for an empty array', () => {
+    expect(arrayCellWidth([])).toBe(ARRAY_CELL_SIZE)
+  })
+})
+
 describe('arrayCellRects', () => {
-  it('lays out one square cell per value, side by side', () => {
-    const size = ARRAY_CELL_SIZE
-    expect(arrayCellRects({ x: 10, y: 20 }, 2)).toEqual([
-      { x: 10, y: 20, w: size, h: size },
-      { x: 10 + size, y: 20, w: size, h: size },
+  it('lays out one cell per value, side by side, all the same width', () => {
+    const w = arrayCellWidth([5, 12345])
+    expect(arrayCellRects({ x: 10, y: 20 }, [5, 12345])).toEqual([
+      { x: 10, y: 20, w, h: ARRAY_CELL_SIZE },
+      { x: 10 + w, y: 20, w, h: ARRAY_CELL_SIZE },
     ])
   })
 })
