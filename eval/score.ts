@@ -14,6 +14,9 @@ export type Attempt = {
   outcome: Outcome
   latencyMs: number
   costUsd: number
+  // From the model response; absent if the request failed before one arrived.
+  finishReason?: string | null
+  tokens?: { prompt: number; completion: number; reasoning: number }
   got: CanvasCommand[] | { error: string }
 }
 

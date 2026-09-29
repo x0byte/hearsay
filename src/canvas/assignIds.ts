@@ -2,23 +2,28 @@
 import type { CanvasCommand } from './commands.ts'
 
 // A command as a model produces it: create commands carry no `id`, and any
-// reference may be NEW_REF, meaning "the object created most recently in this
-// batch". assignIds turns drafts into real commands.
+// reference may be a placeholder "$N", meaning "the object created by command
+// N (0-based) earlier in this batch". assignIds turns drafts into real commands.
 export type DraftCommand = CanvasCommand extends infer C
   ? C extends { id: string }
     ? Omit<C, 'id'>
     : C
   : never
 
-export const NEW_REF = 'new'
+const PLACEHOLDER = /^\$(\d+)$/
 
 // Gives each create command the next free semantic ID for its kind and
-// resolves NEW_REF references. Returns undefined if a NEW_REF has nothing to
-// refer to. `existingIds` are the IDs already on the board.
+// resolves "$N" placeholders to those IDs. Returns undefined, rejecting the
+// whole batch, if any reference starting with "$" is not a placeholder for a
+// create command earlier in the batch. `existingIds` are the IDs on the board.
 export function assignIds(drafts: DraftCommand[], existingIds: string[]): CanvasCommand[] | undefined {
   const taken = new Set(existingIds)
-  let lastCreated: string | undefined
-  const resolve = (ref: string) => (ref === NEW_REF ? lastCreated : ref)
+  const createdIds: (string | undefined)[] = [] // by command index
+  const resolve = (ref: string): string | undefined => {
+    if (!ref.startsWith('$')) return ref
+    const match = PLACEHOLDER.exec(ref)
+    return match ? createdIds[Number(match[1])] : undefined
+  }
   const commands: CanvasCommand[] = []
 
   for (const draft of drafts) {
@@ -30,7 +35,7 @@ export function assignIds(drafts: DraftCommand[], existingIds: string[]): Canvas
         if (draft.type === 'create_pointer' && !array) return undefined
         const id = nextId(draft, taken)
         taken.add(id)
-        lastCreated = id
+        createdIds.push(id)
         commands.push({ ...draft, id, ...(array && { array }) } as CanvasCommand)
         break
       }
@@ -39,6 +44,7 @@ export function assignIds(drafts: DraftCommand[], existingIds: string[]): Canvas
       case 'delete': {
         const target = resolve(draft.target)
         if (!target) return undefined
+        createdIds.push(undefined)
         commands.push({ ...draft, target })
         break
       }

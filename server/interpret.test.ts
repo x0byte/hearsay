@@ -35,7 +35,7 @@ describe('interpret', () => {
   it('turns valid tool calls into commands, in order, with IDs assigned in code', async () => {
     const chat = fakeChat([
       call('create_array', { values: [3, 1, 4] }),
-      call('create_pointer', { label: 'i', array: 'new', index: 0 }),
+      call('create_pointer', { label: 'i', array: '$0', index: 0 }),
     ])
 
     expect(await interpret(chat, request)).toEqual([
@@ -44,8 +44,8 @@ describe('interpret', () => {
     ])
   })
 
-  it('returns no commands when "new" has nothing to refer to', async () => {
-    const chat = fakeChat([call('highlight', { target: 'new' })])
+  it('returns no commands when a "$N" placeholder cannot be resolved', async () => {
+    const chat = fakeChat([call('highlight', { target: '$0' })])
     expect(await interpret(chat, request)).toEqual([])
   })
 
@@ -56,7 +56,7 @@ describe('interpret', () => {
   it('returns no commands at all if any one call is malformed', async () => {
     const chat = fakeChat([
       call('create_array', { values: [3, 1, 4] }),
-      call('create_pointer', { label: 'i', array: 'new', index: '0' }),
+      call('create_pointer', { label: 'i', array: '$0', index: '0' }),
     ])
     expect(await interpret(chat, request)).toEqual([])
   })

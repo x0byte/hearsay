@@ -24,7 +24,12 @@ export type ToolCall = {
 export type ChatResponse = {
   model?: string
   provider?: string
-  usage?: { prompt_tokens?: number; completion_tokens?: number; cost?: number }
+  usage?: {
+    prompt_tokens?: number
+    completion_tokens?: number
+    completion_tokens_details?: { reasoning_tokens?: number }
+    cost?: number
+  }
   choices: {
     finish_reason: string | null
     message: { content: string | null; tool_calls?: ToolCall[] }

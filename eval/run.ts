@@ -7,7 +7,8 @@ import { classify, summarize, type Attempt, type Summary } from './score.ts'
 
 // Runs every eval case against the configured model and saves the results to
 // eval/results/ so runs can be compared. Usage:
-//   npm run eval -- [--repeats=3] [--label=baseline]
+//   npm run eval -- [--repeats=5] [--label=baseline]
+// Head-to-head comparisons: --repeats=5, runs back-to-back in one session.
 
 const RESULTS_DIR = new URL('./results/', import.meta.url)
 const SEGMENT_SPACING_MS = 5_000
@@ -15,7 +16,7 @@ const SEGMENT_SPACING_MS = 5_000
 const args = Object.fromEntries(
   process.argv.slice(2).map((arg) => arg.replace(/^--/, '').split('=') as [string, string]),
 )
-const repeats = Number(args.repeats ?? 3)
+const repeats = Number(args.repeats ?? 5)
 const label = args.label ?? 'run'
 
 const apiKey = process.env.OPENROUTER_API_KEY
@@ -37,9 +38,18 @@ for (const evalCase of cases) {
     })
     if (!request) throw new Error(`Case ${evalCase.name} is not a valid request`)
     let costUsd = 0
+    let finishReason: Attempt['finishReason']
+    let tokens: Attempt['tokens']
     const chat: ChatCompletion = async (req, signal) => {
       const response = await realChat(req, signal)
-      costUsd += response.usage?.cost ?? 0
+      const { usage } = response
+      costUsd += usage?.cost ?? 0
+      finishReason = response.choices[0]?.finish_reason
+      tokens = {
+        prompt: usage?.prompt_tokens ?? 0,
+        completion: usage?.completion_tokens ?? 0,
+        reasoning: usage?.completion_tokens_details?.reasoning_tokens ?? 0,
+      }
       return response
     }
     const started = performance.now()
@@ -51,7 +61,7 @@ for (const evalCase of cases) {
     }
     const latencyMs = Math.round(performance.now() - started)
     const outcome = classify(evalCase.expected, Array.isArray(got) ? got : undefined)
-    attempts.push({ case: evalCase.name, tag: evalCase.tag, outcome, latencyMs, costUsd, got })
+    attempts.push({ case: evalCase.name, tag: evalCase.tag, outcome, latencyMs, costUsd, finishReason, tokens, got })
     marks.push(outcome === 'correct' ? '✓' : outcome === 'false_draw' ? 'D' : outcome === 'miss' ? 'M' : outcome === 'wrong' ? 'W' : 'E')
   }
   console.log(`${marks.join('')}  ${evalCase.tag.padEnd(11)} ${evalCase.name}`)

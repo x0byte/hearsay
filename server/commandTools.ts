@@ -16,7 +16,8 @@ type Schema = {
   items?: { anyOf: Schema[] }
 }
 
-const REF_HELP = 'An ID listed on the board, or "new" for the object created most recently in this reply.'
+const REF_HELP =
+  'An ID listed on the board, or "$N" for the object created by call N (0-based) earlier in this reply.'
 const target: Schema = { type: 'string', description: REF_HELP }
 const cellIndex: Schema = { type: 'integer', description: 'Zero-based array cell index.' }
 

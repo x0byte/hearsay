@@ -1,0 +1,3750 @@
+{
+  "runAt": "2026-09-29T10:14:40.440Z",
+  "label": "batch-refs",
+  "model": "google/gemma-4-26b-a4b-it",
+  "provider": "deepinfra/fp8",
+  "promptHash": "3a9bb4f9a936",
+  "repeats": 5,
+  "summary": {
+    "attempts": 200,
+    "accuracy": 0.88,
+    "counts": {
+      "correct": 176,
+      "false_draw": 12,
+      "miss": 0,
+      "wrong": 10,
+      "error": 2
+    },
+    "falseDrawRate": 0.1411764705882353,
+    "missRate": 0,
+    "accuracyByTag": {
+      "explanation": 0.8352941176470589,
+      "command": 1,
+      "multi": 0,
+      "context": 1
+    },
+    "latencyMs": {
+      "p50": 720,
+      "p95": 1475
+    },
+    "totalCostUsd": 0.01366037
+  },
+  "attempts": [
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 701,
+      "costUsd": 0.00006173,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 1,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 698,
+      "costUsd": 0.00006343,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 501,
+      "costUsd": 0.00006309,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 760,
+      "costUsd": 0.00006343,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "error",
+      "latencyMs": 4790,
+      "costUsd": 0.00014843,
+      "finishReason": "length",
+      "tokens": {
+        "prompt": 877,
+        "completion": 256,
+        "reasoning": 111
+      },
+      "got": {
+        "error": "Model reply was cut off"
+      }
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 726,
+      "costUsd": 0.00006288,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 362,
+      "costUsd": 0.00006322,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 698,
+      "costUsd": 0.00006186,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 303,
+      "costUsd": 0.00006186,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 386,
+      "costUsd": 0.00006254,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 4,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 862,
+      "costUsd": 0.00007116,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 900,
+        "completion": 24,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "O(n^2)",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 356,
+      "costUsd": 0.0000647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 384,
+      "costUsd": 0.00006368,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 355,
+      "costUsd": 0.00006436,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 4,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 318,
+      "costUsd": 0.00006368,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 362,
+      "costUsd": 0.00006368,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 500,
+      "costUsd": 0.00006708,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 12,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 368,
+      "costUsd": 0.00006436,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 4,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 558,
+      "costUsd": 0.0000647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 513,
+      "costUsd": 0.00006402,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 3,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 937,
+      "costUsd": 0.0000619,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 860,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 720,
+      "costUsd": 0.00006224,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 860,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 599,
+      "costUsd": 0.00006224,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 860,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 372,
+      "costUsd": 0.00006224,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 860,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 588,
+      "costUsd": 0.00006224,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 860,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 456,
+      "costUsd": 0.00006288,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 788,
+      "costUsd": 0.00006288,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 415,
+      "costUsd": 0.00006288,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 599,
+      "costUsd": 0.00006288,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1051,
+      "costUsd": 0.00006288,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 874,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 475,
+      "costUsd": 0.00006652,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 926,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 993,
+      "costUsd": 0.0000774,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 926,
+        "completion": 37,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-a"
+        },
+        {
+          "type": "highlight",
+          "index": 3,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 454,
+      "costUsd": 0.00006652,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 926,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 451,
+      "costUsd": 0.00006652,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 926,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 759,
+      "costUsd": 0.00007434,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 926,
+        "completion": 28,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 737,
+      "costUsd": 0.00006975,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 875,
+        "completion": 25,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "binary search only works on sorted input",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 984,
+      "costUsd": 0.00006295,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 875,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 983,
+      "costUsd": 0.00006295,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 875,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 506,
+      "costUsd": 0.00006295,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 875,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 479,
+      "costUsd": 0.00006295,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 875,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 703,
+      "costUsd": 0.00006504,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 472,
+      "costUsd": 0.0000647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 463,
+      "costUsd": 0.0000647,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 2394,
+      "costUsd": 0.00006368,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 765,
+      "costUsd": 0.00006504,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 900,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1178,
+      "costUsd": 0.00007068,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 898,
+        "completion": 23,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 336,
+      "costUsd": 0.00006354,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 898,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 341,
+      "costUsd": 0.00006354,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 898,
+        "completion": 2,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 3013,
+      "costUsd": 0.00007884,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 898,
+        "completion": 47,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 654,
+      "costUsd": 0.00006456,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 898,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 643,
+      "costUsd": 0.00006776,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 866,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 632,
+      "costUsd": 0.00006776,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 866,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 669,
+      "costUsd": 0.00006776,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 866,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 816,
+      "costUsd": 0.00006776,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 866,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 627,
+      "costUsd": 0.00006776,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 866,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 751,
+      "costUsd": 0.00006491,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 903,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 481,
+      "costUsd": 0.00006491,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 903,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 805,
+      "costUsd": 0.00006491,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 903,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 486,
+      "costUsd": 0.00006491,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 903,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 452,
+      "costUsd": 0.00006491,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 903,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 1174,
+      "costUsd": 0.00007091,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 877,
+        "completion": 28,
+        "reasoning": 2
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Worst case: every element moves",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 448,
+      "costUsd": 0.00006309,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1496,
+      "costUsd": 0.00006309,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "error",
+      "latencyMs": 5125,
+      "costUsd": 0.00014843,
+      "finishReason": "length",
+      "tokens": {
+        "prompt": 877,
+        "completion": 256,
+        "reasoning": 111
+      },
+      "got": {
+        "error": "Model reply was cut off"
+      }
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 737,
+      "costUsd": 0.00006309,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 877,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 467,
+      "costUsd": 0.00006302,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 876,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 425,
+      "costUsd": 0.00006302,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 876,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 472,
+      "costUsd": 0.00006336,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 876,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1068,
+      "costUsd": 0.00006336,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 876,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1191,
+      "costUsd": 0.00006336,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 876,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 1769,
+      "costUsd": 0.00007897,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        },
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 429,
+      "costUsd": 0.00006707,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 929,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 644,
+      "costUsd": 0.00006673,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 929,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 1246,
+      "costUsd": 0.00007897,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        },
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 1171,
+      "costUsd": 0.00007897,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 41,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        },
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 593,
+      "costUsd": 0.00006266,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 866,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 424,
+      "costUsd": 0.00006266,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 866,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 422,
+      "costUsd": 0.00006266,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 866,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 449,
+      "costUsd": 0.00006232,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 866,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 934,
+      "costUsd": 0.00006266,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 866,
+        "completion": 6,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 815,
+      "costUsd": 0.00006832,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 659,
+      "costUsd": 0.00006832,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 663,
+      "costUsd": 0.00006832,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1110,
+      "costUsd": 0.00006832,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 683,
+      "costUsd": 0.00006832,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 850,
+      "costUsd": 0.00006717,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 877,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 901,
+      "costUsd": 0.00006717,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 877,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 637,
+      "costUsd": 0.00006717,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 877,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 795,
+      "costUsd": 0.00006717,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 877,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 623,
+      "costUsd": 0.00006717,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 877,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 829,
+      "costUsd": 0.0000705,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 876,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 881,
+      "costUsd": 0.0000705,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 876,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 815,
+      "costUsd": 0.0000705,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 876,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 885,
+      "costUsd": 0.0000705,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 876,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 821,
+      "costUsd": 0.0000705,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 876,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1599,
+      "costUsd": 0.0000719,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 896,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 893,
+      "costUsd": 0.0000719,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 896,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 929,
+      "costUsd": 0.0000719,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 896,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1247,
+      "costUsd": 0.0000719,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 896,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1169,
+      "costUsd": 0.0000719,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 896,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 879,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 814,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 826,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 948,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 894,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 739,
+      "costUsd": 0.00006979,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 895,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 854,
+      "costUsd": 0.00006979,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 895,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 812,
+      "costUsd": 0.00006979,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 895,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 688,
+      "costUsd": 0.00006979,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 895,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 738,
+      "costUsd": 0.00006979,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 895,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1086,
+      "costUsd": 0.00007154,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 920,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 870,
+      "costUsd": 0.00007154,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 920,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 870,
+      "costUsd": 0.00007154,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 920,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 660,
+      "costUsd": 0.00007154,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 920,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 878,
+      "costUsd": 0.00007154,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 920,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1020,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 624,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1527,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 715,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 819,
+      "costUsd": 0.00006993,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1127,
+      "costUsd": 0.00006743,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 871,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1025,
+      "costUsd": 0.00006743,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 871,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 834,
+      "costUsd": 0.00006743,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 871,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 762,
+      "costUsd": 0.00006743,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 871,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1577,
+      "costUsd": 0.00006743,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 871,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1101,
+      "costUsd": 0.00006614,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 533,
+      "costUsd": 0.00006614,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 606,
+      "costUsd": 0.00006614,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 523,
+      "costUsd": 0.00006614,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 584,
+      "costUsd": 0.00006614,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 689,
+      "costUsd": 0.0000675,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 878,
+      "costUsd": 0.0000675,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 760,
+      "costUsd": 0.0000675,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 982,
+      "costUsd": 0.0000675,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 660,
+      "costUsd": 0.0000675,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 872,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 674,
+      "costUsd": 0.0000689,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 892,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 648,
+      "costUsd": 0.0000689,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 892,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 968,
+      "costUsd": 0.0000689,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 892,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 568,
+      "costUsd": 0.0000689,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 892,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 634,
+      "costUsd": 0.0000689,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 892,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 882,
+      "costUsd": 0.00006936,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 918,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 588,
+      "costUsd": 0.00006936,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 918,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 932,
+      "costUsd": 0.00006936,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 918,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 612,
+      "costUsd": 0.00006936,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 918,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 720,
+      "costUsd": 0.00006936,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 918,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 819,
+      "costUsd": 0.00006768,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 894,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 632,
+      "costUsd": 0.00006768,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 894,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 755,
+      "costUsd": 0.00006768,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 894,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 576,
+      "costUsd": 0.00006768,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 894,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 502,
+      "costUsd": 0.00006768,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 894,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 605,
+      "costUsd": 0.00006747,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 891,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 515,
+      "costUsd": 0.00006747,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 891,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 540,
+      "costUsd": 0.00006747,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 891,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 790,
+      "costUsd": 0.00006747,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 891,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 498,
+      "costUsd": 0.00006747,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 891,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 2162,
+      "costUsd": 0.00006571,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 861,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 820,
+      "costUsd": 0.00006571,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 861,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 921,
+      "costUsd": 0.00006571,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 861,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 923,
+      "costUsd": 0.00006571,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 861,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 625,
+      "costUsd": 0.00006571,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 861,
+        "completion": 16,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 963,
+      "costUsd": 0.00006764,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 1251,
+      "costUsd": 0.00006764,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 1475,
+      "costUsd": 0.00006764,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 2956,
+      "costUsd": 0.00006764,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 922,
+      "costUsd": 0.00006764,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 874,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 632,
+      "costUsd": 0.00006969,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 913,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 903,
+      "costUsd": 0.00006969,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 913,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 573,
+      "costUsd": 0.00006969,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 913,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 668,
+      "costUsd": 0.00006969,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 913,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 604,
+      "costUsd": 0.00006969,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 913,
+        "completion": 17,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 773,
+      "costUsd": 0.00007197,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 632,
+      "costUsd": 0.00007197,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1064,
+      "costUsd": 0.00007197,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 806,
+      "costUsd": 0.00007197,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 727,
+      "costUsd": 0.00007197,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 897,
+        "completion": 27,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1465,
+      "costUsd": 0.00007224,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 930,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 983,
+      "costUsd": 0.00007224,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 930,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 584,
+      "costUsd": 0.00007224,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 930,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 850,
+      "costUsd": 0.00007224,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 930,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 621,
+      "costUsd": 0.00007224,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 930,
+        "completion": 21,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 651,
+      "costUsd": 0.00006932,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 898,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 694,
+      "costUsd": 0.00006932,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 898,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1004,
+      "costUsd": 0.00006932,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 898,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 821,
+      "costUsd": 0.00006932,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 898,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 669,
+      "costUsd": 0.00006932,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 898,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1378,
+      "costUsd": 0.00007013,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 542,
+      "costUsd": 0.00007013,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 587,
+      "costUsd": 0.00007013,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1354,
+      "costUsd": 0.00007013,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 897,
+      "costUsd": 0.00007013,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 929,
+        "completion": 15,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1025,
+      "costUsd": 0.00006827,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 883,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 696,
+      "costUsd": 0.00006827,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 883,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 839,
+      "costUsd": 0.00006827,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 883,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 735,
+      "costUsd": 0.00006827,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 883,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 677,
+      "costUsd": 0.00006827,
+      "finishReason": "tool_calls",
+      "tokens": {
+        "prompt": 883,
+        "completion": 19,
+        "reasoning": 0
+      },
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 421,
+      "costUsd": 0.00006393,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 889,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 450,
+      "costUsd": 0.00006393,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 889,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 467,
+      "costUsd": 0.00006393,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 889,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 933,
+      "costUsd": 0.00006393,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 889,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 600,
+      "costUsd": 0.00006393,
+      "finishReason": "stop",
+      "tokens": {
+        "prompt": 889,
+        "completion": 5,
+        "reasoning": 0
+      },
+      "got": []
+    }
+  ]
+}
