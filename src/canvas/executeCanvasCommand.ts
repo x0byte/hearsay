@@ -2,6 +2,7 @@ import {
   createShapeId,
   toRichText,
   type Editor,
+  type TLArrowShape,
   type TLGeoShape,
   type TLShape,
   type TLShapeId,
@@ -11,12 +12,20 @@ import {
 import type {
   CanvasCommand,
   CreateArrayCommand,
+  CreatePointerCommand,
   CreateTextCommand,
   HighlightCommand,
+  MovePointerCommand,
 } from './commands'
-import { arrayCellRects, nextFreePosition, type Point, type Rect } from './layout'
-import type { SemanticStore } from './semanticStore'
-import { toShapeMeta } from './syncSemanticStore'
+import {
+  arrayCellRects,
+  nextFreePosition,
+  pointerGeometry,
+  type Point,
+  type Rect,
+} from './layout'
+import type { SemanticObject, SemanticStore } from './semanticStore'
+import { toShapeMeta, type SemanticShapeMeta } from './syncSemanticStore'
 
 // Applies a CanvasCommand to a tldraw Editor and records the result in the
 // semantic store. All tldraw-specific translation lives here so the command
@@ -35,6 +44,12 @@ export function executeCanvasCommand(
       return
     case 'highlight':
       highlight(editor, store, command)
+      return
+    case 'create_pointer':
+      createPointer(editor, store, command)
+      return
+    case 'move_pointer':
+      movePointer(editor, store, command)
       return
     default: {
       // Fails to compile if a new command type is added without a case above.
@@ -125,6 +140,87 @@ function highlight(editor: Editor, store: SemanticStore, command: HighlightComma
 
 function isSelectedCell(shape: TLShape, index: number | undefined): boolean {
   return index === undefined || shape.meta.index === index
+}
+
+function createPointer(editor: Editor, store: SemanticStore, command: CreatePointerCommand): void {
+  const props = { label: command.label, array: command.array, index: command.index }
+  const ids = { arrow: createShapeId(), label: createShapeId() }
+  const cell = cellBounds(editor, store, command.array, command.index)
+  editor.createShapes(pointerShapes(ids, cell, { semanticId: command.id, kind: 'pointer', props }))
+  store.add({ id: command.id, kind: 'pointer', shapeIds: [ids.arrow, ids.label], props })
+}
+
+// Redraws the pointer's arrow and label under the new cell, and updates the
+// semantic meta on both so a reload sees the new index.
+function movePointer(editor: Editor, store: SemanticStore, command: MovePointerCommand): void {
+  const pointer = getObject(store, command.target)
+  const props: Record<string, unknown> = { ...pointer.props, index: command.index }
+  const ids = {
+    arrow: findPart(editor, pointer, 'pointer-arrow').id,
+    label: findPart(editor, pointer, 'pointer-label').id,
+  }
+  const cell = cellBounds(editor, store, String(props.array), command.index)
+  editor.updateShapes(pointerShapes(ids, cell, { semanticId: pointer.id, kind: 'pointer', props }))
+  store.updateProps(pointer.id, props)
+}
+
+function pointerShapes(
+  ids: { arrow: TLShapeId; label: TLShapeId },
+  cell: Rect,
+  base: SemanticShapeMeta,
+): TLShapePartial[] {
+  const { tip, tail, label, labelWidth } = pointerGeometry(cell)
+  return [
+    {
+      id: ids.arrow,
+      type: 'arrow',
+      x: tail.x,
+      y: tail.y,
+      props: { start: { x: 0, y: 0 }, end: { x: tip.x - tail.x, y: tip.y - tail.y } },
+      meta: toShapeMeta({ ...base, part: 'pointer-arrow' }),
+    } satisfies TLShapePartial<TLArrowShape>,
+    {
+      id: ids.label,
+      type: 'text',
+      x: label.x,
+      y: label.y,
+      props: {
+        richText: toRichText(String(base.props.label)),
+        textAlign: 'middle',
+        autoSize: false,
+        w: labelWidth,
+      },
+      meta: toShapeMeta({ ...base, part: 'pointer-label' }),
+    } satisfies TLShapePartial<TLTextShape>,
+  ]
+}
+
+function getObject(store: SemanticStore, id: string): SemanticObject {
+  const object = store.get(id)
+  if (!object) throw new Error(`No such object: ${id}`)
+  return object
+}
+
+function findPart(
+  editor: Editor,
+  object: SemanticObject,
+  part: SemanticShapeMeta['part'],
+  index?: number,
+): TLShape {
+  const shape = object.shapeIds
+    .map((id) => editor.getShape(id as TLShapeId))
+    .filter((s) => s !== undefined)
+    .find((s) => s.meta.part === part && (index === undefined || s.meta.index === index))
+  if (!shape) throw new Error(`${object.id} has no ${part}${index === undefined ? '' : ` ${index}`}`)
+  return shape
+}
+
+// Where a cell currently is on the page, even if the array was moved by hand.
+function cellBounds(editor: Editor, store: SemanticStore, arrayId: string, index: number): Rect {
+  const cell = findPart(editor, getObject(store, arrayId), 'cell', index)
+  const bounds = editor.getShapePageBounds(cell)
+  if (!bounds) throw new Error(`${arrayId} cell ${index} has no bounds`)
+  return bounds
 }
 
 function positionFor(editor: Editor, command: { x?: number; y?: number }): Point {

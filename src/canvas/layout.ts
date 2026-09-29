@@ -25,3 +25,17 @@ export function arrayCellRects(origin: Point, count: number): Rect[] {
     h: ARRAY_CELL_SIZE,
   }))
 }
+
+// Space under a cell for its index label, then the pointer arrow and its label.
+export const INDEX_LABEL_SPACE = 28
+export const POINTER_ARROW_LENGTH = 40
+
+export type PointerGeometry = { tip: Point; tail: Point; label: Point; labelWidth: number }
+
+// An upward arrow under `cell`, with its label below the tail.
+export function pointerGeometry(cell: Rect): PointerGeometry {
+  const centerX = cell.x + cell.w / 2
+  const tip = { x: centerX, y: cell.y + cell.h + INDEX_LABEL_SPACE }
+  const tail = { x: centerX, y: tip.y + POINTER_ARROW_LENGTH }
+  return { tip, tail, label: { x: cell.x, y: tail.y + 4 }, labelWidth: cell.w }
+}

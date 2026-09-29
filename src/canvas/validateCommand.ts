@@ -1,4 +1,4 @@
-import type { CanvasCommand, HighlightCommand } from './commands'
+import type { CanvasCommand, CreatePointerCommand, HighlightCommand, MovePointerCommand } from './commands'
 import type { SemanticStore } from './semanticStore'
 
 export type ValidationResult = { ok: true } | { ok: false; reason: string }
@@ -16,6 +16,10 @@ export function validateCommand(command: CanvasCommand, store: SemanticStore): V
       return checkNewId(command.id, store)
     case 'highlight':
       return checkHighlight(command, store)
+    case 'create_pointer':
+      return checkCreatePointer(command, store)
+    case 'move_pointer':
+      return checkMovePointer(command, store)
     default: {
       // Fails to compile if a new command type is added without a case above.
       const unhandled: never = command
@@ -30,15 +34,32 @@ function checkNewId(id: string, store: SemanticStore): ValidationResult {
 }
 
 function checkHighlight(command: HighlightCommand, store: SemanticStore): ValidationResult {
-  const target = store.get(command.target)
-  if (!target) return { ok: false, reason: `No such object: ${command.target}` }
+  if (!store.get(command.target)) return { ok: false, reason: `No such object: ${command.target}` }
   if (command.index === undefined) return { ok: true }
-  if (target.kind !== 'array') {
-    return { ok: false, reason: `Only arrays have cells: ${command.target}` }
-  }
-  const length = Array.isArray(target.props.values) ? target.props.values.length : 0
-  if (!Number.isInteger(command.index) || command.index < 0 || command.index >= length) {
-    return { ok: false, reason: `Index ${command.index} out of range for ${command.target}` }
+  return checkArrayCell(command.target, command.index, store)
+}
+
+function checkCreatePointer(command: CreatePointerCommand, store: SemanticStore): ValidationResult {
+  const newId = checkNewId(command.id, store)
+  if (!newId.ok) return newId
+  return checkArrayCell(command.array, command.index, store)
+}
+
+function checkMovePointer(command: MovePointerCommand, store: SemanticStore): ValidationResult {
+  const pointer = store.get(command.target)
+  if (!pointer) return { ok: false, reason: `No such object: ${command.target}` }
+  if (pointer.kind !== 'pointer') return { ok: false, reason: `Not a pointer: ${command.target}` }
+  return checkArrayCell(String(pointer.props.array), command.index, store)
+}
+
+// The array exists and `index` is one of its cells.
+function checkArrayCell(arrayId: string, index: number, store: SemanticStore): ValidationResult {
+  const array = store.get(arrayId)
+  if (!array) return { ok: false, reason: `No such object: ${arrayId}` }
+  if (array.kind !== 'array') return { ok: false, reason: `Only arrays have cells: ${arrayId}` }
+  const length = Array.isArray(array.props.values) ? array.props.values.length : 0
+  if (!Number.isInteger(index) || index < 0 || index >= length) {
+    return { ok: false, reason: `Index ${index} out of range for ${arrayId}` }
   }
   return { ok: true }
 }

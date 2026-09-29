@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { ARRAY_CELL_SIZE, arrayCellRects, GAP, MARGIN, nextFreePosition } from './layout'
+import {
+  ARRAY_CELL_SIZE,
+  arrayCellRects,
+  GAP,
+  INDEX_LABEL_SPACE,
+  MARGIN,
+  nextFreePosition,
+  POINTER_ARROW_LENGTH,
+  pointerGeometry,
+} from './layout'
 
 describe('nextFreePosition', () => {
   it('starts at the top-left margin on an empty page', () => {
@@ -22,5 +31,18 @@ describe('arrayCellRects', () => {
       { x: 10, y: 20, w: size, h: size },
       { x: 10 + size, y: 20, w: size, h: size },
     ])
+  })
+})
+
+describe('pointerGeometry', () => {
+  it('points an upward arrow at the cell centre, below its index label', () => {
+    const cell = { x: 100, y: 100, w: 60, h: 60 }
+    const tipY = 160 + INDEX_LABEL_SPACE
+    expect(pointerGeometry(cell)).toEqual({
+      tip: { x: 130, y: tipY },
+      tail: { x: 130, y: tipY + POINTER_ARROW_LENGTH },
+      label: { x: 100, y: tipY + POINTER_ARROW_LENGTH + 4 },
+      labelWidth: 60,
+    })
   })
 })

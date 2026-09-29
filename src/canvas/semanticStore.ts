@@ -24,6 +24,12 @@ export class SemanticStore {
     return this.objects.get(id)
   }
 
+  updateProps(id: string, props: Record<string, unknown>): void {
+    const object = this.objects.get(id)
+    if (!object) throw new Error(`Semantic object not found: ${id}`)
+    this.objects.set(id, { ...object, props })
+  }
+
   remove(id: string): boolean {
     return this.objects.delete(id)
   }

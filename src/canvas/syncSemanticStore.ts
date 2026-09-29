@@ -8,7 +8,7 @@ export type SemanticShapeMeta = {
   kind: SemanticKind
   props: Record<string, unknown>
   // Which part of the object this shape draws, e.g. array cell 2.
-  part?: 'cell' | 'index-label'
+  part?: 'cell' | 'index-label' | 'pointer-arrow' | 'pointer-label'
   index?: number
 }
 

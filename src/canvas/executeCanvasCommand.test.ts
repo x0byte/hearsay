@@ -105,6 +105,83 @@ describe('executeCanvasCommand', () => {
     ])
   })
 
+  describe('pointers', () => {
+    const cell = { x: 100, y: 100, w: 60, h: 60 }
+
+    // An array with cells 0 and 1, plus whatever pointer shapes a test adds.
+    function setup(extraShapes: { id: string; type: string; meta: Record<string, unknown> }[] = []) {
+      const shapes = [
+        { id: 'shape:c0', type: 'geo', meta: { part: 'cell', index: 0 } },
+        { id: 'shape:c1', type: 'geo', meta: { part: 'cell', index: 1 } },
+        ...extraShapes,
+      ]
+      const editor = {
+        getShape: (id: string) => shapes.find((s) => s.id === id),
+        getShapePageBounds: (s: { meta: { index: number } }) => ({
+          ...cell,
+          x: cell.x + s.meta.index * cell.w,
+        }),
+        createShapes: vi.fn(),
+        updateShapes: vi.fn(),
+      }
+      const store = new SemanticStore()
+      store.add({
+        id: 'array-a',
+        kind: 'array',
+        shapeIds: ['shape:c0', 'shape:c1'],
+        props: { values: [3, 1] },
+      })
+      return { editor, store }
+    }
+
+    it('creates an arrow and label under the target cell', () => {
+      const { editor, store } = setup()
+
+      executeCanvasCommand(editor as unknown as Editor, store, {
+        type: 'create_pointer',
+        id: 'pointer-i',
+        label: 'i',
+        array: 'array-a',
+        index: 1,
+      })
+
+      const [arrow, label] = editor.createShapes.mock.calls[0][0]
+      const props = { label: 'i', array: 'array-a', index: 1 }
+      expect(arrow).toMatchObject({ type: 'arrow', x: 190, meta: { part: 'pointer-arrow', props } })
+      expect(label).toMatchObject({ type: 'text', x: 160, meta: { part: 'pointer-label', props } })
+      expect(store.get('pointer-i')).toEqual({
+        id: 'pointer-i',
+        kind: 'pointer',
+        shapeIds: [arrow.id, label.id],
+        props,
+      })
+    })
+
+    it('moves the existing arrow and label and updates the stored index', () => {
+      const { editor, store } = setup([
+        { id: 'shape:pa', type: 'arrow', meta: { part: 'pointer-arrow' } },
+        { id: 'shape:pl', type: 'text', meta: { part: 'pointer-label' } },
+      ])
+      store.add({
+        id: 'pointer-i',
+        kind: 'pointer',
+        shapeIds: ['shape:pa', 'shape:pl'],
+        props: { label: 'i', array: 'array-a', index: 0 },
+      })
+
+      executeCanvasCommand(editor as unknown as Editor, store, {
+        type: 'move_pointer',
+        target: 'pointer-i',
+        index: 1,
+      })
+
+      const [arrow, label] = editor.updateShapes.mock.calls[0][0]
+      expect(arrow).toMatchObject({ id: 'shape:pa', x: 190, meta: { props: { index: 1 } } })
+      expect(label).toMatchObject({ id: 'shape:pl', x: 160, meta: { props: { index: 1 } } })
+      expect(store.get('pointer-i')?.props).toEqual({ label: 'i', array: 'array-a', index: 1 })
+    })
+  })
+
   it('throws on an unknown command type', () => {
     const unknown = { type: 'not_a_command' } as unknown as CanvasCommand
     expect(() => executeCanvasCommand({} as Editor, new SemanticStore(), unknown)).toThrow(

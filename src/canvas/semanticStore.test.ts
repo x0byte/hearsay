@@ -22,6 +22,14 @@ describe('SemanticStore', () => {
     expect(() => store.add(arrayA)).toThrow('Semantic object already exists: array-a')
   })
 
+  it('replaces an object\'s props', () => {
+    const store = new SemanticStore()
+    store.add(arrayA)
+    store.updateProps('array-a', { values: [9] })
+    expect(store.get('array-a')).toEqual({ ...arrayA, props: { values: [9] } })
+    expect(() => store.updateProps('missing', {})).toThrow('Semantic object not found: missing')
+  })
+
   it('removes an object and reports whether it existed', () => {
     const store = new SemanticStore()
     store.add(arrayA)

@@ -28,4 +28,25 @@ export type HighlightCommand = {
   index?: number
 }
 
-export type CanvasCommand = CreateTextCommand | CreateArrayCommand | HighlightCommand
+// A labelled arrow under one cell of an array, e.g. loop index `i`.
+export type CreatePointerCommand = {
+  type: 'create_pointer'
+  id: string
+  label: string
+  array: string
+  index: number
+}
+
+// Moves a pointer to another cell of the same array.
+export type MovePointerCommand = {
+  type: 'move_pointer'
+  target: string
+  index: number
+}
+
+export type CanvasCommand =
+  | CreateTextCommand
+  | CreateArrayCommand
+  | HighlightCommand
+  | CreatePointerCommand
+  | MovePointerCommand
