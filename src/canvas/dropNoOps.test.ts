@@ -14,6 +14,8 @@ describe('dropNoOps', () => {
     ['moving a pointer to its current index', { type: 'move_pointer', target: 'pointer-i', index: 0 }],
     ['repeating the exact current cell highlight', { type: 'highlight', target: 'array-a', index: 1 }],
     ['clearing a highlight that is not there', { type: 'clear_highlight', target: 'array-b' }],
+    ['swapping a cell with itself', { type: 'swap', target: 'array-a', i: 1, j: 1 }],
+    ['setting a cell to the value it already has', { type: 'set_value', target: 'array-a', index: 2, value: 8 }],
   ])('drops %s', (_label, command) => {
     expect(dropNoOps([command], board)).toEqual({ commands: [], dropped: [command] })
   })
@@ -23,6 +25,9 @@ describe('dropNoOps', () => {
     ['highlighting a different cell', { type: 'highlight', target: 'array-a', index: 2 }],
     ['highlighting the whole object when one cell is highlighted', { type: 'highlight', target: 'array-a' }],
     ['clearing an existing highlight', { type: 'clear_highlight', target: 'array-a' }],
+    ['swapping two different cells', { type: 'swap', target: 'array-a', i: 0, j: 2 }],
+    ['setting a cell to a new value', { type: 'set_value', target: 'array-a', index: 2, value: 9 }],
+    ['setting a number cell to the same digits as a string', { type: 'set_value', target: 'array-a', index: 2, value: '8' }],
     ['a command on an unknown object (left to the validator)', { type: 'move_pointer', target: 'nope', index: 0 }],
   ])('keeps %s', (_label, command) => {
     expect(dropNoOps([command], board)).toEqual({ commands: [command], dropped: [] })
@@ -40,6 +45,21 @@ describe('dropNoOps', () => {
       commands: [commands[0], commands[2], commands[3]],
       dropped: [commands[1], commands[4]],
     })
+  })
+
+  it('tracks values through swaps and sets in the batch', () => {
+    const commands: CanvasCommand[] = [
+      { type: 'swap', target: 'array-a', i: 0, j: 2 }, // [8, 2, 5]
+      { type: 'set_value', target: 'array-a', index: 0, value: 8 }, // already 8
+      { type: 'set_value', target: 'array-a', index: 2, value: 5 }, // already 5
+      { type: 'set_value', target: 'array-a', index: 1, value: 7 }, // [8, 7, 5]
+      { type: 'set_value', target: 'array-a', index: 1, value: 7 }, // already 7
+    ]
+    expect(dropNoOps(commands, board)).toEqual({
+      commands: [commands[0], commands[3]],
+      dropped: [commands[1], commands[2], commands[4]],
+    })
+    expect(board[0].props.values).toEqual([5, 2, 8])
   })
 
   it('tracks objects created in the same batch', () => {

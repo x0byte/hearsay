@@ -20,6 +20,15 @@ export function validateCommand(command: CanvasCommand, store: SemanticStore): V
       return checkCreatePointer(command, store)
     case 'move_pointer':
       return checkMovePointer(command, store)
+    case 'swap': {
+      const first = checkArrayCell(command.target, command.i, store)
+      return first.ok ? checkArrayCell(command.target, command.j, store) : first
+    }
+    case 'set_value':
+      if (typeof command.value === 'number' ? !Number.isFinite(command.value) : command.value.trim() === '') {
+        return { ok: false, reason: `Invalid value for ${command.target}` }
+      }
+      return checkArrayCell(command.target, command.index, store)
     case 'clear_highlight':
     case 'delete':
       if (!store.get(command.target)) return { ok: false, reason: `No such object: ${command.target}` }

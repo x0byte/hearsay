@@ -111,6 +111,12 @@ describe('draftFromToolCall', () => {
       target: 'array-a',
       index: 2,
     })
+    expect(draftFromToolCall(call('set_value', { target: 'array-a', index: 0, value: 'x' }))).toEqual({
+      type: 'set_value',
+      target: 'array-a',
+      index: 0,
+      value: 'x',
+    })
     expect(draftFromToolCall(call('create_array', { values: [1, 'x'] }))).toEqual({
       type: 'create_array',
       values: [1, 'x'],
@@ -126,6 +132,7 @@ describe('draftFromToolCall', () => {
     ['wrong type', call('move_pointer', { target: 'pointer-i', index: 1.5 })],
     ['empty string', call('delete', { target: '' })],
     ['bad array item', call('create_array', { values: [1, null] })],
+    ['a set_value with a non-scalar value', call('set_value', { target: 'array-a', index: 0, value: [1] })],
     ['not an object', call('delete', '["a"]')],
   ])('rejects %s', (_label, toolCall) => {
     expect(draftFromToolCall(toolCall)).toBeUndefined()
@@ -141,6 +148,8 @@ describe('commandTools', () => {
       'clear_highlight',
       'create_pointer',
       'move_pointer',
+      'swap',
+      'set_value',
       'delete',
     ])
     for (const t of commandTools) {

@@ -123,6 +123,34 @@ describe('validateCommand', () => {
     })
   })
 
+  describe('swap and set_value', () => {
+    const store = new SemanticStore()
+    store.add({ id: 'array-a', kind: 'array', shapeIds: [], props: { values: [5, 2, 8] } })
+    store.add({ id: 'hello', kind: 'text', shapeIds: [], props: { text: 'Hi' } })
+
+    it('accepts in-range cells of an array', () => {
+      expect(validateCommand({ type: 'swap', target: 'array-a', i: 0, j: 2 }, store)).toEqual({ ok: true })
+      expect(validateCommand({ type: 'set_value', target: 'array-a', index: 1, value: 'x' }, store)).toEqual({
+        ok: true,
+      })
+    })
+
+    it('rejects out-of-range cells, non-arrays and blank values', () => {
+      expect(validateCommand({ type: 'swap', target: 'array-a', i: 0, j: 3 }, store)).toEqual({
+        ok: false,
+        reason: 'Index 3 out of range for array-a',
+      })
+      expect(validateCommand({ type: 'swap', target: 'hello', i: 0, j: 1 }, store)).toEqual({
+        ok: false,
+        reason: 'Only arrays have cells: hello',
+      })
+      expect(validateCommand({ type: 'set_value', target: 'array-a', index: 0, value: ' ' }, store)).toEqual({
+        ok: false,
+        reason: 'Invalid value for array-a',
+      })
+    })
+  })
+
   it('accepts clear_highlight on an existing object and rejects a missing one', () => {
     const store = new SemanticStore()
     store.add({ id: 'array-a', kind: 'array', shapeIds: [], props: { values: [1] } })

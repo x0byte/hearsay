@@ -61,6 +61,8 @@ Only act when the NEWEST line asks for or clearly describes a change to the
 board. If unsure, do nothing. Most speech is explanation: call no tools.
 Never write notes, summaries or labels unless the speaker explicitly asks for
 text to be written.
+When the speaker says two values on the board swap or trade places, that is a
+swap, even if they only explain why.
 Refer to existing objects only by the IDs listed on the board. New objects get
 their IDs automatically; to refer to an object created earlier in the same
 reply, use "new".

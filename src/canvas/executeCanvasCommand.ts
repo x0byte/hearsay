@@ -17,6 +17,8 @@ import type {
   DeleteCommand,
   Highlight,
   MovePointerCommand,
+  SetValueCommand,
+  SwapCommand,
 } from './commands'
 import {
   arrayCellRects,
@@ -103,6 +105,12 @@ export function executeCanvasCommand(
     case 'move_pointer':
       movePointer(editor, store, command)
       return
+    case 'swap':
+      swap(editor, store, command)
+      return
+    case 'set_value':
+      setValue(editor, store, command)
+      return
     case 'delete':
       deleteObject(editor, store, command)
       return
@@ -136,25 +144,34 @@ function createText(editor: Editor, store: SemanticStore, command: CreateTextCom
 // which cell or label it draws.
 function createArray(editor: Editor, store: SemanticStore, command: CreateArrayCommand): void {
   const props = { values: command.values }
-  const base = { semanticId: command.id, kind: 'array' as const, props }
+  const ids = command.values.map(() => ({ cell: createShapeId(), label: createShapeId() }))
   const cells = arrayCellRects(positionFor(editor, command), command.values)
-  const shapes: TLShapePartial[] = []
-  cells.forEach((cell, index) => {
-    shapes.push({
-      id: createShapeId(),
+  const shapes = arrayShapes(ids, cells, command.values, { semanticId: command.id, kind: 'array', props })
+  editor.createShapes(shapes)
+  store.add({ id: command.id, kind: 'array', shapeIds: shapes.map((s) => s.id), props })
+}
+
+// Each value is a cell with its index labelled underneath. Every shape carries
+// the array's semantic meta (so they rebuild as one object) plus which cell or
+// label it draws. Cell fill and colour are left alone, so highlights survive a
+// redraw.
+function arrayShapes(
+  ids: { cell: TLShapeId; label: TLShapeId }[],
+  cells: Rect[],
+  values: (number | string)[],
+  base: SemanticShapeMeta,
+): TLShapePartial[] {
+  return cells.flatMap((cell, index) => [
+    {
+      id: ids[index].cell,
       type: 'geo',
       x: cell.x,
       y: cell.y,
-      props: {
-        geo: 'rectangle',
-        w: cell.w,
-        h: cell.h,
-        richText: toRichText(String(command.values[index])),
-      },
+      props: { geo: 'rectangle', w: cell.w, h: cell.h, richText: toRichText(String(values[index])) },
       meta: toShapeMeta({ ...base, part: 'cell', index }),
-    } satisfies TLShapePartial<TLGeoShape>)
-    shapes.push({
-      id: createShapeId(),
+    } satisfies TLShapePartial<TLGeoShape>,
+    {
+      id: ids[index].label,
       type: 'text',
       x: cell.x,
       y: cell.y + cell.h + 4,
@@ -167,10 +184,56 @@ function createArray(editor: Editor, store: SemanticStore, command: CreateArrayC
         w: cell.w,
       },
       meta: toShapeMeta({ ...base, part: 'index-label', index }),
-    } satisfies TLShapePartial<TLTextShape>)
-  })
-  editor.createShapes(shapes)
-  store.add({ id: command.id, kind: 'array', shapeIds: shapes.map((s) => s.id), props })
+    } satisfies TLShapePartial<TLTextShape>,
+  ])
+}
+
+function swap(editor: Editor, store: SemanticStore, command: SwapCommand): void {
+  const array = getObject(store, command.target)
+  const values = [...(array.props.values as (number | string)[])]
+  const held = values[command.i]
+  values[command.i] = values[command.j]
+  values[command.j] = held
+  redrawArray(editor, store, array, values)
+}
+
+function setValue(editor: Editor, store: SemanticStore, command: SetValueCommand): void {
+  const array = getObject(store, command.target)
+  const values = [...(array.props.values as (number | string)[])]
+  values[command.index] = command.value
+  redrawArray(editor, store, array, values)
+}
+
+// Redraws an array with new values from where it currently sits (it may have
+// been dragged): cell widths are recomputed, and index labels and every pointer
+// on the array follow the cells.
+function redrawArray(
+  editor: Editor,
+  store: SemanticStore,
+  array: SemanticObject,
+  values: (number | string)[],
+): void {
+  // Deliberately position-based: highlights and pointers stay on their cell
+  // index when values move, like a finger on a slot, not on a value.
+  const props = { ...array.props, values }
+  const first = findPart(editor, array, 'cell', 0)
+  const cells = arrayCellRects({ x: first.x, y: first.y }, values)
+  const ids = values.map((_, index) => ({
+    cell: findPart(editor, array, 'cell', index).id,
+    label: findPart(editor, array, 'index-label', index).id,
+  }))
+  const updates = arrayShapes(ids, cells, values, { semanticId: array.id, kind: 'array', props })
+  for (const pointer of store.list()) {
+    if (pointer.kind !== 'pointer' || pointer.props.array !== array.id) continue
+    const pointerIds = {
+      arrow: findPart(editor, pointer, 'pointer-arrow').id,
+      label: findPart(editor, pointer, 'pointer-label').id,
+    }
+    const cell = cells[Number(pointer.props.index)]
+    updates.push(...pointerShapes(pointerIds, cell, { semanticId: pointer.id, kind: 'pointer', props: pointer.props }))
+  }
+  editor.updateShapes(updates)
+  store.updateProps(array.id, props)
 }
 
 const HIGHLIGHT_COLOR = 'orange'

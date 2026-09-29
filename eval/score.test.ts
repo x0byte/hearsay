@@ -15,6 +15,12 @@ describe('classify', () => {
     expect(classify([move], undefined)).toBe('error')
     expect(classify([move], [{ index: 1, target: 'pointer-i', type: 'move_pointer' }])).toBe('correct')
   })
+
+  it('treats swap(i, j) and swap(j, i) as the same answer', () => {
+    const swap: CanvasCommand = { type: 'swap', target: 'array-a', i: 1, j: 2 }
+    expect(classify([swap], [{ ...swap, i: 2, j: 1 }])).toBe('correct')
+    expect(classify([swap], [{ ...swap, i: 0, j: 2 }])).toBe('wrong')
+  })
 })
 
 describe('matches', () => {
@@ -84,10 +90,10 @@ describe('cases', () => {
   const tuned = cases.filter((c) => c.tag !== 'holdout')
   const holdout = cases.filter((c) => c.tag === 'holdout')
 
-  it('has 40 tuned and 10 held-out cases, all with unique names', () => {
-    expect(tuned).toHaveLength(40)
+  it('has 45 tuned and 10 held-out cases, all with unique names', () => {
+    expect(tuned).toHaveLength(45)
     expect(holdout).toHaveLength(10)
-    expect(new Set(cases.map((c) => c.name)).size).toBe(50)
+    expect(new Set(cases.map((c) => c.name)).size).toBe(55)
   })
 
   it('keeps about 40% of the tuned set expecting no commands', () => {

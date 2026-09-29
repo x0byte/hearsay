@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import type { Editor } from 'tldraw'
 import type { CanvasCommand } from './commands'
 import { executeCanvasCommand, runCommands } from './executeCanvasCommand'
-import { ARRAY_CELL_SIZE, GAP, MARGIN } from './layout'
+import { ARRAY_CELL_SIZE, arrayCellWidth, GAP, MARGIN, pointerGeometry } from './layout'
 import { SemanticStore } from './semanticStore'
 
 // Bounds of shapes already on the page; enough for the layout path.
@@ -215,6 +215,64 @@ describe('executeCanvasCommand', () => {
       expect(arrow).toMatchObject({ id: 'shape:pa', x: 190, meta: { props: { index: 1 } } })
       expect(label).toMatchObject({ id: 'shape:pl', x: 160, meta: { props: { index: 1 } } })
       expect(store.get('pointer-i')?.props).toEqual({ label: 'i', array: 'array-a', index: 1 })
+    })
+  })
+
+  describe('swap and set_value', () => {
+    // array-a [5, 2] at (100, 100) with pointer i on cell 1.
+    function setup() {
+      const meta = (part: string, index?: number) => ({ semanticId: 'x', part, index })
+      const shapes = [
+        { id: 'shape:c0', type: 'geo', x: 100, y: 100, meta: meta('cell', 0) },
+        { id: 'shape:l0', type: 'text', x: 100, y: 164, meta: meta('index-label', 0) },
+        { id: 'shape:c1', type: 'geo', x: 160, y: 100, meta: meta('cell', 1) },
+        { id: 'shape:l1', type: 'text', x: 160, y: 164, meta: meta('index-label', 1) },
+        { id: 'shape:pa', type: 'arrow', x: 0, y: 0, meta: meta('pointer-arrow') },
+        { id: 'shape:pl', type: 'text', x: 0, y: 0, meta: meta('pointer-label') },
+      ]
+      const editor = { getShape: (id: string) => shapes.find((s) => s.id === id), updateShapes: vi.fn() }
+      const store = new SemanticStore()
+      store.add({
+        id: 'array-a',
+        kind: 'array',
+        shapeIds: ['shape:c0', 'shape:l0', 'shape:c1', 'shape:l1'],
+        props: { values: [5, 2], highlight: 1 },
+      })
+      store.add({
+        id: 'pointer-i',
+        kind: 'pointer',
+        shapeIds: ['shape:pa', 'shape:pl'],
+        props: { label: 'i', array: 'array-a', index: 1 },
+      })
+      const updated = () => editor.updateShapes.mock.calls[0][0] as { id: string; x: number; props: Record<string, unknown>; meta: Record<string, unknown> }[]
+      const byId = (id: string) => updated().find((u) => u.id === id)!
+      return { editor: editor as unknown as Editor, store, byId }
+    }
+    const label = (u: { props: Record<string, unknown> }) => JSON.stringify(u.props.richText)
+
+    it('swap relabels the two cells and keeps the highlight on its cell', () => {
+      const { editor, store, byId } = setup()
+      executeCanvasCommand(editor, store, { type: 'swap', target: 'array-a', i: 0, j: 1 })
+
+      expect(label(byId('shape:c0'))).toContain('"2"')
+      expect(label(byId('shape:c1'))).toContain('"5"')
+      expect(byId('shape:c1').props).not.toHaveProperty('fill') // highlight styling untouched
+      expect(store.get('array-a')?.props).toEqual({ values: [2, 5], highlight: 1 })
+      expect(byId('shape:c1').meta.props).toEqual({ values: [2, 5], highlight: 1 })
+    })
+
+    it('set_value widens every cell, and index labels and pointers follow', () => {
+      const { editor, store, byId } = setup()
+      executeCanvasCommand(editor, store, { type: 'set_value', target: 'array-a', index: 0, value: 123456 })
+
+      const w = arrayCellWidth([123456, 2])
+      expect(w).toBeGreaterThan(ARRAY_CELL_SIZE)
+      expect(byId('shape:c0')).toMatchObject({ x: 100, props: { w } })
+      expect(byId('shape:c1')).toMatchObject({ x: 100 + w, props: { w } })
+      expect(byId('shape:l1')).toMatchObject({ x: 100 + w, props: { w } })
+      const { tail } = pointerGeometry({ x: 100 + w, y: 100, w, h: ARRAY_CELL_SIZE })
+      expect(byId('shape:pa')).toMatchObject({ x: tail.x, y: tail.y })
+      expect(store.get('array-a')?.props.values).toEqual([123456, 2])
     })
   })
 

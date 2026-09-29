@@ -39,6 +39,22 @@ export type ClearHighlightCommand = {
 // object, or one array cell. Absent means not highlighted.
 export type Highlight = 'all' | number
 
+// Swaps the values in two cells of an array.
+export type SwapCommand = {
+  type: 'swap'
+  target: string
+  i: number
+  j: number
+}
+
+// Replaces the value in one cell of an array.
+export type SetValueCommand = {
+  type: 'set_value'
+  target: string
+  index: number
+  value: number | string
+}
+
 // A labelled arrow under one cell of an array, e.g. loop index `i`.
 export type CreatePointerCommand = {
   type: 'create_pointer'
@@ -68,4 +84,6 @@ export type CanvasCommand =
   | ClearHighlightCommand
   | CreatePointerCommand
   | MovePointerCommand
+  | SwapCommand
+  | SetValueCommand
   | DeleteCommand

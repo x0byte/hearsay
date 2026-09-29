@@ -27,7 +27,12 @@ export function classify(expected: CanvasCommand[], got: CanvasCommand[] | undef
   if (!got) return 'error'
   if (expected.length === 0) return got.length === 0 ? 'correct' : 'false_draw'
   if (got.length === 0) return 'miss'
-  return matches(expected, got) ? 'correct' : 'wrong'
+  return matches(expected.map(canonical), got.map(canonical)) ? 'correct' : 'wrong'
+}
+
+// swap(i, j) and swap(j, i) are the same change.
+function canonical(command: CanvasCommand): CanvasCommand {
+  return command.type === 'swap' && command.i > command.j ? { ...command, i: command.j, j: command.i } : command
 }
 
 // Deep equality, ignoring key order, where an expected ANY matches any string.

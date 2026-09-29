@@ -4,7 +4,19 @@ export type Point = { x: number; y: number }
 export type Rect = { x: number; y: number; w: number; h: number }
 
 export const MARGIN = 100
-export const GAP = 40
+
+// Space under a cell for its index label, then the pointer arrow and its label.
+export const INDEX_LABEL_SPACE = 28
+export const POINTER_ARROW_LENGTH = 40
+export const POINTER_LABEL_GAP = 4
+export const POINTER_LABEL_HEIGHT = 40 // generous for one line of tldraw text
+// How far a pointer row reaches below an array's cells.
+export const POINTER_ROW_DEPTH =
+  INDEX_LABEL_SPACE + POINTER_ARROW_LENGTH + POINTER_LABEL_GAP + POINTER_LABEL_HEIGHT
+
+// Space between stacked objects: room for a pointer row added later under the
+// object above (measured from its cells, the worst case), plus breathing room.
+export const GAP = POINTER_ROW_DEPTH + 24
 
 // Stacks new objects top to bottom along the left margin, below everything
 // already on the page.
@@ -35,9 +47,6 @@ export function arrayCellRects(origin: Point, values: (number | string)[]): Rect
   return values.map((_, i) => ({ x: origin.x + i * w, y: origin.y, w, h: ARRAY_CELL_SIZE }))
 }
 
-// Space under a cell for its index label, then the pointer arrow and its label.
-export const INDEX_LABEL_SPACE = 28
-export const POINTER_ARROW_LENGTH = 40
 
 export type PointerGeometry = { tip: Point; tail: Point; label: Point; labelWidth: number }
 
@@ -46,5 +55,5 @@ export function pointerGeometry(cell: Rect): PointerGeometry {
   const centerX = cell.x + cell.w / 2
   const tip = { x: centerX, y: cell.y + cell.h + INDEX_LABEL_SPACE }
   const tail = { x: centerX, y: tip.y + POINTER_ARROW_LENGTH }
-  return { tip, tail, label: { x: cell.x, y: tail.y + 4 }, labelWidth: cell.w }
+  return { tip, tail, label: { x: cell.x, y: tail.y + POINTER_LABEL_GAP }, labelWidth: cell.w }
 }

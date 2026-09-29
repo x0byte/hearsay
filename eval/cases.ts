@@ -178,6 +178,37 @@ export const cases: EvalCase[] = [
     expected: [{ type: 'create_text', id: 'text-1', text: ANY }],
   },
 
+  // Changing values: swap and set_value.
+  {
+    name: 'swap-explicit',
+    tag: 'command',
+    segments: ['swap the first two elements'],
+    board: ARR,
+    expected: [{ type: 'swap', target: 'array-a', i: 0, j: 1 }],
+  },
+  {
+    name: 'swap-implied',
+    tag: 'command',
+    segments: ['4 is bigger than 1, so they trade places'],
+    board: [obj('array-a', 'array', { values: [3, 4, 1, 5] })],
+    expected: [{ type: 'swap', target: 'array-a', i: 1, j: 2 }],
+  },
+  {
+    name: 'swap-at-pointers',
+    tag: 'command',
+    segments: ['swap the values at i and j'],
+    board: ARR_IJ,
+    expected: [{ type: 'swap', target: 'array-a', i: 0, j: 3 }],
+  },
+  {
+    name: 'set-value',
+    tag: 'command',
+    segments: ['change the 8 to 10'],
+    board: ARR,
+    expected: [{ type: 'set_value', target: 'array-a', index: 2, value: 10 }],
+  },
+  explain('explain-swapping', 'swapping is how bubble sort makes progress', ARR),
+
   // Several commands in one sentence, referring to what was just created.
   {
     name: 'multi-array-and-pointer',

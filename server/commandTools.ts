@@ -8,17 +8,19 @@ import type { FunctionTool, ToolCall } from './openrouter.ts'
 // (the layout module places objects) and new IDs (assigned in code).
 
 type Schema = {
-  type: 'object' | 'array' | 'string' | 'integer' | 'number'
+  type?: 'object' | 'array' | 'string' | 'integer' | 'number'
+  anyOf?: Schema[]
   description?: string
   properties?: Record<string, Schema>
   required?: string[]
   additionalProperties?: false
-  items?: { anyOf: Schema[] }
+  items?: Schema
 }
 
 const REF_HELP = 'An ID listed on the board, or "new" for the object created most recently in this reply.'
 const target: Schema = { type: 'string', description: REF_HELP }
 const cellIndex: Schema = { type: 'integer', description: 'Zero-based array cell index.' }
+const cellValue: Schema = { anyOf: [{ type: 'number' }, { type: 'string' }] }
 
 function tool(
   name: CanvasCommand['type'],
@@ -41,7 +43,7 @@ export const commandTools = [
   tool(
     'create_array',
     'Draw an array as a row of cells with their indices.',
-    { values: { type: 'array', items: { anyOf: [{ type: 'number' }, { type: 'string' }] } } },
+    { values: { type: 'array', items: cellValue } },
     ['values'],
   ),
   tool(
@@ -65,6 +67,18 @@ export const commandTools = [
     'target',
     'index',
   ]),
+  tool(
+    'swap',
+    'Swap the values in two cells of an existing array, e.g. when two values "trade places".',
+    { target, i: cellIndex, j: cellIndex },
+    ['target', 'i', 'j'],
+  ),
+  tool(
+    'set_value',
+    'Replace the value in one cell of an existing array.',
+    { target, index: cellIndex, value: { ...cellValue, description: 'The new value.' } },
+    ['target', 'index', 'value'],
+  ),
   tool('delete', 'Remove an existing object. Removing an array also removes its pointers.', { target }, [
     'target',
   ]),
@@ -88,6 +102,7 @@ export function draftFromToolCall(call: ToolCall): DraftCommand | undefined {
 
 // Checks a value against the small JSON Schema subset used above.
 function matches(schema: Schema, value: unknown): boolean {
+  if (schema.anyOf) return schema.anyOf.some((option) => matches(option, value))
   switch (schema.type) {
     case 'string':
       return typeof value === 'string' && value.trim() !== ''
@@ -96,10 +111,7 @@ function matches(schema: Schema, value: unknown): boolean {
     case 'integer':
       return Number.isInteger(value)
     case 'array':
-      return (
-        Array.isArray(value) &&
-        value.every((item) => schema.items?.anyOf.some((option) => matches(option, item)) ?? true)
-      )
+      return Array.isArray(value) && value.every((item) => !schema.items || matches(schema.items, item))
     case 'object': {
       if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
       const properties = schema.properties ?? {}
@@ -108,5 +120,7 @@ function matches(schema: Schema, value: unknown): boolean {
       if (!(schema.required ?? []).every((key) => key in record)) return false
       return Object.entries(record).every(([key, v]) => matches(properties[key], v))
     }
+    default:
+      return false
   }
 }

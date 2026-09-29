@@ -10,6 +10,7 @@ import {
   MARGIN,
   nextFreePosition,
   POINTER_ARROW_LENGTH,
+  POINTER_LABEL_HEIGHT,
   pointerGeometry,
 } from './layout'
 
@@ -24,6 +25,15 @@ describe('nextFreePosition', () => {
       { x: 400, y: 80, w: 100, h: 300 },
     ]
     expect(nextFreePosition(occupied)).toEqual({ x: MARGIN, y: 380 + GAP })
+  })
+})
+
+describe('stacking gap', () => {
+  it('leaves room for a pointer row added later under the array above', () => {
+    const cell = { x: MARGIN, y: MARGIN, w: 60, h: 60 }
+    const below = nextFreePosition([cell])
+    const { label } = pointerGeometry(cell)
+    expect(label.y + POINTER_LABEL_HEIGHT).toBeLessThan(below.y)
   })
 })
 

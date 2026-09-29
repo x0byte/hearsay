@@ -5,10 +5,11 @@ import type { SemanticObject } from './semanticStore.ts'
 export type NoOpResult = { commands: CanvasCommand[]; dropped: CanvasCommand[] }
 
 // Removes commands that would not change the board: moving a pointer to the
-// index it is already on, a highlight equal to the object's current one, and
-// clearing a highlight that isn't there. Commands are checked in order against
-// the board as earlier commands in the batch leave it. Anything else, including
-// commands on unknown objects, is kept for the validator to judge.
+// index it is already on, a highlight equal to the object's current one,
+// clearing a highlight that isn't there, swapping a cell with itself, and
+// setting a cell to the value it already has. Commands are checked in order
+// against the board as earlier commands in the batch leave it. Anything else,
+// including commands on unknown objects, is kept for the validator to judge.
 export function dropNoOps(commands: CanvasCommand[], objects: SemanticObject[]): NoOpResult {
   const state = new Map(objects.map((o) => [o.id, { ...o.props }]))
   const kept: CanvasCommand[] = []
@@ -32,6 +33,24 @@ export function dropNoOps(commands: CanvasCommand[], objects: SemanticObject[]):
         noOp = current !== undefined && current.highlight === undefined
         if (current) delete current.highlight
         break
+      case 'swap': {
+        noOp = command.i === command.j
+        if (!noOp && current && Array.isArray(current.values)) {
+          const swapped = [...current.values] // never mutate the caller's board
+          swapped[command.i] = current.values[command.j]
+          swapped[command.j] = current.values[command.i]
+          current.values = swapped
+        }
+        break
+      }
+      case 'set_value': {
+        const values = current && Array.isArray(current.values) ? current.values : undefined
+        noOp = values?.[command.index] === command.value
+        if (!noOp && current && values) {
+          current.values = values.map((v, i) => (i === command.index ? command.value : v))
+        }
+        break
+      }
       case 'delete':
         state.delete(command.target)
         break

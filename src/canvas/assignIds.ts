@@ -37,6 +37,8 @@ export function assignIds(drafts: DraftCommand[], existingIds: string[]): Canvas
       case 'highlight':
       case 'clear_highlight':
       case 'move_pointer':
+      case 'swap':
+      case 'set_value':
       case 'delete': {
         const target = resolve(draft.target)
         if (!target) return undefined
