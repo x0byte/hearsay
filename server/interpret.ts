@@ -52,10 +52,12 @@ function isSegment(value: unknown): value is TranscriptSegment {
   return typeof text === 'string' && typeof at === 'number' && Number.isFinite(at)
 }
 
-const SYSTEM_PROMPT = `You drive a whiteboard for someone explaining ideas out loud, usually algorithms.
-You receive the latest transcript and the objects currently on the board.
-Call tools only when the speaker asks for, or clearly implies, a change to the board.
-Most speech is explanation: in that case call no tools and reply with nothing.
+export const SYSTEM_PROMPT = `You drive a whiteboard for someone explaining ideas out loud, usually algorithms.
+You receive the objects currently on the board and the last ~30 seconds of
+transcript. Only the line marked NEWEST is new; earlier lines are context and
+any changes they asked for are already on the board, so never repeat them.
+Only act when the NEWEST line asks for or clearly describes a change to the
+board. If unsure, do nothing. Most speech is explanation: call no tools.
 Refer to existing objects only by the IDs listed on the board. New objects get
 their IDs automatically; to refer to an object created earlier in the same
 reply, use "new".
@@ -93,7 +95,9 @@ function userMessage({ segments, objects }: InterpretRequest): string {
   const board = objects.length
     ? objects.map(({ id, kind, props }) => `- ${id} (${kind}): ${JSON.stringify(props)}`).join('\n')
     : '(empty)'
-  const transcript = segments.map((segment) => segment.text).join('\n')
+  const transcript = segments
+    .map((segment, i) => (i === segments.length - 1 ? `NEWEST: ${segment.text}` : `earlier: ${segment.text}`))
+    .join('\n')
   return `Board:\n${board}\n\nTranscript (oldest first):\n${transcript}`
 }
 

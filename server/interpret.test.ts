@@ -71,7 +71,7 @@ describe('interpret', () => {
     expect(sent.tools).toBe(commandTools)
     expect(sent.messages[1].content).toContain('- hello (text): {"text":"Hi"}')
     expect(sent.messages[1].content).toContain(
-      'We are going to sort some numbers.\nLet me draw the array 3 1 4 and put i at the start',
+      'earlier: We are going to sort some numbers.\nNEWEST: Let me draw the array 3 1 4 and put i at the start',
     )
   })
 
