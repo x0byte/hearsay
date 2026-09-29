@@ -61,24 +61,31 @@ for (const evalCase of cases) {
     }
     const latencyMs = Math.round(performance.now() - started)
     const outcome = classify(evalCase.expected, Array.isArray(got) ? got : undefined)
-    attempts.push({ case: evalCase.name, tag: evalCase.tag, outcome, latencyMs, costUsd, finishReason, tokens, got })
+    const expectsChange = evalCase.expected.length > 0
+    attempts.push({ case: evalCase.name, tag: evalCase.tag, expectsChange, outcome, latencyMs, costUsd, finishReason, tokens, got })
     marks.push(outcome === 'correct' ? '✓' : outcome === 'false_draw' ? 'D' : outcome === 'miss' ? 'M' : outcome === 'wrong' ? 'W' : 'E')
   }
   console.log(`${marks.join('')}  ${evalCase.tag.padEnd(11)} ${evalCase.name}`)
 }
 
-const summary = summarize(attempts)
+// `summary` covers the tuned set only, so it stays comparable across runs;
+// held-out cases get their own summary.
+const summary = summarize(attempts.filter((a) => a.tag !== 'holdout'))
+const holdout = attempts.filter((a) => a.tag === 'holdout')
+const holdoutSummary = holdout.length ? summarize(holdout) : undefined
 const previous = latestResult()
 mkdirSync(RESULTS_DIR, { recursive: true })
 const file = `${new Date().toISOString().replace(/[:.]/g, '-')}_${label}.json`
 writeFileSync(
   new URL(file, RESULTS_DIR),
-  JSON.stringify({ runAt: new Date().toISOString(), label, ...config, promptHash, repeats, summary, attempts }, null, 2) + '\n',
+  JSON.stringify({ runAt: new Date().toISOString(), label, ...config, promptHash, repeats, summary, holdoutSummary, attempts }, null, 2) + '\n',
 )
 
 console.log('\n✓ correct  D false draw  M miss  W wrong  E error\n')
-printSummary('this run', summary)
-if (previous) printSummary(`previous (${previous.file})`, previous.summary)
+printSummary('this run, tuned set', summary)
+if (previous) printSummary(`previous, tuned set (${previous.file})`, previous.summary)
+if (holdoutSummary) printSummary('this run, HELD-OUT set (report separately)', holdoutSummary)
+if (holdoutSummary && previous?.holdoutSummary) printSummary('previous, held-out set', previous.holdoutSummary)
 console.log(`\nSaved eval/results/${file}`)
 
 function printSummary(title: string, s: Summary) {
@@ -90,7 +97,7 @@ function printSummary(title: string, s: Summary) {
   console.log(`  latency p50 ${s.latencyMs.p50} ms  p95 ${s.latencyMs.p95} ms  cost $${s.totalCostUsd.toFixed(5)}`)
 }
 
-function latestResult(): { file: string; summary: Summary } | undefined {
+function latestResult(): { file: string; summary: Summary; holdoutSummary?: Summary } | undefined {
   let files: string[]
   try {
     files = readdirSync(RESULTS_DIR).filter((f) => f.endsWith('.json')).sort()
@@ -99,5 +106,6 @@ function latestResult(): { file: string; summary: Summary } | undefined {
   }
   const file = files.at(-1)
   if (!file) return undefined
-  return { file, summary: JSON.parse(readFileSync(new URL(file, RESULTS_DIR), 'utf8')).summary }
+  const { summary, holdoutSummary } = JSON.parse(readFileSync(new URL(file, RESULTS_DIR), 'utf8'))
+  return { file, summary, holdoutSummary }
 }

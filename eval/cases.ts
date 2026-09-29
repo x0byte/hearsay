@@ -8,7 +8,9 @@ import type { SemanticObject } from '../src/canvas/semanticStore.ts'
 
 export const ANY = '*'
 
-export type EvalTag = 'explanation' | 'command' | 'multi' | 'context'
+// 'holdout' cases were written after prompt tuning stopped and are never used
+// to tune it; they are reported separately.
+export type EvalTag = 'explanation' | 'command' | 'multi' | 'context' | 'holdout'
 
 export type EvalCase = {
   name: string
@@ -240,5 +242,50 @@ export const cases: EvalCase[] = [
     segments: ['draw the array 3, 1, 2', "this is the input we'll sort"],
     board: [obj('array-a', 'array', { values: [3, 1, 2] })],
     expected: [],
+  },
+
+  // Held out: not used for tuning. Mostly explanation, a couple of multi.
+  ...[
+    ['holdout-explain-two-pointers', 'the reason we use two pointers is to avoid checking every pair', ARR_IJ],
+    ['holdout-explain-bubbles', 'notice how the largest value bubbles to the end after each pass', ARR],
+    ['holdout-explain-what-is-index', 'an index is just the position of a value in the array', ARR],
+    ['holdout-explain-edge-cases', "let's pause and think about the edge cases", ARR_I],
+    ['holdout-explain-sorted-faster', 'a sorted array makes searching much faster', EMPTY],
+    ['holdout-explain-i-starts-at-zero', 'the loop variable i starts at zero', ARR_I],
+    ['holdout-explain-merge-sort', "you'll see this pattern again in merge sort", ARR],
+  ].map(([name, text, board]): EvalCase => ({
+    name: name as string,
+    tag: 'holdout',
+    segments: [text as string],
+    board: board as SemanticObject[],
+    expected: [],
+  })),
+  {
+    name: 'holdout-multi-lo-hi',
+    tag: 'holdout',
+    segments: ['draw an array 2, 4, 6, 8 and put a pointer lo on the first and hi on the last'],
+    board: EMPTY,
+    expected: [
+      { type: 'create_array', id: 'array-a', values: [2, 4, 6, 8] },
+      { type: 'create_pointer', id: 'pointer-lo', label: 'lo', array: 'array-a', index: 0 },
+      { type: 'create_pointer', id: 'pointer-hi', label: 'hi', array: 'array-a', index: 3 },
+    ],
+  },
+  {
+    name: 'holdout-multi-highlight-middle',
+    tag: 'holdout',
+    segments: ['make the array 7, 3, 5 and highlight the middle one'],
+    board: EMPTY,
+    expected: [
+      { type: 'create_array', id: 'array-a', values: [7, 3, 5] },
+      { type: 'highlight', target: 'array-a', index: 1 },
+    ],
+  },
+  {
+    name: 'holdout-shift-j-to-start',
+    tag: 'holdout',
+    segments: ['shift j back to the start'],
+    board: ARR_IJ,
+    expected: [{ type: 'move_pointer', target: 'pointer-j', index: 0 }],
   },
 ]

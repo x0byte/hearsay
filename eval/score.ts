@@ -11,6 +11,7 @@ export type Outcome = 'correct' | 'false_draw' | 'miss' | 'wrong' | 'error'
 export type Attempt = {
   case: string
   tag: EvalTag
+  expectsChange: boolean
   outcome: Outcome
   latencyMs: number
   costUsd: number
@@ -68,7 +69,7 @@ export type Summary = {
 export function summarize(attempts: Attempt[]): Summary {
   const counts: Record<Outcome, number> = { correct: 0, false_draw: 0, miss: 0, wrong: 0, error: 0 }
   for (const attempt of attempts) counts[attempt.outcome]++
-  const expectingNothing = attempts.filter((a) => a.tag === 'explanation').length
+  const expectingNothing = attempts.filter((a) => !a.expectsChange).length
   const expectingCommands = attempts.length - expectingNothing
   const accuracyByTag: Partial<Record<EvalTag, number>> = {}
   for (const tag of new Set(attempts.map((a) => a.tag))) {

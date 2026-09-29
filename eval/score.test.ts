@@ -43,6 +43,7 @@ describe('summarize', () => {
   const attempt = (tag: Attempt['tag'], outcome: Attempt['outcome'], latencyMs: number): Attempt => ({
     case: 'c',
     tag,
+    expectsChange: tag !== 'explanation',
     outcome,
     latencyMs,
     costUsd: 0.001,
@@ -67,15 +68,27 @@ describe('summarize', () => {
 })
 
 describe('cases', () => {
-  it('has 40 cases with unique names, about 40% expecting no commands', () => {
-    expect(cases).toHaveLength(40)
-    expect(new Set(cases.map((c) => c.name)).size).toBe(40)
-    const nothing = cases.filter((c) => c.expected.length === 0).length
-    expect(nothing / cases.length).toBeGreaterThanOrEqual(0.4)
-    expect(nothing / cases.length).toBeLessThanOrEqual(0.45)
+  const tuned = cases.filter((c) => c.tag !== 'holdout')
+  const holdout = cases.filter((c) => c.tag === 'holdout')
+
+  it('has 40 tuned and 10 held-out cases, all with unique names', () => {
+    expect(tuned).toHaveLength(40)
+    expect(holdout).toHaveLength(10)
+    expect(new Set(cases.map((c) => c.name)).size).toBe(50)
   })
 
-  it('tags exactly the cases that expect nothing as explanation', () => {
-    for (const c of cases) expect(c.tag === 'explanation').toBe(c.expected.length === 0)
+  it('keeps about 40% of the tuned set expecting no commands', () => {
+    const nothing = tuned.filter((c) => c.expected.length === 0).length
+    expect(nothing / tuned.length).toBeGreaterThanOrEqual(0.4)
+    expect(nothing / tuned.length).toBeLessThanOrEqual(0.45)
+  })
+
+  it('tags exactly the tuned cases that expect nothing as explanation', () => {
+    for (const c of tuned) expect(c.tag === 'explanation').toBe(c.expected.length === 0)
+  })
+
+  it('makes the held-out set mostly explanation with a couple of multi-command cases', () => {
+    expect(holdout.filter((c) => c.expected.length === 0).length).toBeGreaterThanOrEqual(6)
+    expect(holdout.filter((c) => c.expected.length > 1).length).toBeGreaterThanOrEqual(2)
   })
 })
