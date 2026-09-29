@@ -66,6 +66,11 @@ export function openRouterChat(apiKey: string): ChatCompletion {
       const message = error?.metadata?.raw ?? error?.message ?? response.statusText
       throw new OpenRouterError(response.status, `OpenRouter ${response.status}: ${message}`)
     }
+    // A 200 whose body never arrived (e.g. timed out mid-stream) or isn't a
+    // completion is a failure, not an empty reply.
+    if (!Array.isArray((body as ChatResponse | undefined)?.choices)) {
+      throw new OpenRouterError(502, 'OpenRouter returned no completion (body missing or malformed)')
+    }
     return body as ChatResponse
   }
 }
