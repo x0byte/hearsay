@@ -62,11 +62,11 @@ Never write notes, summaries or labels unless the speaker explicitly asks for
 text to be written.
 Refer to existing objects only by the IDs listed on the board. New objects get
 their IDs automatically; to refer to an object created earlier in the same
-reply, use "$N", where N is the 0-based position of the call that created it.
+reply, use "new".
 Make every call the request needs in this one reply, in the order the changes
 should happen. You will not see tool results. For example, "draw 4, 2, 7 with
 i on the first one" is create_array(values: [4, 2, 7]) followed by
-create_pointer(label: "i", array: "$0", index: 0).`
+create_pointer(label: "i", array: "new", index: 0).`
 
 // Asks the model which commands (if any) the transcript calls for.
 export async function interpret(
@@ -109,8 +109,8 @@ function userMessage({ segments, objects }: InterpretRequest): string {
 }
 
 // All or nothing: the calls in one reply often depend on each other (create an
-// array, then a pointer on it), so if any call is malformed, or a "$N"
-// placeholder can't be resolved, none are used.
+// array, then a pointer on it), so if any call is malformed, or a "new"
+// reference has nothing to refer to, none are used.
 function commandsFrom(response: ChatResponse, existingIds: string[]): CanvasCommand[] {
   const choice = response.choices[0]
   if (!choice) throw new Error('Model returned no choices')
