@@ -37,6 +37,20 @@ export default function App() {
 
   function onMount(mounted: Editor) {
     setEditor(mounted)
+    // TEMP dev console hook — do not commit. In the browser console:
+    //   hearsay.run({ type: 'create_array', id: 'array-a', values: [3, 1, 4] })
+    //   hearsay.run([{ ... }, { ... }])   // one batch, one undo step
+    //   hearsay.objects()                 // semantic store contents
+    if (import.meta.env.DEV) {
+      Object.assign(window, {
+        hearsay: {
+          run: (commands: CanvasCommand | CanvasCommand[]) =>
+            runCommands(mounted, semanticStore, Array.isArray(commands) ? commands : [commands]),
+          objects: () => semanticStore.list(),
+          editor: mounted,
+        },
+      })
+    }
     return handleMount(mounted)
   }
 

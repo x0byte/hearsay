@@ -60,15 +60,18 @@ for (const evalCase of cases) {
     }
     const started = performance.now()
     let got: Attempt['got']
+    let dropped: Attempt['dropped'] = []
     try {
-      got = await interpret(chat, request, config)
+      const result = await interpret(chat, request, config)
+      got = result.commands
+      dropped = result.dropped
     } catch (error) {
       got = { error: error instanceof Error ? error.message : String(error) }
     }
     const latencyMs = Math.round(performance.now() - started)
     const outcome = classify(evalCase.expected, Array.isArray(got) ? got : undefined)
     const expectsChange = evalCase.expected.length > 0
-    attempts.push({ case: evalCase.name, tag: evalCase.tag, expectsChange, outcome, latencyMs, costUsd, finishReason, tokens, got })
+    attempts.push({ case: evalCase.name, tag: evalCase.tag, expectsChange, outcome, latencyMs, costUsd, finishReason, tokens, got, dropped })
     marks.push(outcome === 'correct' ? '✓' : outcome === 'false_draw' ? 'D' : outcome === 'miss' ? 'M' : outcome === 'wrong' ? 'W' : 'E')
   }
   console.log(`${marks.join('')}  ${evalCase.tag.padEnd(11)} ${evalCase.name}`)
@@ -100,6 +103,10 @@ function printSummary(title: string, s: Summary) {
   console.log(`  accuracy ${pct(s.accuracy)} (${s.counts.correct}/${s.attempts})  by tag: ${byTag}`)
   console.log(`  false draws ${s.counts.false_draw} (${pct(s.falseDrawRate)} of no-change attempts)  misses ${s.counts.miss} (${pct(s.missRate)} of change attempts)  wrong ${s.counts.wrong}  errors ${s.counts.error}`)
   console.log(`  latency p50 ${s.latencyMs.p50} ms  p95 ${s.latencyMs.p95} ms  cost $${s.totalCostUsd.toFixed(5)}`)
+  // Older result files predate no-op dropping.
+  if (s.noOps) {
+    console.log(`  no-op drops: ${s.noOps.commands} commands in ${s.noOps.attempts} attempts; ${s.noOps.rescued} no-change attempts correct only because of a drop`)
+  }
 }
 
 // Result files are named <timestamp>_<label>.json, so sorting by name is by time.

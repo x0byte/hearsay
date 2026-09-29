@@ -1,6 +1,7 @@
 import type { CanvasCommand } from '../src/canvas/commands.ts'
 import type { InterpretRequest, TranscriptSegment } from '../src/interpret/protocol.ts'
 import { assignIds, type DraftCommand } from '../src/canvas/assignIds.ts'
+import { dropNoOps, type NoOpResult } from '../src/canvas/dropNoOps.ts'
 import { commandTools, draftFromToolCall } from './commandTools.ts'
 import type { ChatCompletion, ChatResponse } from './openrouter.ts'
 
@@ -68,13 +69,14 @@ should happen. You will not see tool results. For example, "draw 4, 2, 7 with
 i on the first one" is create_array(values: [4, 2, 7]) followed by
 create_pointer(label: "i", array: "new", index: 0).`
 
-// Asks the model which commands (if any) the transcript calls for.
+// Asks the model which commands (if any) the transcript calls for. Commands
+// that wouldn't change the board are returned separately in `dropped`.
 export async function interpret(
   chat: ChatCompletion,
   request: InterpretRequest,
   config: ModelConfig = resolveModelConfig({}),
   signal?: AbortSignal,
-): Promise<CanvasCommand[]> {
+): Promise<NoOpResult> {
   const response = await chat(
     {
       model: config.model,
@@ -95,7 +97,8 @@ export async function interpret(
     },
     signal,
   )
-  return commandsFrom(response, request.objects.map((object) => object.id))
+  const commands = commandsFrom(response, request.objects.map((object) => object.id))
+  return dropNoOps(commands, request.objects)
 }
 
 function userMessage({ segments, objects }: InterpretRequest): string {

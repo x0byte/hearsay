@@ -48,6 +48,7 @@ describe('summarize', () => {
     latencyMs,
     costUsd: 0.001,
     got: [],
+    dropped: [],
   })
 
   it('reports rates against the right denominators', () => {
@@ -64,6 +65,18 @@ describe('summarize', () => {
     expect(summary.accuracyByTag).toEqual({ explanation: 0.5, command: 0.5, context: 0 })
     expect(summary.latencyMs).toEqual({ p50: 200, p95: 400 })
     expect(summary.totalCostUsd).toBeCloseTo(0.005)
+  })
+
+  it('reports dropped no-ops separately, including no-change attempts they rescued', () => {
+    const noOp: CanvasCommand = { type: 'move_pointer', target: 'pointer-i', index: 0 }
+    const summary = summarize([
+      { ...attempt('explanation', 'correct', 100), dropped: [noOp] }, // rescued
+      { ...attempt('explanation', 'false_draw', 100), dropped: [noOp] }, // still a false draw
+      { ...attempt('command', 'correct', 100), dropped: [noOp, noOp] },
+      attempt('explanation', 'correct', 100),
+    ])
+    expect(summary.noOps).toEqual({ commands: 4, attempts: 3, rescued: 1 })
+    expect(summary.counts.false_draw).toBe(1)
   })
 })
 

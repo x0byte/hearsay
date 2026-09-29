@@ -19,6 +19,8 @@ export type Attempt = {
   finishReason?: string | null
   tokens?: { prompt: number; completion: number; reasoning: number }
   got: CanvasCommand[] | { error: string }
+  // No-op commands removed before scoring (they would not change the board).
+  dropped: CanvasCommand[]
 }
 
 export function classify(expected: CanvasCommand[], got: CanvasCommand[] | undefined): Outcome {
@@ -64,6 +66,12 @@ export type Summary = {
   accuracyByTag: Partial<Record<EvalTag, number>>
   latencyMs: { p50: number; p95: number }
   totalCostUsd: number
+  // Reported separately so no-op drops can't hide false draws.
+  noOps: {
+    commands: number // no-op commands dropped in total
+    attempts: number // attempts with at least one dropped command
+    rescued: number // no-change attempts scored correct only because of a drop
+  }
 }
 
 export function summarize(attempts: Attempt[]): Summary {
@@ -86,6 +94,12 @@ export function summarize(attempts: Attempt[]): Summary {
     accuracyByTag,
     latencyMs: { p50: percentile(latencies, 50), p95: percentile(latencies, 95) },
     totalCostUsd: attempts.reduce((sum, a) => sum + a.costUsd, 0),
+    noOps: {
+      commands: attempts.reduce((sum, a) => sum + a.dropped.length, 0),
+      attempts: attempts.filter((a) => a.dropped.length > 0).length,
+      rescued: attempts.filter((a) => !a.expectsChange && a.outcome === 'correct' && a.dropped.length > 0)
+        .length,
+    },
   }
 }
 

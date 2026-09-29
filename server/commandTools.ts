@@ -46,10 +46,11 @@ export const commandTools = [
   ),
   tool(
     'highlight',
-    'Highlight an existing object, or one cell of an array when index is given.',
+    'Highlight an existing object, or one cell of an array when index is given. Replaces the object\'s current highlight.',
     { target, index: cellIndex },
     ['target'],
   ),
+  tool('clear_highlight', 'Remove the highlight from an existing object.', { target }, ['target']),
   tool(
     'create_pointer',
     'Draw a labelled pointer (e.g. loop variable "i") under a cell of an existing array.',

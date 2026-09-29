@@ -123,6 +123,16 @@ describe('validateCommand', () => {
     })
   })
 
+  it('accepts clear_highlight on an existing object and rejects a missing one', () => {
+    const store = new SemanticStore()
+    store.add({ id: 'array-a', kind: 'array', shapeIds: [], props: { values: [1] } })
+    expect(validateCommand({ type: 'clear_highlight', target: 'array-a' }, store)).toEqual({ ok: true })
+    expect(validateCommand({ type: 'clear_highlight', target: 'nope' }, store)).toEqual({
+      ok: false,
+      reason: 'No such object: nope',
+    })
+  })
+
   it('accepts delete of an existing object and rejects a missing one', () => {
     const store = new SemanticStore()
     store.add({ id: 'hello', kind: 'text', shapeIds: [], props: {} })

@@ -81,28 +81,64 @@ describe('executeCanvasCommand', () => {
     })
   })
 
-  it('highlights only the requested array cell', () => {
-    const shapes = [
-      { id: 'shape:c0', type: 'geo', meta: { part: 'cell', index: 0 } },
-      { id: 'shape:l0', type: 'text', meta: { part: 'index-label', index: 0 } },
-      { id: 'shape:c1', type: 'geo', meta: { part: 'cell', index: 1 } },
-    ]
-    const editor = {
-      getShape: (id: string) => shapes.find((s) => s.id === id),
-      updateShapes: vi.fn(),
+  describe('highlight', () => {
+    const arrayMeta = { semanticId: 'array-a', kind: 'array', props: { values: [5, 2] } }
+    // Two cells and one index label of array-a, already highlighted at cell 0.
+    function setup() {
+      const shapes = [
+        { id: 'shape:c0', type: 'geo', meta: { ...arrayMeta, part: 'cell', index: 0 } },
+        { id: 'shape:l0', type: 'text', meta: { ...arrayMeta, part: 'index-label', index: 0 } },
+        { id: 'shape:c1', type: 'geo', meta: { ...arrayMeta, part: 'cell', index: 1 } },
+      ]
+      const editor = {
+        getShape: (id: string) => shapes.find((s) => s.id === id),
+        updateShapes: vi.fn(),
+      }
+      const store = new SemanticStore()
+      store.add({
+        id: 'array-a',
+        kind: 'array',
+        shapeIds: shapes.map((s) => s.id),
+        props: { values: [5, 2], highlight: 0 },
+      })
+      return { editor: editor as typeof editor & Editor, updateShapes: editor.updateShapes, store }
     }
-    const store = new SemanticStore()
-    store.add({ id: 'array-a', kind: 'array', shapeIds: shapes.map((s) => s.id), props: {} })
 
-    executeCanvasCommand(editor as unknown as Editor, store, {
-      type: 'highlight',
-      target: 'array-a',
-      index: 1,
+    it('replaces the previous highlight and records the new one', () => {
+      const { editor, updateShapes, store } = setup()
+
+      executeCanvasCommand(editor, store, { type: 'highlight', target: 'array-a', index: 1 })
+
+      const props = { values: [5, 2], highlight: 1 }
+      expect(updateShapes).toHaveBeenCalledWith([
+        { id: 'shape:c0', type: 'geo', props: { fill: 'none', color: 'black' }, meta: { ...arrayMeta, props, part: 'cell', index: 0 } },
+        { id: 'shape:l0', type: 'text', meta: { ...arrayMeta, props, part: 'index-label', index: 0 } },
+        { id: 'shape:c1', type: 'geo', props: { fill: 'solid', color: 'orange' }, meta: { ...arrayMeta, props, part: 'cell', index: 1 } },
+      ])
+      expect(store.get('array-a')?.props).toEqual(props)
     })
 
-    expect(editor.updateShapes).toHaveBeenCalledWith([
-      { id: 'shape:c1', type: 'geo', props: { fill: 'solid', color: 'orange' } },
-    ])
+    it('highlights every cell when no index is given', () => {
+      const { editor, updateShapes, store } = setup()
+      executeCanvasCommand(editor, store, { type: 'highlight', target: 'array-a' })
+      const cells = updateShapes.mock.calls[0][0].filter((u: { type: string }) => u.type === 'geo')
+      expect(cells.map((u: { props: object }) => u.props)).toEqual([
+        { fill: 'solid', color: 'orange' },
+        { fill: 'solid', color: 'orange' },
+      ])
+      expect(store.get('array-a')?.props.highlight).toBe('all')
+    })
+
+    it('clear_highlight resets every cell and removes the stored highlight', () => {
+      const { editor, updateShapes, store } = setup()
+      executeCanvasCommand(editor, store, { type: 'clear_highlight', target: 'array-a' })
+      const cells = updateShapes.mock.calls[0][0].filter((u: { type: string }) => u.type === 'geo')
+      expect(cells.map((u: { props: object }) => u.props)).toEqual([
+        { fill: 'none', color: 'black' },
+        { fill: 'none', color: 'black' },
+      ])
+      expect(store.get('array-a')?.props).toEqual({ values: [5, 2] })
+    })
   })
 
   describe('pointers', () => {
@@ -218,6 +254,18 @@ describe('runCommands', () => {
     }
     return { editor, store: new SemanticStore() }
   }
+
+  it('skips no-op commands instead of executing them', () => {
+    const { editor, store } = setup()
+    store.add({ id: 'pointer-i', kind: 'pointer', shapeIds: [], props: { array: 'array-a', index: 0 } })
+
+    const result = runCommands(editor as unknown as Editor, store, [
+      { type: 'move_pointer', target: 'pointer-i', index: 0 },
+    ])
+
+    // Nothing to validate or execute, so no failure from the missing array.
+    expect(result).toEqual({ ok: true })
+  })
 
   it('runs a batch where later commands depend on earlier ones', () => {
     const { editor, store } = setup()

@@ -38,7 +38,7 @@ describe('interpret', () => {
       call('create_pointer', { label: 'i', array: 'new', index: 0 }),
     ])
 
-    expect(await interpret(chat, request)).toEqual([
+    expect((await interpret(chat, request)).commands).toEqual([
       { type: 'create_array', id: 'array-a', values: [3, 1, 4] },
       { type: 'create_pointer', id: 'pointer-i', label: 'i', array: 'array-a', index: 0 },
     ])
@@ -46,11 +46,23 @@ describe('interpret', () => {
 
   it('returns no commands when "new" has nothing to refer to', async () => {
     const chat = fakeChat([call('highlight', { target: 'new' })])
-    expect(await interpret(chat, request)).toEqual([])
+    expect((await interpret(chat, request)).commands).toEqual([])
+  })
+
+  it('returns no-op commands separately instead of as commands', async () => {
+    const withPointer = {
+      ...request,
+      objects: [{ id: 'pointer-i', kind: 'pointer' as const, shapeIds: [], props: { label: 'i', index: 0 } }],
+    }
+    const noOp = call('move_pointer', { target: 'pointer-i', index: 0 })
+    expect(await interpret(fakeChat([noOp]), withPointer)).toEqual({
+      commands: [],
+      dropped: [{ type: 'move_pointer', target: 'pointer-i', index: 0 }],
+    })
   })
 
   it('returns no commands when the model calls no tools', async () => {
-    expect(await interpret(fakeChat(undefined, 'stop'), request)).toEqual([])
+    expect((await interpret(fakeChat(undefined, 'stop'), request)).commands).toEqual([])
   })
 
   it('returns no commands at all if any one call is malformed', async () => {
@@ -58,7 +70,7 @@ describe('interpret', () => {
       call('create_array', { values: [3, 1, 4] }),
       call('create_pointer', { label: 'i', array: 'new', index: '0' }),
     ])
-    expect(await interpret(chat, request)).toEqual([])
+    expect((await interpret(chat, request)).commands).toEqual([])
   })
 
   it('sends the board, transcript, tools and pinned provider', async () => {
@@ -126,6 +138,7 @@ describe('commandTools', () => {
       'create_text',
       'create_array',
       'highlight',
+      'clear_highlight',
       'create_pointer',
       'move_pointer',
       'delete',

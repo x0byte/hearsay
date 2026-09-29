@@ -20,6 +20,7 @@ export function validateCommand(command: CanvasCommand, store: SemanticStore): V
       return checkCreatePointer(command, store)
     case 'move_pointer':
       return checkMovePointer(command, store)
+    case 'clear_highlight':
     case 'delete':
       if (!store.get(command.target)) return { ok: false, reason: `No such object: ${command.target}` }
       return { ok: true }

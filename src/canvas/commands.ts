@@ -21,12 +21,23 @@ export type CreateArrayCommand = {
 }
 
 // Highlights an existing object, or a single cell when `index` is given
-// (arrays only).
+// (arrays only). Highlights are exclusive per object: a new one replaces the
+// object's previous highlight.
 export type HighlightCommand = {
   type: 'highlight'
   target: string
   index?: number
 }
+
+// Removes an object's highlight.
+export type ClearHighlightCommand = {
+  type: 'clear_highlight'
+  target: string
+}
+
+// An object's current highlight, stored in its props as `highlight`: the whole
+// object, or one array cell. Absent means not highlighted.
+export type Highlight = 'all' | number
 
 // A labelled arrow under one cell of an array, e.g. loop index `i`.
 export type CreatePointerCommand = {
@@ -54,6 +65,7 @@ export type CanvasCommand =
   | CreateTextCommand
   | CreateArrayCommand
   | HighlightCommand
+  | ClearHighlightCommand
   | CreatePointerCommand
   | MovePointerCommand
   | DeleteCommand

@@ -39,7 +39,7 @@ const server = createServer(async (req, res) => {
     if (!res.writableEnded) clientGone.abort()
   })
   try {
-    const commands = await interpret(chat, request, config, clientGone.signal)
+    const { commands } = await interpret(chat, request, config, clientGone.signal)
     sendJson(res, 200, { commands })
   } catch (error) {
     if (clientGone.signal.aborted) return

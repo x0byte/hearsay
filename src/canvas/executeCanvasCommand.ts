@@ -15,7 +15,7 @@ import type {
   CreatePointerCommand,
   CreateTextCommand,
   DeleteCommand,
-  HighlightCommand,
+  Highlight,
   MovePointerCommand,
 } from './commands'
 import {
@@ -32,6 +32,7 @@ import {
   whileApplyingCommands,
   type SemanticShapeMeta,
 } from './syncSemanticStore'
+import { dropNoOps } from './dropNoOps'
 import { validateCommand } from './validateCommand'
 
 export type RunResult = { ok: true } | { ok: false; index: number; reason: string }
@@ -45,11 +46,14 @@ export function runCommands(
   store: SemanticStore,
   commands: CanvasCommand[],
 ): RunResult {
+  // Safety net: the server already drops no-ops, but the board may have
+  // changed since. `index` in a failure refers to the remaining commands.
+  const { commands: effective } = dropNoOps(commands, store.list())
   return whileApplyingCommands(() => {
     const mark = editor.markHistoryStoppingPoint('hearsay-commands')
     let result: RunResult = { ok: true }
     editor.run(() => {
-      for (const [index, command] of commands.entries()) {
+      for (const [index, command] of effective.entries()) {
         const validation = validateCommand(command, store)
         if (!validation.ok) {
           result = { ok: false, index, reason: validation.reason }
@@ -88,7 +92,10 @@ export function executeCanvasCommand(
       createArray(editor, store, command)
       return
     case 'highlight':
-      highlight(editor, store, command)
+      setHighlight(editor, store, command.target, command.index ?? 'all')
+      return
+    case 'clear_highlight':
+      setHighlight(editor, store, command.target, undefined)
       return
     case 'create_pointer':
       createPointer(editor, store, command)
@@ -168,26 +175,42 @@ function createArray(editor: Editor, store: SemanticStore, command: CreateArrayC
 
 const HIGHLIGHT_COLOR = 'orange'
 
-// Fills array cells (all, or just `index`) and recolours text objects.
-function highlight(editor: Editor, store: SemanticStore, command: HighlightCommand): void {
-  const target = store.get(command.target)
-  if (!target) throw new Error(`No such object: ${command.target}`)
-  const shapes = target.shapeIds
-    .map((id) => editor.getShape(id as TLShapeId))
-    .filter((shape) => shape !== undefined)
-  const updates: TLShapePartial[] = []
-  for (const shape of shapes) {
-    if (shape.type === 'text' && target.kind === 'text') {
-      updates.push({ id: shape.id, type: 'text', props: { color: HIGHLIGHT_COLOR } })
-    } else if (shape.meta.part === 'cell' && isSelectedCell(shape, command.index)) {
-      updates.push({ id: shape.id, type: 'geo', props: { fill: 'solid', color: HIGHLIGHT_COLOR } })
+// Highlights are exclusive per object: every shape of the object is redrawn
+// from its single current highlight, which is stored in the object's props
+// (and each shape's meta, so it survives a reload). `undefined` clears it.
+function setHighlight(
+  editor: Editor,
+  store: SemanticStore,
+  target: string,
+  highlight: Highlight | undefined,
+): void {
+  const object = getObject(store, target)
+  const props = { ...object.props }
+  delete props.highlight
+  if (highlight !== undefined) props.highlight = highlight
+  const updates: TLShapePartial[] = shapesOf(editor, object).map((shape) => {
+    const meta = toShapeMeta({ ...(shape.meta as unknown as SemanticShapeMeta), props })
+    if (shape.type === 'text' && object.kind === 'text') {
+      const color = highlight === undefined ? 'black' : HIGHLIGHT_COLOR
+      return { id: shape.id, type: 'text', meta, props: { color } }
     }
-  }
+    if (shape.meta.part === 'cell') {
+      const on = highlight === 'all' || shape.meta.index === highlight
+      const style = on
+        ? ({ fill: 'solid', color: HIGHLIGHT_COLOR } as const)
+        : ({ fill: 'none', color: 'black' } as const)
+      return { id: shape.id, type: 'geo', meta, props: style }
+    }
+    return { id: shape.id, type: shape.type, meta }
+  })
   editor.updateShapes(updates)
+  store.updateProps(object.id, props)
 }
 
-function isSelectedCell(shape: TLShape, index: number | undefined): boolean {
-  return index === undefined || shape.meta.index === index
+function shapesOf(editor: Editor, object: SemanticObject): TLShape[] {
+  return object.shapeIds
+    .map((id) => editor.getShape(id as TLShapeId))
+    .filter((shape) => shape !== undefined)
 }
 
 function createPointer(editor: Editor, store: SemanticStore, command: CreatePointerCommand): void {
@@ -266,10 +289,7 @@ function findPart(
   part: SemanticShapeMeta['part'],
   index?: number,
 ): TLShape {
-  const shape = object.shapeIds
-    .map((id) => editor.getShape(id as TLShapeId))
-    .filter((s) => s !== undefined)
-    .find((s) => s.meta.part === part && (index === undefined || s.meta.index === index))
+  const shape = shapesOf(editor, object).find((s) => s.meta.part === part && (index === undefined || s.meta.index === index))
   if (!shape) throw new Error(`${object.id} has no ${part}${index === undefined ? '' : ` ${index}`}`)
   return shape
 }
