@@ -48,6 +48,23 @@ describe('interpret', () => {
     ])
   })
 
+  it('expands a compound create_array into the array and its pointers', async () => {
+    const chat = fakeChat([call('create_array', { values: [2, 4, 6, 8], pointers: [{ label: 'lo', index: 0 }, { label: 'hi', index: 3 }] })])
+    expect((await interpret(chat, request)).commands).toEqual([
+      { type: 'create_array', id: 'array-a', values: [2, 4, 6, 8] },
+      { type: 'create_pointer', id: 'pointer-lo', label: 'lo', array: 'array-a', index: 0 },
+      { type: 'create_pointer', id: 'pointer-hi', label: 'hi', array: 'array-a', index: 3 },
+    ])
+  })
+
+  it('expands a compound highlight on a new array', async () => {
+    const chat = fakeChat([call('create_array', { values: [4, 2, 7], highlight: 1 })])
+    expect((await interpret(chat, request)).commands).toEqual([
+      { type: 'create_array', id: 'array-a', values: [4, 2, 7] },
+      { type: 'highlight', target: 'array-a', index: 1 },
+    ])
+  })
+
   it('returns no commands when "new" has nothing to refer to', async () => {
     const chat = fakeChat([call('highlight', { target: 'new' })])
     expect((await interpret(chat, request)).commands).toEqual([])
@@ -137,6 +154,10 @@ describe('draftFromToolCall', () => {
     ['empty string', call('delete', { target: '' })],
     ['bad array item', call('create_array', { values: [1, null] })],
     ['a set_value with a non-scalar value', call('set_value', { target: 'array-a', index: 0, value: [1] })],
+    ['a compound pointer without an index', call('create_array', { values: [1], pointers: [{ label: 'i' }] })],
+    ['a compound pointer with an extra field', call('create_array', { values: [1], pointers: [{ label: 'i', index: 0, color: 'red' }] })],
+    ['a compound highlight that is neither a cell nor "all"', call('create_array', { values: [1], highlight: 'middle' })],
+    ['a compound highlight that is not a whole number', call('create_array', { values: [1], highlight: 1.5 })],
     ['not an object', call('delete', '["a"]')],
   ])('rejects %s', (_label, toolCall) => {
     expect(draftFromToolCall(toolCall)).toBeUndefined()
@@ -167,7 +188,11 @@ describe('commandTools', () => {
 
 describe('resolveModelConfig', () => {
   it('defaults to paid Gemma pinned to DeepInfra fp8', () => {
-    expect(resolveModelConfig({})).toEqual({ model: DEFAULT_MODEL, provider: 'deepinfra/fp8' })
+    expect(resolveModelConfig({})).toEqual({
+      model: DEFAULT_MODEL,
+      provider: 'deepinfra/fp8',
+      fallbackProvider: 'novita/bf16',
+    })
   })
 
   it('pins the free variant to its own provider when only the model is set', () => {

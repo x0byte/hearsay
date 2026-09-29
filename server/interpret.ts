@@ -24,7 +24,14 @@ export const PROVIDER_FOR_MODEL: Record<string, string> = {
   'google/gemma-4-26b-a4b-it:free': 'google-ai-studio',
 }
 
-export type ModelConfig = { model: string; provider: string }
+// Where the server sends Gemma if the pinned provider is still rate-limited
+// after one retry (the eval stays pinned). Tool-calling support checked on
+// OpenRouter's endpoint list.
+export const FALLBACK_PROVIDER_FOR_MODEL: Record<string, string> = {
+  'google/gemma-4-26b-a4b-it': 'novita/bf16',
+}
+
+export type ModelConfig = { model: string; provider: string; fallbackProvider?: string }
 
 // HEARSAY_MODEL picks the model and HEARSAY_PROVIDER overrides its pinned
 // provider. An unknown model needs an explicit provider.
@@ -32,7 +39,8 @@ export function resolveModelConfig(env: Record<string, string | undefined>): Mod
   const model = env.HEARSAY_MODEL ?? DEFAULT_MODEL
   const provider = env.HEARSAY_PROVIDER ?? PROVIDER_FOR_MODEL[model]
   if (!provider) throw new Error(`No provider pinned for ${model}; set HEARSAY_PROVIDER`)
-  return { model, provider }
+  const fallbackProvider = FALLBACK_PROVIDER_FOR_MODEL[model]
+  return { model, provider, ...(fallbackProvider && fallbackProvider !== provider && { fallbackProvider }) }
 }
 
 // The server decides how much transcript the model sees, whatever the client
@@ -76,9 +84,10 @@ Refer to existing objects only by the IDs listed on the board. New objects get
 their IDs automatically; to refer to an object created earlier in the same
 reply, use "new".
 Make every call the request needs in this one reply, in the order the changes
-should happen. You will not see tool results. For example, "draw 4, 2, 7 with
-i on the first one" is create_array(values: [4, 2, 7]) followed by
-create_pointer(label: "i", array: "new", index: 0).`
+should happen. You will not see tool results. Pointers and a highlight on a
+new array go in the same create_array call: "draw 4, 2, 7 with i on the first
+one and the 7 highlighted" is create_array(values: [4, 2, 7],
+pointers: [{ label: "i", index: 0 }], highlight: 2).`
 
 // Asks the model which commands (if any) the transcript calls for. Commands
 // that wouldn't change the board are returned separately in `dropped`.

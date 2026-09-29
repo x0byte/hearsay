@@ -10,6 +10,7 @@ import type { FunctionTool, ToolCall } from './openrouter.ts'
 type Schema = {
   type?: 'object' | 'array' | 'string' | 'integer' | 'number'
   anyOf?: Schema[]
+  enum?: string[]
   description?: string
   properties?: Record<string, Schema>
   required?: string[]
@@ -42,8 +43,27 @@ export const commandTools = [
   tool('create_text', 'Write a short piece of text on the board.', { text: { type: 'string' } }, ['text']),
   tool(
     'create_array',
-    'Draw an array as a row of cells with their indices.',
-    { values: { type: 'array', items: cellValue } },
+    'Draw an array as a row of cells with their indices, optionally with pointers on it (e.g. i on the first cell) and a highlight.',
+    {
+      values: { type: 'array', items: cellValue },
+      highlight: {
+        description: 'Highlight on the new array straight away: a zero-based cell index, or "all".',
+        anyOf: [cellIndex, { type: 'string', enum: ['all'] }],
+      },
+      pointers: {
+        type: 'array',
+        description: 'Pointers to put on the new array straight away.',
+        items: {
+          type: 'object',
+          properties: {
+            label: { type: 'string', description: 'Short label, usually the variable name.' },
+            index: cellIndex,
+          },
+          required: ['label', 'index'],
+          additionalProperties: false,
+        },
+      },
+    },
     ['values'],
   ),
   tool(
@@ -105,7 +125,7 @@ function matches(schema: Schema, value: unknown): boolean {
   if (schema.anyOf) return schema.anyOf.some((option) => matches(option, value))
   switch (schema.type) {
     case 'string':
-      return typeof value === 'string' && value.trim() !== ''
+      return typeof value === 'string' && value.trim() !== '' && (!schema.enum || schema.enum.includes(value))
     case 'number':
       return typeof value === 'number' && Number.isFinite(value)
     case 'integer':

@@ -9,6 +9,7 @@ import {
 } from '../server/interpret.ts'
 import { DEFAULT_THRESHOLDS, JEV_QUESTION_TEXT, openRouterJev, type JevDecide, type JevThresholds } from '../server/jev.ts'
 import { openRouterChat, type ChatCompletion } from '../server/openrouter.ts'
+import { retryingChat } from '../server/retry.ts'
 import { cases } from './cases.ts'
 import type { InterpretRequest } from '../src/interpret/protocol.ts'
 import { requestFor } from './request.ts'
@@ -69,10 +70,12 @@ for (const evalCase of cases) {
 
 type Run = Omit<Attempt, 'case' | 'tag' | 'expectsChange' | 'outcome'>
 
-// A chat function that records Gemma's cost, finish reason and token counts.
+// A chat function that records Gemma's cost, finish reason, token counts and
+// rate-limit retries. It retries like the server does but stays pinned to the
+// eval's provider (no second provider), so runs stay comparable.
 function recordingChat() {
-  const record: Pick<Run, 'finishReason' | 'tokens'> & { costUsd: number } = { costUsd: 0 }
-  const chat: ChatCompletion = async (req, signal) => {
+  const record: Pick<Run, 'finishReason' | 'tokens'> & { costUsd: number; retries: number } = { costUsd: 0, retries: 0 }
+  const call: ChatCompletion = async (req, signal) => {
     const response = await realChat(req, signal)
     const { usage } = response
     record.costUsd += usage?.cost ?? 0
@@ -84,6 +87,7 @@ function recordingChat() {
     }
     return response
   }
+  const chat = retryingChat(call, { onRetry: () => record.retries++ })
   return { chat, record }
 }
 
@@ -106,6 +110,7 @@ async function runGemmaOnly(request: InterpretRequest): Promise<Run> {
   const gemma = await runGemma(request, false)
   return {
     path: 'gemma',
+    retries: gemma.retries,
     latencyMs: gemma.latencyMs,
     costUsd: gemma.costUsd,
     finishReason: gemma.finishReason,
@@ -132,11 +137,12 @@ async function runWithJev(request: InterpretRequest): Promise<Run> {
     const jevUsed = { ...result.jev, latencyMs: Math.round(result.jev.latencyMs) }
     const gemma: GemmaTrace | undefined =
       result.path === 'fallback'
-        ? { latencyMs: Math.round(result.gemmaLatencyMs ?? 0), costUsd: record.costUsd, shadow: false, commands: result.commands, dropped: result.dropped }
+        ? { latencyMs: Math.round(result.gemmaLatencyMs ?? 0), costUsd: record.costUsd, retries: record.retries, shadow: false, commands: result.commands, dropped: result.dropped }
         : undefined
     run = {
       path: result.path,
       reason: result.reason,
+      retries: record.retries,
       latencyMs: Math.round(performance.now() - started),
       costUsd: jevUsed.costUsd + record.costUsd,
       finishReason: record.finishReason,
@@ -151,6 +157,7 @@ async function runWithJev(request: InterpretRequest): Promise<Run> {
     run = {
       path: 'fallback',
       reason: 'gemma error',
+      retries: record.retries,
       latencyMs: Math.round(performance.now() - started),
       costUsd: (jevTrace?.costUsd ?? 0) + record.costUsd,
       finishReason: record.finishReason,
@@ -158,7 +165,7 @@ async function runWithJev(request: InterpretRequest): Promise<Run> {
       got: { error: errorOf(error) },
       dropped: [],
       jev: jevTrace,
-      gemma: { latencyMs: 0, costUsd: record.costUsd, shadow: false, error: errorOf(error) },
+      gemma: { latencyMs: 0, costUsd: record.costUsd, retries: record.retries, shadow: false, error: errorOf(error) },
     }
   }
   // Jev settled it: ask Gemma anyway, untimed, so the run can be re-scored.
@@ -198,7 +205,9 @@ function printSummary(title: string, s: Summary) {
   console.log(`${title}:`)
   console.log(`  accuracy ${pct(s.accuracy)} (${s.counts.correct}/${s.attempts})  by tag: ${byTag}`)
   console.log(`  false draws ${s.counts.false_draw} (${pct(s.falseDrawRate)} of no-change attempts)  misses ${s.counts.miss} (${pct(s.missRate)} of change attempts)  wrong ${s.counts.wrong}  errors ${s.counts.error}`)
-  console.log(`  latency p50 ${s.latencyMs.p50} ms  p95 ${s.latencyMs.p95} ms  cost $${s.totalCostUsd.toFixed(5)}`)
+  // Older result files predate retry counting.
+  const retries = s.retries === undefined ? '' : `  rate-limit retries ${s.retries}`
+  console.log(`  latency p50 ${s.latencyMs.p50} ms  p95 ${s.latencyMs.p95} ms  cost $${s.totalCostUsd.toFixed(5)}${retries}`)
   // Older result files predate paths and simulated parallel latency.
   if (s.paths && s.parallelLatencyMs) {
     const paths = Object.entries(s.paths).map(([path, n]) => `${path} ${n}`).join(', ')
