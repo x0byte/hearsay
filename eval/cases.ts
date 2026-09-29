@@ -275,7 +275,8 @@ export const cases: EvalCase[] = [
     expected: [],
   },
 
-  // Held out: not used for tuning. Mostly explanation, a couple of multi.
+  // Held out: frozen (see the hash test in score.test.ts) and never used for
+  // tuning. 25 cases, 40% explanation-only.
   ...[
     ['holdout-explain-two-pointers', 'the reason we use two pointers is to avoid checking every pair', ARR_IJ],
     ['holdout-explain-bubbles', 'notice how the largest value bubbles to the end after each pass', ARR],
@@ -284,6 +285,9 @@ export const cases: EvalCase[] = [
     ['holdout-explain-sorted-faster', 'a sorted array makes searching much faster', EMPTY],
     ['holdout-explain-i-starts-at-zero', 'the loop variable i starts at zero', ARR_I],
     ['holdout-explain-merge-sort', "you'll see this pattern again in merge sort", ARR],
+    ['holdout-explain-swap-cost', 'a swap costs three assignments if you use a temporary variable', ARR],
+    ['holdout-explain-swap-condition', 'we only swap when the left value is bigger', ARR_IJ],
+    ['holdout-explain-fewer-swaps', 'selection sort does far fewer swaps than bubble sort', ARR],
   ].map(([name, text, board]): EvalCase => ({
     name: name as string,
     tag: 'holdout',
@@ -318,5 +322,89 @@ export const cases: EvalCase[] = [
     segments: ['shift j back to the start'],
     board: ARR_IJ,
     expected: [{ type: 'move_pointer', target: 'pointer-j', index: 0 }],
+  },
+  {
+    name: 'holdout-swap-ends',
+    tag: 'holdout',
+    segments: ['exchange the first and last values'],
+    board: ARR,
+    expected: [{ type: 'swap', target: 'array-a', i: 0, j: 3 }],
+  },
+  {
+    name: 'holdout-swap-implied-switch',
+    tag: 'holdout',
+    segments: ['since 5 is larger than 2 they need to switch'],
+    board: ARR,
+    expected: [{ type: 'swap', target: 'array-a', i: 0, j: 1 }],
+  },
+  {
+    name: 'holdout-swap-i-with-next',
+    tag: 'holdout',
+    segments: ['swap i with the element right after it'],
+    board: ARR_I,
+    expected: [{ type: 'swap', target: 'array-a', i: 0, j: 1 }],
+  },
+  {
+    name: 'holdout-context-those-two-swap',
+    tag: 'holdout',
+    segments: ['look at the 8 and the 1 at the end', 'those two should swap'],
+    board: ARR,
+    expected: [{ type: 'swap', target: 'array-a', i: 2, j: 3 }],
+  },
+  {
+    name: 'holdout-set-value-replace',
+    tag: 'holdout',
+    segments: ['replace the 2 with a 7'],
+    board: ARR,
+    expected: [{ type: 'set_value', target: 'array-a', index: 1, value: 7 }],
+  },
+  {
+    name: 'holdout-set-value-last-zero',
+    tag: 'holdout',
+    segments: ['make the last element zero'],
+    board: ARR,
+    expected: [{ type: 'set_value', target: 'array-a', index: 3, value: 0 }],
+  },
+  {
+    name: 'holdout-set-value-letter',
+    tag: 'holdout',
+    segments: ['change the b to a z'],
+    board: [obj('array-a', 'array', { values: ['a', 'b', 'c'] })],
+    expected: [{ type: 'set_value', target: 'array-a', index: 1, value: 'z' }],
+  },
+  {
+    name: 'holdout-advance-i-by-two',
+    tag: 'holdout',
+    segments: ['advance i by two'],
+    board: ARR_I,
+    expected: [{ type: 'move_pointer', target: 'pointer-i', index: 2 }],
+  },
+  {
+    name: 'holdout-highlight-smallest',
+    tag: 'holdout',
+    segments: ['highlight the smallest number'],
+    board: ARR,
+    expected: [{ type: 'highlight', target: 'array-a', index: 3 }],
+  },
+  {
+    name: 'holdout-unhighlight',
+    tag: 'holdout',
+    segments: ['unhighlight the array'],
+    board: [obj('array-a', 'array', { values: [5, 2, 8, 1], highlight: 2 })],
+    expected: [{ type: 'clear_highlight', target: 'array-a' }],
+  },
+  {
+    name: 'holdout-word-array',
+    tag: 'holdout',
+    segments: ['put up an array of the words cat, dog, emu'],
+    board: EMPTY,
+    expected: [{ type: 'create_array', id: 'array-a', values: ['cat', 'dog', 'emu'] }],
+  },
+  {
+    name: 'holdout-remove-i-pointer',
+    tag: 'holdout',
+    segments: ['remove the i pointer'],
+    board: ARR_IJ,
+    expected: [{ type: 'delete', target: 'pointer-i' }],
   },
 ]

@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import type { CanvasCommand } from '../src/canvas/commands.ts'
 import { ANY, cases } from './cases.ts'
@@ -90,10 +91,10 @@ describe('cases', () => {
   const tuned = cases.filter((c) => c.tag !== 'holdout')
   const holdout = cases.filter((c) => c.tag === 'holdout')
 
-  it('has 45 tuned and 10 held-out cases, all with unique names', () => {
+  it('has 45 tuned and 25 held-out cases, all with unique names', () => {
     expect(tuned).toHaveLength(45)
-    expect(holdout).toHaveLength(10)
-    expect(new Set(cases.map((c) => c.name)).size).toBe(55)
+    expect(holdout).toHaveLength(25)
+    expect(new Set(cases.map((c) => c.name)).size).toBe(70)
   })
 
   it('keeps about 40% of the tuned set expecting no commands', () => {
@@ -106,8 +107,22 @@ describe('cases', () => {
     for (const c of tuned) expect(c.tag === 'explanation').toBe(c.expected.length === 0)
   })
 
-  it('makes the held-out set mostly explanation with a couple of multi-command cases', () => {
-    expect(holdout.filter((c) => c.expected.length === 0).length).toBeGreaterThanOrEqual(6)
+  it('keeps the held-out set about 40% explanation-only, with a couple of multi-command cases', () => {
+    expect(holdout.filter((c) => c.expected.length === 0).length).toBe(10)
     expect(holdout.filter((c) => c.expected.length > 1).length).toBeGreaterThanOrEqual(2)
+  })
+
+  it('never reuses a tuned sentence in the held-out set', () => {
+    const tunedSegments = new Set(tuned.flatMap((c) => c.segments))
+    expect(holdout.flatMap((c) => c.segments).filter((s) => tunedSegments.has(s))).toEqual([])
+  })
+
+  // The held-out set is frozen: its results are only comparable across runs if
+  // it never changes. If this fails, undo the change to the holdout cases. To
+  // start a genuinely new held-out set, change the hash in its own commit and
+  // say so, because earlier held-out results stop being comparable.
+  it('is frozen', () => {
+    const hash = createHash('sha256').update(JSON.stringify(holdout)).digest('hex')
+    expect(hash).toBe('951bb4fbb9e40c09646c2f27b22e742a56c8402aaea99556904cad1405f08a36')
   })
 })
