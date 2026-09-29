@@ -182,6 +182,20 @@ describe('executeCanvasCommand', () => {
     })
   })
 
+  it('deletes an array together with the pointers on it', () => {
+    const editor = { deleteShapes: vi.fn() }
+    const store = new SemanticStore()
+    store.add({ id: 'array-a', kind: 'array', shapeIds: ['shape:c0'], props: { values: [1] } })
+    store.add({ id: 'array-b', kind: 'array', shapeIds: ['shape:b0'], props: { values: [2] } })
+    store.add({ id: 'pointer-i', kind: 'pointer', shapeIds: ['shape:pa'], props: { array: 'array-a' } })
+    store.add({ id: 'pointer-j', kind: 'pointer', shapeIds: ['shape:pb'], props: { array: 'array-b' } })
+
+    executeCanvasCommand(editor as unknown as Editor, store, { type: 'delete', target: 'array-a' })
+
+    expect(editor.deleteShapes).toHaveBeenCalledWith(['shape:c0', 'shape:pa'])
+    expect(store.list().map((o) => o.id)).toEqual(['array-b', 'pointer-j'])
+  })
+
   it('throws on an unknown command type', () => {
     const unknown = { type: 'not_a_command' } as unknown as CanvasCommand
     expect(() => executeCanvasCommand({} as Editor, new SemanticStore(), unknown)).toThrow(

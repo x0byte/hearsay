@@ -20,6 +20,9 @@ export function validateCommand(command: CanvasCommand, store: SemanticStore): V
       return checkCreatePointer(command, store)
     case 'move_pointer':
       return checkMovePointer(command, store)
+    case 'delete':
+      if (!store.get(command.target)) return { ok: false, reason: `No such object: ${command.target}` }
+      return { ok: true }
     default: {
       // Fails to compile if a new command type is added without a case above.
       const unhandled: never = command

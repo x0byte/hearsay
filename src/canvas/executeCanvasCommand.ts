@@ -14,6 +14,7 @@ import type {
   CreateArrayCommand,
   CreatePointerCommand,
   CreateTextCommand,
+  DeleteCommand,
   HighlightCommand,
   MovePointerCommand,
 } from './commands'
@@ -50,6 +51,9 @@ export function executeCanvasCommand(
       return
     case 'move_pointer':
       movePointer(editor, store, command)
+      return
+    case 'delete':
+      deleteObject(editor, store, command)
       return
     default: {
       // Fails to compile if a new command type is added without a case above.
@@ -162,6 +166,17 @@ function movePointer(editor: Editor, store: SemanticStore, command: MovePointerC
   const cell = cellBounds(editor, store, String(props.array), command.index)
   editor.updateShapes(pointerShapes(ids, cell, { semanticId: pointer.id, kind: 'pointer', props }))
   store.updateProps(pointer.id, props)
+}
+
+// Pointers on a deleted array would point at nothing, so they go too.
+function deleteObject(editor: Editor, store: SemanticStore, command: DeleteCommand): void {
+  const target = getObject(store, command.target)
+  const dependents = store
+    .list()
+    .filter((object) => object.kind === 'pointer' && object.props.array === target.id)
+  const removed = [target, ...dependents]
+  editor.deleteShapes(removed.flatMap((object) => object.shapeIds) as TLShapeId[])
+  for (const object of removed) store.remove(object.id)
 }
 
 function pointerShapes(

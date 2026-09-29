@@ -123,6 +123,16 @@ describe('validateCommand', () => {
     })
   })
 
+  it('accepts delete of an existing object and rejects a missing one', () => {
+    const store = new SemanticStore()
+    store.add({ id: 'hello', kind: 'text', shapeIds: [], props: {} })
+    expect(validateCommand({ type: 'delete', target: 'hello' }, store)).toEqual({ ok: true })
+    expect(validateCommand({ type: 'delete', target: 'nope' }, store)).toEqual({
+      ok: false,
+      reason: 'No such object: nope',
+    })
+  })
+
   it('rejects an unknown command type', () => {
     const unknown = { type: 'not_a_command' } as unknown as CanvasCommand
     expect(validateCommand(unknown, new SemanticStore())).toEqual({

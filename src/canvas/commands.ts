@@ -44,9 +44,16 @@ export type MovePointerCommand = {
   index: number
 }
 
+// Removes an object. Deleting an array also removes the pointers on it.
+export type DeleteCommand = {
+  type: 'delete'
+  target: string
+}
+
 export type CanvasCommand =
   | CreateTextCommand
   | CreateArrayCommand
   | HighlightCommand
   | CreatePointerCommand
   | MovePointerCommand
+  | DeleteCommand
