@@ -1,5 +1,6 @@
 import { createShapeId, toRichText, type Editor, type TLTextShape } from 'tldraw'
 import type { CanvasCommand, CreateTextCommand } from './commands'
+import { nextFreePosition, type Point, type Rect } from './layout'
 import type { SemanticStore } from './semanticStore'
 import { toShapeMeta } from './syncSemanticStore'
 
@@ -28,13 +29,26 @@ export function executeCanvasCommand(
 function createText(editor: Editor, store: SemanticStore, command: CreateTextCommand): void {
   const shapeId = createShapeId()
   const props = { text: command.text }
+  const { x, y } = positionFor(editor, command)
   editor.createShape<TLTextShape>({
     id: shapeId,
     type: 'text',
-    x: command.x,
-    y: command.y,
+    x,
+    y,
     props: { richText: toRichText(command.text) },
     meta: toShapeMeta({ semanticId: command.id, kind: 'text', props }),
   })
   store.add({ id: command.id, kind: 'text', shapeIds: [shapeId], props })
+}
+
+function positionFor(editor: Editor, command: { x?: number; y?: number }): Point {
+  if (command.x !== undefined && command.y !== undefined) return { x: command.x, y: command.y }
+  return nextFreePosition(occupiedRects(editor))
+}
+
+function occupiedRects(editor: Editor): Rect[] {
+  return editor
+    .getCurrentPageShapes()
+    .map((shape) => editor.getShapePageBounds(shape))
+    .filter((bounds) => bounds !== undefined)
 }

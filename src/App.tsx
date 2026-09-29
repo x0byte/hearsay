@@ -16,8 +16,6 @@ const HELLO_COMMAND: CanvasCommand = {
   type: 'create_text',
   id: 'hello',
   text: 'Hello from Hearsay',
-  x: 100,
-  y: 100,
 }
 
 // Restore the semantic store from the persisted canvas, then seed an empty

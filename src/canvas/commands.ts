@@ -6,8 +6,9 @@ export type CreateTextCommand = {
   type: 'create_text'
   id: string
   text: string
-  x: number
-  y: number
+  // Optional: when omitted, the layout module picks the position.
+  x?: number
+  y?: number
 }
 
 export type CanvasCommand = CreateTextCommand
