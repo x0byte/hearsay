@@ -57,6 +57,14 @@ describe('interpret', () => {
     ])
   })
 
+  it('expands a compound highlight on a new array', async () => {
+    const chat = fakeChat([call('create_array', { values: [4, 2, 7], highlight: 1 })])
+    expect((await interpret(chat, request)).commands).toEqual([
+      { type: 'create_array', id: 'array-a', values: [4, 2, 7] },
+      { type: 'highlight', target: 'array-a', index: 1 },
+    ])
+  })
+
   it('returns no commands when "new" has nothing to refer to', async () => {
     const chat = fakeChat([call('highlight', { target: 'new' })])
     expect((await interpret(chat, request)).commands).toEqual([])
@@ -148,6 +156,8 @@ describe('draftFromToolCall', () => {
     ['a set_value with a non-scalar value', call('set_value', { target: 'array-a', index: 0, value: [1] })],
     ['a compound pointer without an index', call('create_array', { values: [1], pointers: [{ label: 'i' }] })],
     ['a compound pointer with an extra field', call('create_array', { values: [1], pointers: [{ label: 'i', index: 0, color: 'red' }] })],
+    ['a compound highlight that is neither a cell nor "all"', call('create_array', { values: [1], highlight: 'middle' })],
+    ['a compound highlight that is not a whole number', call('create_array', { values: [1], highlight: 1.5 })],
     ['not an object', call('delete', '["a"]')],
   ])('rejects %s', (_label, toolCall) => {
     expect(draftFromToolCall(toolCall)).toBeUndefined()

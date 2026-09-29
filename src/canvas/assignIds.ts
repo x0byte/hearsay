@@ -1,14 +1,14 @@
 // Explicit .ts extension: this module is also loaded by the Node server.
-import type { CanvasCommand, CreateArrayCommand } from './commands.ts'
+import type { CanvasCommand, CreateArrayCommand, Highlight } from './commands.ts'
 
 // A command as a model produces it: create commands carry no `id`, and any
 // reference may be NEW_REF, meaning "the object created most recently in this
-// batch". A create_array draft may also carry pointers to put on the new array
-// (a compound create), which become separate create_pointer commands.
-// assignIds turns drafts into real commands.
+// batch". A create_array draft may also carry pointers and a highlight for the
+// new array (a compound create), which become separate create_pointer and
+// highlight commands. assignIds turns drafts into real commands.
 export type DraftCommand =
   | Exclude<WithoutId<CanvasCommand>, { type: 'create_array' }>
-  | (Omit<CreateArrayCommand, 'id'> & { pointers?: DraftPointer[] })
+  | (Omit<CreateArrayCommand, 'id'> & { pointers?: DraftPointer[]; highlight?: Highlight })
 
 export type DraftPointer = { label: string; index: number }
 
@@ -29,7 +29,7 @@ export function assignIds(drafts: DraftCommand[], existingIds: string[]): Canvas
   for (const draft of drafts) {
     switch (draft.type) {
       case 'create_array': {
-        const { pointers = [], ...array } = draft
+        const { pointers = [], highlight, ...array } = draft
         const id = nextId(array, taken)
         taken.add(id)
         commands.push({ ...array, id })
@@ -38,6 +38,9 @@ export function assignIds(drafts: DraftCommand[], existingIds: string[]): Canvas
           const pointerId = nextId(pointer, taken)
           taken.add(pointerId)
           commands.push({ ...pointer, id: pointerId })
+        }
+        if (highlight !== undefined) {
+          commands.push(highlight === 'all' ? { type: 'highlight', target: id } : { type: 'highlight', target: id, index: highlight })
         }
         lastCreated = id
         break

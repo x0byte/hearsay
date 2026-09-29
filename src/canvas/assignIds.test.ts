@@ -62,6 +62,20 @@ describe('assignIds', () => {
     expect(assignIds(drafts, [])?.at(-1)).toEqual({ type: 'highlight', target: 'array-a', index: 1 })
   })
 
+  it('expands a compound highlight after the pointers, as a cell or the whole array', () => {
+    const drafts: DraftCommand[] = [
+      { type: 'create_array', values: [4, 2, 7], pointers: [{ label: 'i', index: 0 }], highlight: 2 },
+      { type: 'create_array', values: [1, 2], highlight: 'all' },
+    ]
+    expect(assignIds(drafts, [])).toEqual([
+      { type: 'create_array', id: 'array-a', values: [4, 2, 7] },
+      { type: 'create_pointer', id: 'pointer-i', label: 'i', array: 'array-a', index: 0 },
+      { type: 'highlight', target: 'array-a', index: 2 },
+      { type: 'create_array', id: 'array-b', values: [1, 2] },
+      { type: 'highlight', target: 'array-b' },
+    ])
+  })
+
   it('numbers compound pointers around IDs already on the board', () => {
     const drafts: DraftCommand[] = [{ type: 'create_array', values: [1], pointers: [{ label: 'i', index: 0 }] }]
     expect(assignIds(drafts, ['array-a', 'pointer-i'])?.map((c) => 'id' in c && c.id)).toEqual(['array-b', 'pointer-i-2'])
