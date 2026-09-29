@@ -28,6 +28,10 @@ export class SemanticStore {
     return this.objects.delete(id)
   }
 
+  clear(): void {
+    this.objects.clear()
+  }
+
   list(): SemanticObject[] {
     return [...this.objects.values()]
   }

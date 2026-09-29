@@ -3,6 +3,7 @@ import 'tldraw/tldraw.css'
 import type { CanvasCommand } from './canvas/commands'
 import { executeCanvasCommand } from './canvas/executeCanvasCommand'
 import { SemanticStore } from './canvas/semanticStore'
+import { rebuildSemanticStore } from './canvas/syncSemanticStore'
 
 // The canvas is saved to the browser (IndexedDB) under this key, so drawings
 // survive page reloads. Changing the key starts a fresh, empty board.
@@ -18,8 +19,10 @@ const HELLO_COMMAND: CanvasCommand = {
   y: 100,
 }
 
-// Only seed an empty page, so reloading a persisted board doesn't add a copy.
+// Restore the semantic store from the persisted canvas, then seed an empty
+// page only, so reloading a persisted board doesn't add a copy.
 function handleMount(editor: Editor) {
+  rebuildSemanticStore(editor, semanticStore)
   if (editor.getCurrentPageShapeIds().size === 0) {
     executeCanvasCommand(editor, semanticStore, HELLO_COMMAND)
   }

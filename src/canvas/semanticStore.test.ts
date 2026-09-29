@@ -37,4 +37,11 @@ describe('SemanticStore', () => {
     store.add(pointerI)
     expect(store.list().map((o) => o.id)).toEqual(['array-a', 'pointer-i'])
   })
+
+  it('clears all objects', () => {
+    const store = new SemanticStore()
+    store.add(arrayA)
+    store.clear()
+    expect(store.list()).toEqual([])
+  })
 })

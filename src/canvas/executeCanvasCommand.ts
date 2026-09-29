@@ -1,6 +1,7 @@
 import { createShapeId, toRichText, type Editor, type TLTextShape } from 'tldraw'
 import type { CanvasCommand, CreateTextCommand } from './commands'
 import type { SemanticStore } from './semanticStore'
+import { toShapeMeta } from './syncSemanticStore'
 
 // Applies a CanvasCommand to a tldraw Editor and records the result in the
 // semantic store. All tldraw-specific translation lives here so the command
@@ -26,12 +27,14 @@ export function executeCanvasCommand(
 // and the store links the two.
 function createText(editor: Editor, store: SemanticStore, command: CreateTextCommand): void {
   const shapeId = createShapeId()
+  const props = { text: command.text }
   editor.createShape<TLTextShape>({
     id: shapeId,
     type: 'text',
     x: command.x,
     y: command.y,
     props: { richText: toRichText(command.text) },
+    meta: toShapeMeta({ semanticId: command.id, kind: 'text', props }),
   })
-  store.add({ id: command.id, kind: 'text', shapeIds: [shapeId], props: { text: command.text } })
+  store.add({ id: command.id, kind: 'text', shapeIds: [shapeId], props })
 }

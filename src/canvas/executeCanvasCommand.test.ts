@@ -22,7 +22,12 @@ describe('executeCanvasCommand', () => {
     })
 
     const shape = editor.createShape.mock.calls[0][0]
-    expect(shape).toMatchObject({ type: 'text', x: 10, y: 20 })
+    expect(shape).toMatchObject({
+      type: 'text',
+      x: 10,
+      y: 20,
+      meta: { semanticId: 'hello', kind: 'text', props: { text: 'Hi' } },
+    })
     expect(store.get('hello')).toEqual({
       id: 'hello',
       kind: 'text',
