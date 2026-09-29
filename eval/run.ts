@@ -7,7 +7,8 @@ import { classify, summarize, type Attempt, type Summary } from './score.ts'
 
 // Runs every eval case against the configured model and saves the results to
 // eval/results/ so runs can be compared. Usage:
-//   npm run eval -- [--repeats=5] [--label=baseline]
+//   npm run eval -- [--repeats=5] [--label=baseline] [--compare=<label>]
+// --compare picks the latest saved run with that label; otherwise the latest run.
 // Head-to-head comparisons: --repeats=5, runs back-to-back in one session.
 
 const RESULTS_DIR = new URL('./results/', import.meta.url)
@@ -18,6 +19,11 @@ const args = Object.fromEntries(
 )
 const repeats = Number(args.repeats ?? 5)
 const label = args.label ?? 'run'
+const compareLabel: string | undefined = args.compare
+
+// Looked up before any model calls, so a bad --compare fails fast and free.
+const previous = latestResult(compareLabel)
+if (compareLabel && !previous) throw new Error(`No saved run labelled "${compareLabel}" in eval/results/`)
 
 const apiKey = process.env.OPENROUTER_API_KEY
 if (!apiKey) throw new Error('OPENROUTER_API_KEY is not set (add it to .env)')
@@ -73,7 +79,6 @@ for (const evalCase of cases) {
 const summary = summarize(attempts.filter((a) => a.tag !== 'holdout'))
 const holdout = attempts.filter((a) => a.tag === 'holdout')
 const holdoutSummary = holdout.length ? summarize(holdout) : undefined
-const previous = latestResult()
 mkdirSync(RESULTS_DIR, { recursive: true })
 const file = `${new Date().toISOString().replace(/[:.]/g, '-')}_${label}.json`
 writeFileSync(
@@ -83,9 +88,9 @@ writeFileSync(
 
 console.log('\n✓ correct  D false draw  M miss  W wrong  E error\n')
 printSummary('this run, tuned set', summary)
-if (previous) printSummary(`previous, tuned set (${previous.file})`, previous.summary)
+if (previous) printSummary(`compared with, tuned set (${previous.file})`, previous.summary)
 if (holdoutSummary) printSummary('this run, HELD-OUT set (report separately)', holdoutSummary)
-if (holdoutSummary && previous?.holdoutSummary) printSummary('previous, held-out set', previous.holdoutSummary)
+if (holdoutSummary && previous?.holdoutSummary) printSummary('compared with, held-out set', previous.holdoutSummary)
 console.log(`\nSaved eval/results/${file}`)
 
 function printSummary(title: string, s: Summary) {
@@ -97,10 +102,13 @@ function printSummary(title: string, s: Summary) {
   console.log(`  latency p50 ${s.latencyMs.p50} ms  p95 ${s.latencyMs.p95} ms  cost $${s.totalCostUsd.toFixed(5)}`)
 }
 
-function latestResult(): { file: string; summary: Summary; holdoutSummary?: Summary } | undefined {
+// Result files are named <timestamp>_<label>.json, so sorting by name is by time.
+function latestResult(withLabel?: string): { file: string; summary: Summary; holdoutSummary?: Summary } | undefined {
   let files: string[]
   try {
-    files = readdirSync(RESULTS_DIR).filter((f) => f.endsWith('.json')).sort()
+    files = readdirSync(RESULTS_DIR)
+      .filter((f) => f.endsWith(withLabel ? `_${withLabel}.json` : '.json'))
+      .sort()
   } catch {
     return undefined
   }
