@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { Tldraw, type Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import type { CanvasCommand } from './canvas/commands'
 import { runCommands } from './canvas/executeCanvasCommand'
 import { SemanticStore } from './canvas/semanticStore'
 import { rebuildSemanticStore, syncSemanticStore } from './canvas/syncSemanticStore'
+import { DevCommandBox } from './DevCommandBox'
 
 // The canvas is saved to the browser (IndexedDB) under this key, so drawings
 // survive page reloads. Changing the key starts a fresh, empty board.
@@ -31,9 +33,17 @@ function handleMount(editor: Editor) {
 }
 
 export default function App() {
+  const [editor, setEditor] = useState<Editor | null>(null)
+
+  function onMount(mounted: Editor) {
+    setEditor(mounted)
+    return handleMount(mounted)
+  }
+
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
-      <Tldraw persistenceKey={PERSISTENCE_KEY} onMount={handleMount} />
+      <Tldraw persistenceKey={PERSISTENCE_KEY} onMount={onMount} />
+      {import.meta.env.DEV && editor && <DevCommandBox editor={editor} store={semanticStore} />}
     </div>
   )
 }

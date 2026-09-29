@@ -3,8 +3,10 @@ import { commandTools, draftFromToolCall } from './commandTools.ts'
 import {
   DEFAULT_MODEL,
   interpret,
+  MAX_SEGMENTS,
   parseInterpretRequest,
   resolveModelConfig,
+  WINDOW_MS,
 } from './interpret.ts'
 import type { ChatRequest, ToolCall } from './openrouter.ts'
 
@@ -16,13 +18,16 @@ const call = (name: string, args: unknown): ToolCall => ({
 
 // A fake chat completion that replies with the given tool calls.
 function fakeChat(toolCalls: ToolCall[] | undefined, finishReason = 'tool_calls') {
-  return vi.fn(async (_request: ChatRequest) => ({
+  return vi.fn(async (_request: ChatRequest, _signal?: AbortSignal) => ({
     choices: [{ finish_reason: finishReason, message: { content: null, tool_calls: toolCalls } }],
   }))
 }
 
 const request = {
-  transcript: 'Let me draw the array 3 1 4 and put i at the start',
+  segments: [
+    { text: 'We are going to sort some numbers.', at: 1_000 },
+    { text: 'Let me draw the array 3 1 4 and put i at the start', at: 4_000 },
+  ],
   objects: [{ id: 'hello', kind: 'text' as const, shapeIds: ['shape:1'], props: { text: 'Hi' } }],
 }
 
@@ -65,7 +70,16 @@ describe('interpret', () => {
     expect(sent.provider).toEqual({ order: ['deepinfra/fp8'], allow_fallbacks: false })
     expect(sent.tools).toBe(commandTools)
     expect(sent.messages[1].content).toContain('- hello (text): {"text":"Hi"}')
-    expect(sent.messages[1].content).toContain(request.transcript)
+    expect(sent.messages[1].content).toContain(
+      'We are going to sort some numbers.\nLet me draw the array 3 1 4 and put i at the start',
+    )
+  })
+
+  it('passes the abort signal through to the chat call', async () => {
+    const chat = fakeChat([], 'stop')
+    const controller = new AbortController()
+    await interpret(chat, request, undefined, controller.signal)
+    expect(chat.mock.calls[0][1]).toBe(controller.signal)
   })
 
   it('throws on a cut-off reply', async () => {
@@ -143,13 +157,38 @@ describe('resolveModelConfig', () => {
 })
 
 describe('parseInterpretRequest', () => {
-  it('accepts a transcript with board objects', () => {
+  it('accepts segments with board objects', () => {
     expect(parseInterpretRequest(request)).toEqual(request)
   })
 
-  it('rejects missing or empty fields', () => {
+  it('keeps only segments from the last 30 s before the newest one', () => {
+    const newestAt = 100_000
+    const segments = [
+      { text: 'too old', at: newestAt - WINDOW_MS - 1 },
+      { text: 'just inside', at: newestAt - WINDOW_MS },
+      { text: 'newest', at: newestAt },
+    ]
+    expect(parseInterpretRequest({ segments, objects: [] })?.segments.map((s) => s.text)).toEqual([
+      'just inside',
+      'newest',
+    ])
+  })
+
+  it('caps the number of segments, keeping the newest', () => {
+    const segments = Array.from({ length: MAX_SEGMENTS + 5 }, (_, i) => ({ text: `s${i}`, at: i }))
+    const window = parseInterpretRequest({ segments, objects: [] })?.segments ?? []
+    expect(window).toHaveLength(MAX_SEGMENTS)
+    expect(window.at(-1)?.text).toBe(`s${MAX_SEGMENTS + 4}`)
+    expect(window[0].text).toBe('s5')
+  })
+
+  it('rejects missing, malformed or empty-newest segments', () => {
     expect(parseInterpretRequest(null)).toBeUndefined()
-    expect(parseInterpretRequest({ transcript: '  ', objects: [] })).toBeUndefined()
-    expect(parseInterpretRequest({ transcript: 'hi' })).toBeUndefined()
+    expect(parseInterpretRequest({ segments: [], objects: [] })).toBeUndefined()
+    expect(parseInterpretRequest({ segments: [{ text: 'hi', at: 0 }] })).toBeUndefined()
+    expect(parseInterpretRequest({ segments: [{ text: 'hi' }], objects: [] })).toBeUndefined()
+    expect(
+      parseInterpretRequest({ segments: [{ text: 'hi', at: 0 }, { text: ' ', at: 1 }], objects: [] }),
+    ).toBeUndefined()
   })
 })

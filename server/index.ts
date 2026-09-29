@@ -2,8 +2,8 @@ import { createServer, type IncomingMessage, type ServerResponse } from 'node:ht
 import { interpret, parseInterpretRequest, resolveModelConfig } from './interpret.ts'
 import { OpenRouterError, openRouterChat } from './openrouter.ts'
 
-// Minimal backend that keeps the API key off the browser. The client posts
-// { transcript, objects } to /api/interpret and gets back { commands }.
+// Minimal backend that keeps the API key off the browser. The client posts an
+// InterpretRequest to /api/interpret and gets back { commands }.
 
 const PORT = Number(process.env.PORT ?? 8787)
 const config = resolveModelConfig(process.env)
@@ -28,12 +28,21 @@ const server = createServer(async (req, res) => {
   }
   const request = parseInterpretRequest(body)
   if (!request) {
-    return sendJson(res, 400, { error: 'Expected { transcript: string, objects: array }' })
+    return sendJson(res, 400, {
+      error: 'Expected { segments: [{ text, at }] (newest last, non-empty), objects: array }',
+    })
   }
+  // A newer request from the same client aborts this one's connection; stop
+  // the model call too instead of paying for an answer nobody reads.
+  const clientGone = new AbortController()
+  res.on('close', () => {
+    if (!res.writableEnded) clientGone.abort()
+  })
   try {
-    const commands = await interpret(chat, request, config)
+    const commands = await interpret(chat, request, config, clientGone.signal)
     sendJson(res, 200, { commands })
   } catch (error) {
+    if (clientGone.signal.aborted) return
     // Never forward provider error details to the browser; log them here.
     console.error('interpret failed:', error)
     const status = error instanceof OpenRouterError && error.status === 429 ? 429 : 502

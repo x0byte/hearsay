@@ -30,7 +30,7 @@ export type ChatResponse = {
   }[]
 }
 
-export type ChatCompletion = (request: ChatRequest) => Promise<ChatResponse>
+export type ChatCompletion = (request: ChatRequest, signal?: AbortSignal) => Promise<ChatResponse>
 
 export class OpenRouterError extends Error {
   readonly status: number
@@ -46,7 +46,7 @@ const ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions'
 const TIMEOUT_MS = 30_000
 
 export function openRouterChat(apiKey: string): ChatCompletion {
-  return async (request) => {
+  return async (request, signal) => {
     const response = await fetch(ENDPOINT, {
       method: 'POST',
       headers: {
@@ -55,7 +55,8 @@ export function openRouterChat(apiKey: string): ChatCompletion {
         'X-Title': 'Hearsay',
       },
       body: JSON.stringify(request),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
+      // Stops on timeout, or as soon as the caller aborts (e.g. client left).
+      signal: AbortSignal.any([AbortSignal.timeout(TIMEOUT_MS), ...(signal ? [signal] : [])]),
     })
     const body: unknown = await response.json().catch(() => undefined)
     if (!response.ok) {

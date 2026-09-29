@@ -1,5 +1,5 @@
 import type { CanvasCommand } from '../src/canvas/commands.ts'
-import type { SemanticObject } from '../src/canvas/semanticStore.ts'
+import type { InterpretRequest, TranscriptSegment } from '../src/interpret/protocol.ts'
 import { assignIds, type DraftCommand } from '../src/canvas/assignIds.ts'
 import { commandTools, draftFromToolCall } from './commandTools.ts'
 import type { ChatCompletion, ChatResponse } from './openrouter.ts'
@@ -14,11 +14,6 @@ export const PROVIDER_FOR_MODEL: Record<string, string> = {
   'google/gemma-4-26b-a4b-it:free': 'google-ai-studio',
 }
 
-export type InterpretRequest = {
-  transcript: string
-  objects: SemanticObject[]
-}
-
 export type ModelConfig = { model: string; provider: string }
 
 // HEARSAY_MODEL picks the model and HEARSAY_PROVIDER overrides its pinned
@@ -30,13 +25,31 @@ export function resolveModelConfig(env: Record<string, string | undefined>): Mod
   return { model, provider }
 }
 
-// Checks the shape of an incoming request body; returns undefined if invalid.
+// The server decides how much transcript the model sees, whatever the client
+// sends: segments from the last WINDOW_MS before the newest, at most MAX_SEGMENTS.
+export const WINDOW_MS = 30_000
+export const MAX_SEGMENTS = 20
+
+// Checks the shape of an incoming request body and trims its transcript
+// window; returns undefined if invalid.
 export function parseInterpretRequest(body: unknown): InterpretRequest | undefined {
   if (typeof body !== 'object' || body === null) return undefined
-  const { transcript, objects } = body as Record<string, unknown>
-  if (typeof transcript !== 'string' || transcript.trim() === '') return undefined
-  if (!Array.isArray(objects)) return undefined
-  return { transcript, objects: objects as SemanticObject[] }
+  const { segments, objects } = body as Record<string, unknown>
+  if (!Array.isArray(objects) || !Array.isArray(segments) || !segments.every(isSegment)) {
+    return undefined
+  }
+  const newest = segments.at(-1)
+  if (!newest || newest.text.trim() === '') return undefined
+  const window = segments
+    .filter((segment) => segment.at >= newest.at - WINDOW_MS)
+    .slice(-MAX_SEGMENTS)
+  return { segments: window, objects: objects as InterpretRequest['objects'] }
+}
+
+function isSegment(value: unknown): value is TranscriptSegment {
+  if (typeof value !== 'object' || value === null) return false
+  const { text, at } = value as Record<string, unknown>
+  return typeof text === 'string' && typeof at === 'number' && Number.isFinite(at)
 }
 
 const SYSTEM_PROMPT = `You drive a whiteboard for someone explaining ideas out loud, usually algorithms.
@@ -56,27 +69,32 @@ export async function interpret(
   chat: ChatCompletion,
   request: InterpretRequest,
   config: ModelConfig = resolveModelConfig({}),
+  signal?: AbortSignal,
 ): Promise<CanvasCommand[]> {
-  const response = await chat({
-    model: config.model,
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'user', content: userMessage(request) },
-    ],
-    tools: commandTools,
-    tool_choice: 'auto',
-    // Pin one provider so behaviour doesn't change between requests.
-    provider: { order: [config.provider], allow_fallbacks: false },
-    max_tokens: 1024,
-  })
+  const response = await chat(
+    {
+      model: config.model,
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: userMessage(request) },
+      ],
+      tools: commandTools,
+      tool_choice: 'auto',
+      // Pin one provider so behaviour doesn't change between requests.
+      provider: { order: [config.provider], allow_fallbacks: false },
+      max_tokens: 1024,
+    },
+    signal,
+  )
   return commandsFrom(response, request.objects.map((object) => object.id))
 }
 
-function userMessage({ transcript, objects }: InterpretRequest): string {
+function userMessage({ segments, objects }: InterpretRequest): string {
   const board = objects.length
     ? objects.map(({ id, kind, props }) => `- ${id} (${kind}): ${JSON.stringify(props)}`).join('\n')
     : '(empty)'
-  return `Board:\n${board}\n\nTranscript:\n${transcript}`
+  const transcript = segments.map((segment) => segment.text).join('\n')
+  return `Board:\n${board}\n\nTranscript (oldest first):\n${transcript}`
 }
 
 // All or nothing: the calls in one reply often depend on each other (create an
