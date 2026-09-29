@@ -13,3 +13,15 @@ export function nextFreePosition(occupied: Rect[]): Point {
   const bottom = Math.max(...occupied.map((r) => r.y + r.h))
   return { x: MARGIN, y: bottom + GAP }
 }
+
+export const ARRAY_CELL_SIZE = 60
+
+// One square cell per value, side by side from the origin.
+export function arrayCellRects(origin: Point, count: number): Rect[] {
+  return Array.from({ length: count }, (_, i) => ({
+    x: origin.x + i * ARRAY_CELL_SIZE,
+    y: origin.y,
+    w: ARRAY_CELL_SIZE,
+    h: ARRAY_CELL_SIZE,
+  }))
+}

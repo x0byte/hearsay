@@ -1,6 +1,13 @@
-import { createShapeId, toRichText, type Editor, type TLTextShape } from 'tldraw'
-import type { CanvasCommand, CreateTextCommand } from './commands'
-import { nextFreePosition, type Point, type Rect } from './layout'
+import {
+  createShapeId,
+  toRichText,
+  type Editor,
+  type TLGeoShape,
+  type TLShapePartial,
+  type TLTextShape,
+} from 'tldraw'
+import type { CanvasCommand, CreateArrayCommand, CreateTextCommand } from './commands'
+import { arrayCellRects, nextFreePosition, type Point, type Rect } from './layout'
 import type { SemanticStore } from './semanticStore'
 import { toShapeMeta } from './syncSemanticStore'
 
@@ -16,10 +23,13 @@ export function executeCanvasCommand(
     case 'create_text':
       createText(editor, store, command)
       return
+    case 'create_array':
+      createArray(editor, store, command)
+      return
     default: {
       // Fails to compile if a new command type is added without a case above.
-      const unhandled: never = command.type
-      throw new Error(`Unhandled canvas command type: ${String(unhandled)}`)
+      const unhandled: never = command
+      throw new Error(`Unhandled canvas command type: ${(unhandled as CanvasCommand).type}`)
     }
   }
 }
@@ -39,6 +49,47 @@ function createText(editor: Editor, store: SemanticStore, command: CreateTextCom
     meta: toShapeMeta({ semanticId: command.id, kind: 'text', props }),
   })
   store.add({ id: command.id, kind: 'text', shapeIds: [shapeId], props })
+}
+
+// Each value becomes a square cell with its index labelled underneath. Every
+// shape carries the same semantic meta, so they rebuild as one object.
+function createArray(editor: Editor, store: SemanticStore, command: CreateArrayCommand): void {
+  const props = { values: command.values }
+  const meta = toShapeMeta({ semanticId: command.id, kind: 'array', props })
+  const cells = arrayCellRects(positionFor(editor, command), command.values.length)
+  const shapes: TLShapePartial[] = []
+  cells.forEach((cell, index) => {
+    shapes.push({
+      id: createShapeId(),
+      type: 'geo',
+      x: cell.x,
+      y: cell.y,
+      props: {
+        geo: 'rectangle',
+        w: cell.w,
+        h: cell.h,
+        richText: toRichText(String(command.values[index])),
+      },
+      meta,
+    } satisfies TLShapePartial<TLGeoShape>)
+    shapes.push({
+      id: createShapeId(),
+      type: 'text',
+      x: cell.x,
+      y: cell.y + cell.h + 4,
+      props: {
+        richText: toRichText(String(index)),
+        size: 's',
+        color: 'grey',
+        textAlign: 'middle',
+        autoSize: false,
+        w: cell.w,
+      },
+      meta,
+    } satisfies TLShapePartial<TLTextShape>)
+  })
+  editor.createShapes(shapes)
+  store.add({ id: command.id, kind: 'array', shapeIds: shapes.map((s) => s.id), props })
 }
 
 function positionFor(editor: Editor, command: { x?: number; y?: number }): Point {

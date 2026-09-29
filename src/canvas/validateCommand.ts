@@ -8,14 +8,21 @@ export type ValidationResult = { ok: true } | { ok: false; reason: string }
 export function validateCommand(command: CanvasCommand, store: SemanticStore): ValidationResult {
   switch (command.type) {
     case 'create_text':
-      if (store.get(command.id)) {
-        return { ok: false, reason: `Object already exists: ${command.id}` }
+      return checkNewId(command.id, store)
+    case 'create_array':
+      if (command.values.length === 0) {
+        return { ok: false, reason: `Array has no values: ${command.id}` }
       }
-      return { ok: true }
+      return checkNewId(command.id, store)
     default: {
       // Fails to compile if a new command type is added without a case above.
-      const unhandled: never = command.type
-      return { ok: false, reason: `Unknown command type: ${String(unhandled)}` }
+      const unhandled: never = command
+      return { ok: false, reason: `Unknown command type: ${(unhandled as CanvasCommand).type}` }
     }
   }
+}
+
+function checkNewId(id: string, store: SemanticStore): ValidationResult {
+  if (store.get(id)) return { ok: false, reason: `Object already exists: ${id}` }
+  return { ok: true }
 }

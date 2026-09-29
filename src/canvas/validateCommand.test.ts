@@ -19,6 +19,24 @@ describe('validateCommand', () => {
     })
   })
 
+  it('rejects create_array with no values', () => {
+    const empty: CanvasCommand = { type: 'create_array', id: 'array-a', values: [] }
+    expect(validateCommand(empty, new SemanticStore())).toEqual({
+      ok: false,
+      reason: 'Array has no values: array-a',
+    })
+  })
+
+  it('rejects create_array when the ID already exists', () => {
+    const store = new SemanticStore()
+    store.add({ id: 'array-a', kind: 'array', shapeIds: [], props: {} })
+    const create: CanvasCommand = { type: 'create_array', id: 'array-a', values: [1] }
+    expect(validateCommand(create, store)).toEqual({
+      ok: false,
+      reason: 'Object already exists: array-a',
+    })
+  })
+
   it('rejects an unknown command type', () => {
     const unknown = { type: 'not_a_command' } as unknown as CanvasCommand
     expect(validateCommand(unknown, new SemanticStore())).toEqual({

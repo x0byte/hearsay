@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { GAP, MARGIN, nextFreePosition } from './layout'
+import { ARRAY_CELL_SIZE, arrayCellRects, GAP, MARGIN, nextFreePosition } from './layout'
 
 describe('nextFreePosition', () => {
   it('starts at the top-left margin on an empty page', () => {
@@ -12,5 +12,15 @@ describe('nextFreePosition', () => {
       { x: 400, y: 80, w: 100, h: 300 },
     ]
     expect(nextFreePosition(occupied)).toEqual({ x: MARGIN, y: 380 + GAP })
+  })
+})
+
+describe('arrayCellRects', () => {
+  it('lays out one square cell per value, side by side', () => {
+    const size = ARRAY_CELL_SIZE
+    expect(arrayCellRects({ x: 10, y: 20 }, 2)).toEqual([
+      { x: 10, y: 20, w: size, h: size },
+      { x: 10 + size, y: 20, w: size, h: size },
+    ])
   })
 })

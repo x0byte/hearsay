@@ -11,4 +11,13 @@ export type CreateTextCommand = {
   y?: number
 }
 
-export type CanvasCommand = CreateTextCommand
+export type CreateArrayCommand = {
+  type: 'create_array'
+  id: string
+  values: (number | string)[]
+  // Optional: when omitted, the layout module picks the position.
+  x?: number
+  y?: number
+}
+
+export type CanvasCommand = CreateTextCommand | CreateArrayCommand
