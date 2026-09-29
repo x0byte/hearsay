@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { Editor } from 'tldraw'
 import type { CanvasCommand } from './commands'
-import { executeCanvasCommand } from './executeCanvasCommand'
+import { executeCanvasCommand, runCommands } from './executeCanvasCommand'
 import { ARRAY_CELL_SIZE, GAP, MARGIN } from './layout'
 import { SemanticStore } from './semanticStore'
 
@@ -201,5 +201,50 @@ describe('executeCanvasCommand', () => {
     expect(() => executeCanvasCommand({} as Editor, new SemanticStore(), unknown)).toThrow(
       'Unhandled canvas command type: not_a_command',
     )
+  })
+})
+
+describe('runCommands', () => {
+  // Enough editor for text commands, plus the history calls runCommands makes.
+  function setup() {
+    const editor = {
+      markHistoryStoppingPoint: vi.fn(() => 'mark-1'),
+      bailToMark: vi.fn(),
+      run: (fn: () => void) => fn(),
+      createShape: vi.fn(),
+      deleteShapes: vi.fn(),
+      getCurrentPageShapes: () => [],
+      getShapePageBounds: () => undefined,
+    }
+    return { editor, store: new SemanticStore() }
+  }
+
+  it('runs a batch where later commands depend on earlier ones', () => {
+    const { editor, store } = setup()
+
+    const result = runCommands(editor as unknown as Editor, store, [
+      { type: 'create_text', id: 'a', text: 'A' },
+      { type: 'create_text', id: 'b', text: 'B' },
+      { type: 'delete', target: 'a' },
+    ])
+
+    expect(result).toEqual({ ok: true })
+    expect(editor.markHistoryStoppingPoint).toHaveBeenCalledTimes(1)
+    expect(editor.bailToMark).not.toHaveBeenCalled()
+    expect(store.list().map((o) => o.id)).toEqual(['b'])
+  })
+
+  it('rolls back the whole batch when one command is rejected', () => {
+    const { editor, store } = setup()
+
+    const result = runCommands(editor as unknown as Editor, store, [
+      { type: 'create_text', id: 'a', text: 'A' },
+      { type: 'create_text', id: 'a', text: 'Again' },
+    ])
+
+    expect(result).toEqual({ ok: false, index: 1, reason: 'Object already exists: a' })
+    expect(editor.bailToMark).toHaveBeenCalledWith('mark-1')
+    // Rebuilt from the (rolled back, here empty) canvas.
+    expect(store.list()).toEqual([])
   })
 })

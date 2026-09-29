@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { Editor } from 'tldraw'
 import { SemanticStore } from './semanticStore'
-import { rebuildSemanticStore, syncSemanticStore } from './syncSemanticStore'
+import { rebuildSemanticStore, syncSemanticStore, whileApplyingCommands } from './syncSemanticStore'
 
 function editorWithShapes(shapes: { id: string; meta: Record<string, unknown> }[]) {
   return { getCurrentPageShapes: () => shapes } as unknown as Editor
@@ -35,52 +35,88 @@ describe('rebuildSemanticStore', () => {
 })
 
 describe('syncSemanticStore', () => {
-  const textShape = (id: string, meta: Record<string, unknown>) => ({ typeName: 'shape', id, meta })
+  type FakeShape = { id: string; meta: Record<string, unknown> }
   const helloMeta = { semanticId: 'hello', kind: 'text', props: { text: 'Hi' } }
-  const noChanges = { added: {}, updated: {}, removed: {} }
+  const hello = (meta: Record<string, unknown> = helloMeta): FakeShape => ({ id: 'shape:1', meta })
+  const flushMicrotasks = () => Promise.resolve()
 
-  // A fake editor whose page shapes can change, with the listener captured.
+  // A fake editor whose page shapes can change, with the side-effect handlers
+  // captured so tests can fire them like tldraw would.
   function setup() {
-    let pageShapes: ReturnType<typeof textShape>[] = [textShape('shape:1', helloMeta)]
-    let listener: (entry: unknown) => void = () => {}
+    let pageShapes: FakeShape[] = [hello()]
+    const handlers: Record<string, (...args: FakeShape[]) => void> = {}
+    const register = (kind: string) => (_type: string, handler: (...args: FakeShape[]) => void) => {
+      handlers[kind] = handler
+      return () => delete handlers[kind]
+    }
     const editor = {
-      getCurrentPageShapes: () => pageShapes,
-      store: {
-        listen: vi.fn((callback: (entry: unknown) => void) => {
-          listener = callback
-          return () => {}
-        }),
+      getCurrentPageShapes: vi.fn(() => pageShapes),
+      sideEffects: {
+        registerAfterCreateHandler: register('create'),
+        registerAfterDeleteHandler: register('delete'),
+        registerAfterChangeHandler: register('change'),
       },
     }
     const store = new SemanticStore()
     rebuildSemanticStore(editor as unknown as Editor, store)
-    syncSemanticStore(editor as unknown as Editor, store)
+    const stop = syncSemanticStore(editor as unknown as Editor, store)
+    editor.getCurrentPageShapes.mockClear()
     return {
+      editor,
       store,
-      setPageShapes: (shapes: typeof pageShapes) => (pageShapes = shapes),
-      emit: (changes: Partial<typeof noChanges>) => listener({ changes: { ...noChanges, ...changes } }),
+      handlers,
+      stop,
+      setPageShapes: (shapes: FakeShape[]) => (pageShapes = shapes),
     }
   }
 
-  it('drops an object when its shapes are deleted by hand', () => {
-    const { store, setPageShapes, emit } = setup()
+  it('drops an object when its shapes are deleted by hand', async () => {
+    const { store, handlers, setPageShapes } = setup()
     setPageShapes([])
-    emit({ removed: { 'shape:1': textShape('shape:1', helloMeta) } })
+    handlers.delete(hello())
+    await flushMicrotasks()
     expect(store.list()).toEqual([])
   })
 
-  it('picks up restored meta, e.g. after undo', () => {
-    const { store, setPageShapes, emit } = setup()
+  it('picks up restored meta, e.g. after undo', async () => {
+    const { store, handlers, setPageShapes } = setup()
     const restored = { ...helloMeta, props: { text: 'Before' } }
-    setPageShapes([textShape('shape:1', restored)])
-    emit({ updated: { 'shape:1': [textShape('shape:1', helloMeta), textShape('shape:1', restored)] } })
+    setPageShapes([hello(restored)])
+    handlers.change(hello(), hello(restored))
+    await flushMicrotasks()
     expect(store.get('hello')?.props).toEqual({ text: 'Before' })
   })
 
-  it('ignores changes to shapes without semantic meta', () => {
-    const { store, setPageShapes, emit } = setup()
+  it('ignores changes made while applying commands', async () => {
+    const { editor, handlers, setPageShapes } = setup()
     setPageShapes([])
-    emit({ removed: { 'shape:9': textShape('shape:9', {}) } })
-    expect(store.get('hello')).toBeDefined()
+    whileApplyingCommands(() => {
+      handlers.create(hello())
+      handlers.delete(hello())
+    })
+    await flushMicrotasks()
+    expect(editor.getCurrentPageShapes).not.toHaveBeenCalled()
+  })
+
+  it('rebuilds once for many shapes deleted together', async () => {
+    const { editor, handlers, setPageShapes } = setup()
+    setPageShapes([])
+    handlers.delete(hello())
+    handlers.delete({ id: 'shape:2', meta: helloMeta })
+    await flushMicrotasks()
+    expect(editor.getCurrentPageShapes).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores shapes without semantic meta', async () => {
+    const { editor, handlers } = setup()
+    handlers.delete({ id: 'shape:9', meta: {} })
+    await flushMicrotasks()
+    expect(editor.getCurrentPageShapes).not.toHaveBeenCalled()
+  })
+
+  it('stops syncing when unsubscribed', () => {
+    const { handlers, stop } = setup()
+    stop()
+    expect(Object.keys(handlers)).toEqual([])
   })
 })

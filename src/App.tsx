@@ -1,10 +1,9 @@
 import { Tldraw, type Editor } from 'tldraw'
 import 'tldraw/tldraw.css'
 import type { CanvasCommand } from './canvas/commands'
-import { executeCanvasCommand } from './canvas/executeCanvasCommand'
+import { runCommands } from './canvas/executeCanvasCommand'
 import { SemanticStore } from './canvas/semanticStore'
 import { rebuildSemanticStore, syncSemanticStore } from './canvas/syncSemanticStore'
-import { validateCommand } from './canvas/validateCommand'
 
 // The canvas is saved to the browser (IndexedDB) under this key, so drawings
 // survive page reloads. Changing the key starts a fresh, empty board.
@@ -25,18 +24,10 @@ function handleMount(editor: Editor) {
   rebuildSemanticStore(editor, semanticStore)
   const stopSync = syncSemanticStore(editor, semanticStore)
   if (editor.getCurrentPageShapeIds().size === 0) {
-    runCommand(editor, HELLO_COMMAND)
+    const result = runCommands(editor, semanticStore, [HELLO_COMMAND])
+    if (!result.ok) console.warn(`Seed command rejected: ${result.reason}`)
   }
   return stopSync
-}
-
-function runCommand(editor: Editor, command: CanvasCommand) {
-  const result = validateCommand(command, semanticStore)
-  if (!result.ok) {
-    console.warn(`Rejected ${command.type}: ${result.reason}`)
-    return
-  }
-  executeCanvasCommand(editor, semanticStore, command)
 }
 
 export default function App() {

@@ -1,4 +1,4 @@
-import type { Editor, HistoryEntry, JsonObject, TLRecord, TLShape } from 'tldraw'
+import type { Editor, JsonObject, TLShape } from 'tldraw'
 import type { SemanticKind, SemanticObject, SemanticStore } from './semanticStore'
 
 // Each tldraw shape drawn for a semantic object carries this in its `meta`,
@@ -46,27 +46,55 @@ export function rebuildSemanticStore(editor: Editor, store: SemanticStore): void
   for (const object of objects.values()) store.add(object)
 }
 
-// Keeps the store in step with the canvas when shapes change outside the
-// executor: manual deletes, undo and redo. Rebuilding from shape meta gives the
-// same result a reload would. Returns a function that stops listening.
+// True while runCommands is applying (or rolling back) a batch. Those changes
+// already update the store, so sync ignores them.
+let applyingCommands = false
+
+export function whileApplyingCommands<T>(fn: () => T): T {
+  const previous = applyingCommands
+  applyingCommands = true
+  try {
+    return fn()
+  } finally {
+    applyingCommands = previous
+  }
+}
+
+// Keeps the store in step with changes made outside runCommands: manual
+// deletes, undo and redo. Side-effect handlers run synchronously with each
+// change, so they can tell our own changes apart; store.listen can't, because
+// it reports every local change as source 'user' on the next frame.
+// Rebuilding from shape meta gives the same result a reload would. Returns a
+// function that stops syncing.
 export function syncSemanticStore(editor: Editor, store: SemanticStore): () => void {
-  return editor.store.listen(
-    (entry) => {
-      if (touchesSemanticShapes(entry)) rebuildSemanticStore(editor, store)
-    },
-    { scope: 'document' },
-  )
+  let rebuildPending = false
+  const onSemanticChange = () => {
+    if (applyingCommands || rebuildPending) return
+    // Deleting many shapes fires once per shape; rebuild once, after the change.
+    rebuildPending = true
+    queueMicrotask(() => {
+      rebuildPending = false
+      rebuildSemanticStore(editor, store)
+    })
+  }
+  const { sideEffects } = editor
+  const unsubscribers = [
+    sideEffects.registerAfterCreateHandler('shape', (shape) => {
+      if (isSemanticShape(shape)) onSemanticChange()
+    }),
+    sideEffects.registerAfterDeleteHandler('shape', (shape) => {
+      if (isSemanticShape(shape)) onSemanticChange()
+    }),
+    // e.g. undoing move_pointer restores the old meta.
+    sideEffects.registerAfterChangeHandler('shape', (prev, next) => {
+      if (prev.meta !== next.meta && (isSemanticShape(prev) || isSemanticShape(next))) {
+        onSemanticChange()
+      }
+    }),
+  ]
+  return () => unsubscribers.forEach((unsubscribe) => unsubscribe())
 }
 
-function touchesSemanticShapes({ changes }: HistoryEntry<TLRecord>): boolean {
-  const addedOrRemoved = [...Object.values(changes.added), ...Object.values(changes.removed)]
-  if (addedOrRemoved.some(isSemanticShape)) return true
-  // e.g. undoing move_pointer restores the old meta.
-  return Object.values(changes.updated).some(
-    ([from, to]) => isSemanticShape(to) && from.meta !== to.meta,
-  )
-}
-
-function isSemanticShape(record: TLRecord): boolean {
-  return record.typeName === 'shape' && typeof record.meta.semanticId === 'string'
+function isSemanticShape(shape: TLShape): boolean {
+  return typeof shape.meta.semanticId === 'string'
 }

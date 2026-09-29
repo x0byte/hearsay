@@ -26,7 +26,51 @@ import {
   type Rect,
 } from './layout'
 import type { SemanticObject, SemanticStore } from './semanticStore'
-import { toShapeMeta, type SemanticShapeMeta } from './syncSemanticStore'
+import {
+  rebuildSemanticStore,
+  toShapeMeta,
+  whileApplyingCommands,
+  type SemanticShapeMeta,
+} from './syncSemanticStore'
+import { validateCommand } from './validateCommand'
+
+export type RunResult = { ok: true } | { ok: false; index: number; reason: string }
+
+// Runs a batch of commands as one undo step, all or nothing. Each command is
+// validated just before it runs, so later commands can build on earlier ones
+// (e.g. create an array, then a pointer on it). If any command is rejected or
+// fails, the canvas is rolled back and the store rebuilt from it.
+export function runCommands(
+  editor: Editor,
+  store: SemanticStore,
+  commands: CanvasCommand[],
+): RunResult {
+  return whileApplyingCommands(() => {
+    const mark = editor.markHistoryStoppingPoint('hearsay-commands')
+    let result: RunResult = { ok: true }
+    editor.run(() => {
+      for (const [index, command] of commands.entries()) {
+        const validation = validateCommand(command, store)
+        if (!validation.ok) {
+          result = { ok: false, index, reason: validation.reason }
+          return
+        }
+        try {
+          executeCanvasCommand(editor, store, command)
+        } catch (error) {
+          const reason = error instanceof Error ? error.message : String(error)
+          result = { ok: false, index, reason }
+          return
+        }
+      }
+    })
+    if (!result.ok) {
+      editor.bailToMark(mark)
+      rebuildSemanticStore(editor, store)
+    }
+    return result
+  })
+}
 
 // Applies a CanvasCommand to a tldraw Editor and records the result in the
 // semantic store. All tldraw-specific translation lives here so the command
