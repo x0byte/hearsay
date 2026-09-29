@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import type { CanvasCommand } from '../src/canvas/commands.ts'
 import { ANY, cases } from './cases.ts'
-import { classify, matches, percentile, summarize, type Attempt } from './score.ts'
+import { classify, matches, parallelLatencyMs, percentile, summarize, type Attempt } from './score.ts'
 
 const move: CanvasCommand = { type: 'move_pointer', target: 'pointer-i', index: 1 }
 
@@ -56,6 +56,7 @@ describe('summarize', () => {
     costUsd: 0.001,
     got: [],
     dropped: [],
+    path: 'gemma',
   })
 
   it('reports rates against the right denominators', () => {
@@ -124,5 +125,27 @@ describe('cases', () => {
   it('is frozen', () => {
     const hash = createHash('sha256').update(JSON.stringify(holdout)).digest('hex')
     expect(hash).toBe('951bb4fbb9e40c09646c2f27b22e742a56c8402aaea99556904cad1405f08a36')
+  })
+})
+
+describe('parallelLatencyMs', () => {
+  const jevRun: Attempt = {
+    case: 'c',
+    tag: 'command',
+    expectsChange: true,
+    outcome: 'correct',
+    latencyMs: 300,
+    costUsd: 0,
+    got: [],
+    dropped: [],
+    path: 'jev',
+    jev: { latencyMs: 300, costUsd: 0 },
+    gemma: { latencyMs: 800, costUsd: 0, shadow: true },
+  }
+
+  it('is Jev alone when Jev settles, the slower of the two on fallback, and unchanged for Gemma-only', () => {
+    expect(parallelLatencyMs(jevRun)).toBe(300)
+    expect(parallelLatencyMs({ ...jevRun, path: 'fallback', gemma: { latencyMs: 800, costUsd: 0, shadow: false } })).toBe(800)
+    expect(parallelLatencyMs({ ...jevRun, path: 'gemma', latencyMs: 750 })).toBe(750)
   })
 })

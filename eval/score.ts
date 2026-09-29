@@ -1,4 +1,5 @@
 import type { CanvasCommand } from '../src/canvas/commands.ts'
+import type { InterpretPath, JevTrace } from '../server/interpret.ts'
 import { ANY, type EvalTag } from './cases.ts'
 
 // correct:    got exactly the expected commands (including [] when [] expected)
@@ -21,6 +22,31 @@ export type Attempt = {
   got: CanvasCommand[] | { error: string }
   // No-op commands removed before scoring (they would not change the board).
   dropped: CanvasCommand[]
+  // Which route produced the answer; Jev runs also record every Jev answer.
+  path: InterpretPath
+  reason?: string // why a Jev run fell back to Gemma
+  jev?: JevTrace
+  gemma?: GemmaTrace
+}
+
+// Gemma's answer for this attempt. In Jev runs where Jev settled the request,
+// Gemma is still called afterwards as a "shadow" (untimed, not in the path or
+// cost) so saved runs can be re-scored at other thresholds.
+export type GemmaTrace = {
+  latencyMs: number
+  costUsd: number
+  shadow: boolean
+  commands?: CanvasCommand[]
+  dropped?: CanvasCommand[]
+  error?: string
+}
+
+// Latency if Jev and Gemma were started together and Gemma cancelled whenever
+// Jev settles the request.
+export function parallelLatencyMs(a: Attempt): number {
+  if (a.path === 'gemma' || !a.jev) return a.latencyMs
+  if (a.path === 'fallback') return Math.max(a.jev.latencyMs, a.gemma?.latencyMs ?? 0)
+  return a.jev.latencyMs
 }
 
 export function classify(expected: CanvasCommand[], got: CanvasCommand[] | undefined): Outcome {
@@ -70,6 +96,8 @@ export type Summary = {
   missRate: number // of attempts where commands were expected
   accuracyByTag: Partial<Record<EvalTag, number>>
   latencyMs: { p50: number; p95: number }
+  parallelLatencyMs: { p50: number; p95: number } // simulated; see parallelLatencyMs()
+  paths: Partial<Record<InterpretPath, number>>
   totalCostUsd: number
   // Reported separately so no-op drops can't hide false draws.
   noOps: {
@@ -89,7 +117,11 @@ export function summarize(attempts: Attempt[]): Summary {
     const ofTag = attempts.filter((a) => a.tag === tag)
     accuracyByTag[tag] = ratio(ofTag.filter((a) => a.outcome === 'correct').length, ofTag.length)
   }
-  const latencies = attempts.filter((a) => a.outcome !== 'error').map((a) => a.latencyMs)
+  const timed = attempts.filter((a) => a.outcome !== 'error')
+  const latencies = timed.map((a) => a.latencyMs)
+  const parallel = timed.map(parallelLatencyMs)
+  const paths: Partial<Record<InterpretPath, number>> = {}
+  for (const a of attempts) paths[a.path] = (paths[a.path] ?? 0) + 1
   return {
     attempts: attempts.length,
     accuracy: ratio(counts.correct, attempts.length),
@@ -98,6 +130,8 @@ export function summarize(attempts: Attempt[]): Summary {
     missRate: ratio(counts.miss, expectingCommands),
     accuracyByTag,
     latencyMs: { p50: percentile(latencies, 50), p95: percentile(latencies, 95) },
+    parallelLatencyMs: { p50: percentile(parallel, 50), p95: percentile(parallel, 95) },
+    paths,
     totalCostUsd: attempts.reduce((sum, a) => sum + a.costUsd, 0),
     noOps: {
       commands: attempts.reduce((sum, a) => sum + a.dropped.length, 0),
