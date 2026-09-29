@@ -86,7 +86,12 @@ export async function interpret(
       tool_choice: 'auto',
       // Pin one provider so behaviour doesn't change between requests.
       provider: { order: [config.provider], allow_fallbacks: false },
-      max_tokens: 1024,
+      // A reply is at most a few short tool calls (~40 tokens). Gemma
+      // occasionally slips into a thinking loop ("thoughtthought…") until the
+      // limit; 256 bounds that at a few seconds instead of ~27 s. Reasoning is
+      // left at its default: DeepInfra honours effort "none", but in the eval it
+      // raised false draws (9.8% -> 21.6%) and did not stop the loops.
+      max_tokens: 256,
     },
     signal,
   )

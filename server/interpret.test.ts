@@ -68,6 +68,7 @@ describe('interpret', () => {
     const sent = chat.mock.calls[0][0]
     expect(sent.model).toBe(DEFAULT_MODEL)
     expect(sent.provider).toEqual({ order: ['deepinfra/fp8'], allow_fallbacks: false })
+    expect(sent.max_tokens).toBe(256)
     expect(sent.tools).toBe(commandTools)
     expect(sent.messages[1].content).toContain('- hello (text): {"text":"Hi"}')
     expect(sent.messages[1].content).toContain(

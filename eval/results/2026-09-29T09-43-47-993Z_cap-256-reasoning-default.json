@@ -1,0 +1,1543 @@
+{
+  "runAt": "2026-09-29T09:43:47.995Z",
+  "label": "cap-256-reasoning-default",
+  "model": "google/gemma-4-26b-a4b-it",
+  "provider": "deepinfra/fp8",
+  "promptHash": "54ac5c6b9456",
+  "repeats": 3,
+  "summary": {
+    "attempts": 120,
+    "accuracy": 0.9416666666666667,
+    "counts": {
+      "correct": 113,
+      "false_draw": 5,
+      "miss": 0,
+      "wrong": 2,
+      "error": 0
+    },
+    "falseDrawRate": 0.09803921568627451,
+    "missRate": 0,
+    "accuracyByTag": {
+      "explanation": 0.9019607843137255,
+      "command": 1,
+      "multi": 0.6666666666666666,
+      "context": 1
+    },
+    "latencyMs": {
+      "p50": 733,
+      "p95": 1403
+    },
+    "totalCostUsd": 0.007788950000000007
+  },
+  "attempts": [
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 590,
+      "costUsd": 0.00006001,
+      "got": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1117,
+      "costUsd": 0.00006035,
+      "got": []
+    },
+    {
+      "case": "explain-idea",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1064,
+      "costUsd": 0.00005899,
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 499,
+      "costUsd": 0.0000598,
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 464,
+      "costUsd": 0.0000598,
+      "got": []
+    },
+    {
+      "case": "explain-neighbours",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 761,
+      "costUsd": 0.0000598,
+      "got": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 425,
+      "costUsd": 0.00006162,
+      "got": []
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 838,
+      "costUsd": 0.00006944,
+      "got": [
+        {
+          "type": "create_text",
+          "text": "O(n^2)",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "explain-complexity",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1025,
+      "costUsd": 0.00006672,
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 372,
+      "costUsd": 0.0000606,
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 645,
+      "costUsd": 0.00006196,
+      "got": []
+    },
+    {
+      "case": "explain-why-left",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 438,
+      "costUsd": 0.00006196,
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1083,
+      "costUsd": 0.00005916,
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 820,
+      "costUsd": 0.00005882,
+      "got": []
+    },
+    {
+      "case": "explain-confused",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 457,
+      "costUsd": 0.00005916,
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1247,
+      "costUsd": 0.0000598,
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 6272,
+      "costUsd": 0.00011318,
+      "got": []
+    },
+    {
+      "case": "explain-zero-indexed",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 467,
+      "costUsd": 0.0000598,
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1647,
+      "costUsd": 0.00006344,
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 640,
+      "costUsd": 0.0000631,
+      "got": []
+    },
+    {
+      "case": "explain-in-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 854,
+      "costUsd": 0.00006344,
+      "got": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 391,
+      "costUsd": 0.00005851,
+      "got": []
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 1824,
+      "costUsd": 0.00007211,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-binary-search",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 835,
+      "costUsd": 0.00005987,
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 346,
+      "costUsd": 0.00006026,
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 488,
+      "costUsd": 0.00006196,
+      "got": []
+    },
+    {
+      "case": "explain-check-in",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 511,
+      "costUsd": 0.00006196,
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 464,
+      "costUsd": 0.00006182,
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 454,
+      "costUsd": 0.00006148,
+      "got": []
+    },
+    {
+      "case": "explain-until-done",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1000,
+      "costUsd": 0.00006148,
+      "got": []
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 830,
+      "costUsd": 0.00006468,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 1187,
+      "costUsd": 0.00006468,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-array",
+      "tag": "explanation",
+      "outcome": "false_draw",
+      "latencyMs": 861,
+      "costUsd": 0.00006468,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 2242,
+      "costUsd": 0.00006047,
+      "got": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 416,
+      "costUsd": 0.00006183,
+      "got": []
+    },
+    {
+      "case": "explain-what-is-i",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 493,
+      "costUsd": 0.00006183,
+      "got": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1084,
+      "costUsd": 0.00006885,
+      "got": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 648,
+      "costUsd": 0.00006035,
+      "got": []
+    },
+    {
+      "case": "explain-worst-case",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 1023,
+      "costUsd": 0.00006035,
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 855,
+      "costUsd": 0.00006028,
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 919,
+      "costUsd": 0.00006028,
+      "got": []
+    },
+    {
+      "case": "explain-thinking",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 733,
+      "costUsd": 0.00005892,
+      "got": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 490,
+      "costUsd": 0.00006501,
+      "got": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 502,
+      "costUsd": 0.00006365,
+      "got": []
+    },
+    {
+      "case": "explain-out-of-order",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 624,
+      "costUsd": 0.00006501,
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 538,
+      "costUsd": 0.00005958,
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 500,
+      "costUsd": 0.00006026,
+      "got": []
+    },
+    {
+      "case": "explain-later",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 430,
+      "costUsd": 0.00005958,
+      "got": []
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 539,
+      "costUsd": 0.00006524,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 644,
+      "costUsd": 0.00006524,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 733,
+      "costUsd": 0.00006524,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            3,
+            1,
+            4,
+            1,
+            5
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1226,
+      "costUsd": 0.00006409,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1403,
+      "costUsd": 0.00006409,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 618,
+      "costUsd": 0.00006409,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1515,
+      "costUsd": 0.00006742,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 972,
+      "costUsd": 0.00006742,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-first",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 655,
+      "costUsd": 0.00006742,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 776,
+      "costUsd": 0.00006882,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 780,
+      "costUsd": 0.00006882,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "create-pointer-end",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1246,
+      "costUsd": 0.00006882,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 3,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 759,
+      "costUsd": 0.00006685,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 974,
+      "costUsd": 0.00006685,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-pointer-absolute",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 812,
+      "costUsd": 0.00006685,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1253,
+      "costUsd": 0.00006671,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 618,
+      "costUsd": 0.00006671,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-it-over-one",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 791,
+      "costUsd": 0.00006671,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 663,
+      "costUsd": 0.00006846,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 909,
+      "costUsd": 0.00006846,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-j-left",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 668,
+      "costUsd": 0.00006846,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 2,
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 868,
+      "costUsd": 0.00006685,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1025,
+      "costUsd": 0.00006685,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "move-i-to-last",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 819,
+      "costUsd": 0.00006685,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 3,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1023,
+      "costUsd": 0.00006435,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 822,
+      "costUsd": 0.00006435,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-value",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 780,
+      "costUsd": 0.00006435,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 834,
+      "costUsd": 0.00006306,
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1019,
+      "costUsd": 0.00006306,
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-whole-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1037,
+      "costUsd": 0.00006306,
+      "got": [
+        {
+          "type": "highlight",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1033,
+      "costUsd": 0.00006442,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1208,
+      "costUsd": 0.00006442,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-by-index",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1461,
+      "costUsd": 0.00006442,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 1,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 1229,
+      "costUsd": 0.00006582,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 704,
+      "costUsd": 0.00006582,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "highlight-in-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 671,
+      "costUsd": 0.00006582,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 517,
+      "costUsd": 0.00006628,
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 587,
+      "costUsd": 0.00006628,
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-pointer",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 799,
+      "costUsd": 0.00006628,
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 713,
+      "costUsd": 0.0000646,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 553,
+      "costUsd": 0.0000646,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-that-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 589,
+      "costUsd": 0.0000646,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 421,
+      "costUsd": 0.00006439,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 566,
+      "costUsd": 0.00006439,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "delete-second-array",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 558,
+      "costUsd": 0.00006439,
+      "got": [
+        {
+          "type": "delete",
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 499,
+      "costUsd": 0.00006263,
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 616,
+      "costUsd": 0.00006263,
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "create-title",
+      "tag": "command",
+      "outcome": "correct",
+      "latencyMs": 610,
+      "costUsd": 0.00006263,
+      "got": [
+        {
+          "type": "create_text",
+          "text": "Bubble sort",
+          "id": "text-1"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 878,
+      "costUsd": 0.00006456,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "correct",
+      "latencyMs": 1263,
+      "costUsd": 0.00007272,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 2,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "multi-array-and-pointer",
+      "tag": "multi",
+      "outcome": "wrong",
+      "latencyMs": 1222,
+      "costUsd": 0.00006456,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            6,
+            3,
+            9,
+            1
+          ],
+          "id": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "correct",
+      "latencyMs": 907,
+      "costUsd": 0.00007477,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-b",
+          "index": 2,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "correct",
+      "latencyMs": 1037,
+      "costUsd": 0.00007477,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-b",
+          "index": 2,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "multi-second-array-and-pointer",
+      "tag": "multi",
+      "outcome": "correct",
+      "latencyMs": 1033,
+      "costUsd": 0.00007477,
+      "got": [
+        {
+          "type": "create_array",
+          "values": [
+            9,
+            7,
+            2
+          ],
+          "id": "array-b"
+        },
+        {
+          "type": "create_pointer",
+          "array": "array-b",
+          "index": 2,
+          "label": "j",
+          "id": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 694,
+      "costUsd": 0.00006889,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 637,
+      "costUsd": 0.00006889,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-pointer-after-array",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 671,
+      "costUsd": 0.00006889,
+      "got": [
+        {
+          "type": "create_pointer",
+          "array": "array-a",
+          "index": 0,
+          "label": "i",
+          "id": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 581,
+      "costUsd": 0.00006916,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 593,
+      "costUsd": 0.00006916,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-move-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 545,
+      "costUsd": 0.00006916,
+      "got": [
+        {
+          "type": "move_pointer",
+          "index": 1,
+          "target": "pointer-i"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 899,
+      "costUsd": 0.00006624,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1084,
+      "costUsd": 0.00006624,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-its-first-cell",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 955,
+      "costUsd": 0.00006624,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 0,
+          "target": "array-b"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 626,
+      "costUsd": 0.00006705,
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 492,
+      "costUsd": 0.00006705,
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-remove-it",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 542,
+      "costUsd": 0.00006705,
+      "got": [
+        {
+          "type": "delete",
+          "target": "pointer-j"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 545,
+      "costUsd": 0.00006519,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 741,
+      "costUsd": 0.00006519,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-highlight-that",
+      "tag": "context",
+      "outcome": "correct",
+      "latencyMs": 1396,
+      "costUsd": 0.00006519,
+      "got": [
+        {
+          "type": "highlight",
+          "index": 2,
+          "target": "array-a"
+        }
+      ]
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 595,
+      "costUsd": 0.00006085,
+      "got": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 438,
+      "costUsd": 0.00006085,
+      "got": []
+    },
+    {
+      "case": "context-no-repeat",
+      "tag": "explanation",
+      "outcome": "correct",
+      "latencyMs": 364,
+      "costUsd": 0.00006085,
+      "got": []
+    }
+  ]
+}
