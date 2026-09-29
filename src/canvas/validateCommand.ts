@@ -1,5 +1,6 @@
-import type { CanvasCommand, CreatePointerCommand, HighlightCommand, MovePointerCommand } from './commands'
-import type { SemanticStore } from './semanticStore'
+// Explicit .ts extensions: this module is also loaded by the Node server.
+import type { CanvasCommand, CreatePointerCommand, HighlightCommand, MovePointerCommand } from './commands.ts'
+import type { SemanticStore } from './semanticStore.ts'
 
 export type ValidationResult = { ok: true } | { ok: false; reason: string }
 
