@@ -178,7 +178,11 @@ describe('commandTools', () => {
 
 describe('resolveModelConfig', () => {
   it('defaults to paid Gemma pinned to DeepInfra fp8', () => {
-    expect(resolveModelConfig({})).toEqual({ model: DEFAULT_MODEL, provider: 'deepinfra/fp8' })
+    expect(resolveModelConfig({})).toEqual({
+      model: DEFAULT_MODEL,
+      provider: 'deepinfra/fp8',
+      fallbackProvider: 'novita/bf16',
+    })
   })
 
   it('pins the free variant to its own provider when only the model is set', () => {

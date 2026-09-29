@@ -2,6 +2,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from 'node:ht
 import { interpret, interpretWithJev, parseInterpretRequest, resolveModelConfig } from './interpret.ts'
 import { DEFAULT_THRESHOLDS, openRouterJev } from './jev.ts'
 import { OpenRouterError, openRouterChat } from './openrouter.ts'
+import { retryingChat } from './retry.ts'
 
 // Minimal backend that keeps the API key off the browser. The client posts an
 // InterpretRequest to /api/interpret and gets back { commands }.
@@ -15,7 +16,12 @@ if (!apiKey) {
   console.error('OPENROUTER_API_KEY is not set. Add it to .env (server only).')
   process.exit(1)
 }
-const chat = openRouterChat(apiKey)
+// A rate-limited Gemma call is retried once, then sent to a second provider.
+// A superseded request (client gone) aborts even during the pause.
+const chat = retryingChat(openRouterChat(apiKey), {
+  fallbackProvider: config.fallbackProvider,
+  onRetry: ({ kind, provider }) => console.warn(`Gemma rate-limited: ${kind} via ${provider}`),
+})
 // Jev in front of Gemma, adopted per the eval decision rule (eval/results/*_jev-s1.json).
 // HEARSAY_JEV=0 turns it off, leaving Gemma alone.
 const jev = process.env.HEARSAY_JEV === '0' ? undefined : openRouterJev(apiKey)

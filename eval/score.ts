@@ -25,6 +25,7 @@ export type Attempt = {
   // Which route produced the answer; Jev runs also record every Jev answer.
   path: InterpretPath
   reason?: string // why a Jev run fell back to Gemma
+  retries?: number // rate-limit retries of the Gemma call on the path
   jev?: JevTrace
   gemma?: GemmaTrace
 }
@@ -35,6 +36,7 @@ export type Attempt = {
 export type GemmaTrace = {
   latencyMs: number
   costUsd: number
+  retries?: number
   shadow: boolean
   commands?: CanvasCommand[]
   dropped?: CanvasCommand[]
@@ -98,6 +100,7 @@ export type Summary = {
   latencyMs: { p50: number; p95: number }
   parallelLatencyMs: { p50: number; p95: number } // simulated; see parallelLatencyMs()
   paths: Partial<Record<InterpretPath, number>>
+  retries: number // rate-limit retries across attempts (shadow calls excluded)
   totalCostUsd: number
   // Reported separately so no-op drops can't hide false draws.
   noOps: {
@@ -132,6 +135,7 @@ export function summarize(attempts: Attempt[]): Summary {
     latencyMs: { p50: percentile(latencies, 50), p95: percentile(latencies, 95) },
     parallelLatencyMs: { p50: percentile(parallel, 50), p95: percentile(parallel, 95) },
     paths,
+    retries: attempts.reduce((sum, a) => sum + (a.retries ?? 0), 0),
     totalCostUsd: attempts.reduce((sum, a) => sum + a.costUsd, 0),
     noOps: {
       commands: attempts.reduce((sum, a) => sum + a.dropped.length, 0),

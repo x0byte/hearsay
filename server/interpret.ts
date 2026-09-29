@@ -24,7 +24,14 @@ export const PROVIDER_FOR_MODEL: Record<string, string> = {
   'google/gemma-4-26b-a4b-it:free': 'google-ai-studio',
 }
 
-export type ModelConfig = { model: string; provider: string }
+// Where the server sends Gemma if the pinned provider is still rate-limited
+// after one retry (the eval stays pinned). Tool-calling support checked on
+// OpenRouter's endpoint list.
+export const FALLBACK_PROVIDER_FOR_MODEL: Record<string, string> = {
+  'google/gemma-4-26b-a4b-it': 'novita/bf16',
+}
+
+export type ModelConfig = { model: string; provider: string; fallbackProvider?: string }
 
 // HEARSAY_MODEL picks the model and HEARSAY_PROVIDER overrides its pinned
 // provider. An unknown model needs an explicit provider.
@@ -32,7 +39,8 @@ export function resolveModelConfig(env: Record<string, string | undefined>): Mod
   const model = env.HEARSAY_MODEL ?? DEFAULT_MODEL
   const provider = env.HEARSAY_PROVIDER ?? PROVIDER_FOR_MODEL[model]
   if (!provider) throw new Error(`No provider pinned for ${model}; set HEARSAY_PROVIDER`)
-  return { model, provider }
+  const fallbackProvider = FALLBACK_PROVIDER_FOR_MODEL[model]
+  return { model, provider, ...(fallbackProvider && fallbackProvider !== provider && { fallbackProvider }) }
 }
 
 // The server decides how much transcript the model sees, whatever the client
