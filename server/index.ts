@@ -16,8 +16,9 @@ if (!apiKey) {
   process.exit(1)
 }
 const chat = openRouterChat(apiKey)
-// Jev in front of Gemma: off unless HEARSAY_JEV=1 (pending the eval decision).
-const jev = process.env.HEARSAY_JEV === '1' ? openRouterJev(apiKey) : undefined
+// Jev in front of Gemma, adopted per the eval decision rule (eval/results/*_jev-s1.json).
+// HEARSAY_JEV=0 turns it off, leaving Gemma alone.
+const jev = process.env.HEARSAY_JEV === '0' ? undefined : openRouterJev(apiKey)
 const thresholds = {
   gate: Number(process.env.JEV_GATE ?? DEFAULT_THRESHOLDS.gate),
   confidence: Number(process.env.JEV_CONFIDENCE ?? DEFAULT_THRESHOLDS.confidence),
